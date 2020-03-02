@@ -70,4 +70,10 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$rootProject.junitVersion"
     testImplementation "io.mockk:mockk:1.9.3"
     testImplementation "org.assertj:assertj-core:$rootProject.assertjVersion"
+
+    // Instrumentation testing
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCoreVersion"
+    androidTestImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
+    androidTestImplementation "org.assertj:assertj-core:$rootProject.assertjVersion"
 }
