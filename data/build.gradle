@@ -55,6 +55,12 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxandroid:$rootProject.rxAndroidVersion"
     implementation "io.reactivex.rxjava3:rxjava:$rootProject.rxJavaVersion"
 
+    // RxJava Bridge
+    implementation("com.github.akarnokd:rxjava3-bridge:3.0.0") {
+        because "This provides interoperability between RxJava 2 and 3. " +
+                "Room only returns RxJava2 observables, however, the primary module uses RxJava3."
+    }
+
     // Timber
     debugImplementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
