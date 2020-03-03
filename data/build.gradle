@@ -49,7 +49,6 @@ dependencies {
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     implementation "androidx.room:room-rxjava2:$rootProject.roomVersion"
-    testImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
     // RxJava
     implementation "io.reactivex.rxjava3:rxandroid:$rootProject.rxAndroidVersion"
@@ -72,8 +71,14 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$rootProject.assertjVersion"
 
     // Instrumentation testing
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJunitVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoCoreVersion"
+    implementation ("androidx.appcompat:appcompat:1.2.0-alpha02") {
+        because "Required to successfully unit test Room."
+    }
+    implementation ("androidx.arch.core:core-runtime:$rootProject.androidXArchCoreVersion") {
+        because "Required to successfully test Room."
+    }
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidXArchCoreVersion"
     androidTestImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJunitVersion"
     androidTestImplementation "org.assertj:assertj-core:$rootProject.assertjVersion"
 }

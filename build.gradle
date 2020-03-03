@@ -29,8 +29,11 @@ buildscript {
         leakCanaryVersion = "2.1"
         junitVersion = "5.5.2"
         assertjVersion = "3.13.2"
+        androidXArchCoreVersion = "2.1.0"
         androidXJunitVersion = "1.1.1"
         espressoCoreVersion = "3.2.0"
+        androidXTestCoreVersion = "1.2.0"
+        androidXTestRunnerVersion = "1.2.0"
         androidXTestRulesVersion = "1.2.0"
     }
     repositories {
