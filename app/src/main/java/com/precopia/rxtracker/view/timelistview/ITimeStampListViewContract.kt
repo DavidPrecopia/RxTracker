@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import com.precopia.domain.datamodel.TimeStamp
 
 interface ITimeStampListViewContract {
-    interface View {
-        fun onEvent(event: ViewEvents)
-    }
+    interface View
 
     interface Adapter {
         fun showList(list: List<TimeStamp>)
