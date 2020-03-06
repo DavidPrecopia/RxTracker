@@ -1,5 +1,6 @@
 package com.precopia.rxtracker.view.timelistview
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.precopia.domain.datamodel.TimeStamp
@@ -11,7 +12,6 @@ import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.ViewE
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class TimeStampLogic(
-    private val view: ITimeStampListViewContract.View,
     private val repo: ITimeStampRepoContract,
     private val schedulerProvider: ISchedulerProviderContract,
     private val disposable: CompositeDisposable
@@ -19,26 +19,47 @@ class TimeStampLogic(
     ITimeStampListViewContract.Logic {
 
 
-    private val timeStampLiveData = MutableLiveData<List<TimeStamp>>()
+    private val viewEventLiveData = MutableLiveData<ViewEvents>()
 
 
-    // TODO Invoke the repo
-    init {
+//    init {
+//        viewEventLiveData.value = ViewEvents.DisplayLoading
+//        disposable.add(
+//            subscribeFlowableTimeStamp(
+//                repo.getAll(),
+//                { evalTimeStampList(it) },
+//                { repoError(it) },
+//                schedulerProvider
+//            )
+//        )
+//    }
 
+    private fun evalTimeStampList(list: List<TimeStamp>) {
+        if (list.isEmpty()) {
+            viewEventLiveData.value = ViewEvents.DisplayError("LIST IS EMPTY - PLACEHOLDER")
+        } else {
+            viewEventLiveData.value = ViewEvents.DisplayList(list)
+        }
+    }
+
+    private fun repoError(throwable: Throwable) {
     }
 
 
     override fun onEvent(event: LogicEvents) {
         when (event) {
             is LogicEvents.DeleteItem -> validateDeletePosition(event.position)
-            LogicEvents.OpenAddPrescriptionView -> view.onEvent(ViewEvents.OpenPrescriptionView)
-            LogicEvents.OpenAddTimeStampView -> view.onEvent(ViewEvents.OpenAddTimeStampView)
+            LogicEvents.OpenAddPrescriptionView -> viewEventLiveData.setValue(ViewEvents.OpenPrescriptionView)
+            LogicEvents.OpenAddTimeStampView -> viewEventLiveData.setValue(ViewEvents.OpenAddTimeStampView)
         }
     }
 
+    override fun observe(): LiveData<ViewEvents> = viewEventLiveData
+
+
     private fun validateDeletePosition(position: Int) {
         if (position >= 0) {
-            view.onEvent(ViewEvents.DeleteItem(position))
+            viewEventLiveData.setValue(ViewEvents.DeleteItem(position))
         } else {
             UtilExceptions.throwException(IllegalArgumentException("Is less then 0."))
         }

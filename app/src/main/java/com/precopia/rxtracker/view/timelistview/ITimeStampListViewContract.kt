@@ -1,5 +1,6 @@
 package com.precopia.rxtracker.view.timelistview
 
+import androidx.lifecycle.LiveData
 import com.precopia.domain.datamodel.TimeStamp
 
 interface ITimeStampListViewContract {
@@ -9,11 +10,14 @@ interface ITimeStampListViewContract {
 
     interface Adapter {
         fun showList(list: List<TimeStamp>)
+
         fun delete(position: Int)
     }
 
     interface Logic {
         fun onEvent(event: LogicEvents)
+
+        fun observe(): LiveData<ViewEvents>
     }
 
 
