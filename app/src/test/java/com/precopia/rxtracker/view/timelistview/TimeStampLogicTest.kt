@@ -6,9 +6,7 @@ import com.precopia.rxtracker.SchedulerProviderMockInit
 import com.precopia.rxtracker.util.ISchedulerProviderContract
 import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.LogicEvents
 import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.ViewEvents
-import io.mockk.clearAllMocks
-import io.mockk.mockk
-import io.mockk.spyk
+import io.mockk.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -72,36 +70,41 @@ internal class TimeStampLogicTest {
         /**
          * - Pass the function the position of the list item.
          *   - In this test it will be 0 or greater, thus valid.
-         * - The position is passed to the View via the [ViewEvents.DeleteItem] event.
+         * -  Pass the position to the View via the [ViewEvents.DeleteItem] event.
+         * - Pass the ID to the repo.
          */
         @Test
         fun `deleteItem - valid number`() {
+            val id = 1
             val validPosition = 0
 
-            logic.onEvent(LogicEvents.DeleteItem(validPosition))
+            logic.onEvent(LogicEvents.DeleteItem(id, validPosition))
 
             logic.observe().observeForever {
                 assertThat(it).isEqualTo(ViewEvents.DeleteItem(validPosition))
             }
+            verify(exactly = 1) { repo.delete(id) }
         }
 
         /**
          * - Pass the function the position of the list item.
          *   - In this test it will be less than 0, thus invalid.
          * - An Exception will be thrown.
-         * - Verify no events were sent to the View.
+         * - Verify no events were sent to the View and the Repo was not called.
          */
         @Test
         fun `deleteItem - invalid number`() {
+            val id = 1
             val invalidPosition = -1
 
             assertThrows<Exception> {
-                logic.onEvent(LogicEvents.DeleteItem(invalidPosition))
+                logic.onEvent(LogicEvents.DeleteItem(id, invalidPosition))
             }
 
             logic.observe().observeForever {
                 assertThat(it).isEqualTo(null)
             }
+            verify { repo wasNot Called }
         }
     }
 }

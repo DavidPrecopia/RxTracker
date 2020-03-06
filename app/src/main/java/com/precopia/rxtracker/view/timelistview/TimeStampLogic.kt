@@ -7,6 +7,7 @@ import com.precopia.domain.datamodel.TimeStamp
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.util.ISchedulerProviderContract
 import com.precopia.rxtracker.util.UtilExceptions
+import com.precopia.rxtracker.util.subscribeCompletable
 import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.LogicEvents
 import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.ViewEvents
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -48,7 +49,7 @@ class TimeStampLogic(
 
     override fun onEvent(event: LogicEvents) {
         when (event) {
-            is LogicEvents.DeleteItem -> validateDeletePosition(event.position)
+            is LogicEvents.DeleteItem -> validateDeletePosition(event.id, event.position)
             LogicEvents.OpenAddPrescriptionView -> viewEventLiveData.setValue(ViewEvents.OpenPrescriptionView)
             LogicEvents.OpenAddTimeStampView -> viewEventLiveData.setValue(ViewEvents.OpenAddTimeStampView)
         }
@@ -57,12 +58,18 @@ class TimeStampLogic(
     override fun observe(): LiveData<ViewEvents> = viewEventLiveData
 
 
-    private fun validateDeletePosition(position: Int) {
-        if (position >= 0) {
-            viewEventLiveData.setValue(ViewEvents.DeleteItem(position))
-        } else {
+    private fun validateDeletePosition(id: Int, position: Int) {
+        if (position < 0) {
             UtilExceptions.throwException(IllegalArgumentException("Is less then 0."))
         }
+
+        viewEventLiveData.value = ViewEvents.DeleteItem(position)
+        disposable.add(subscribeCompletable(
+            repo.delete(id),
+            { /*intentionally empty*/ },
+            { UtilExceptions.throwException(IllegalStateException("Encountered an error deleting")) },
+            schedulerProvider
+        ))
     }
 
 
