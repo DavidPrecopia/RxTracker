@@ -85,6 +85,9 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$rootProject.junitVersion"
     testImplementation "io.mockk:mockk:1.9.3"
     testImplementation "org.assertj:assertj-core:$rootProject.assertjVersion"
+    testImplementation ("androidx.arch.core:core-testing:$rootProject.androidXArchCoreVersion") {
+        because "Needed to unit test LiveData"
+    }
 
     // Instrumentation testing
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJunitVersion"
