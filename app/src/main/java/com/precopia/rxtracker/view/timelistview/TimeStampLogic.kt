@@ -72,14 +72,19 @@ class TimeStampLogic(
         if (position < 0) {
             UtilExceptions.throwException(IllegalArgumentException("Is less then 0."))
         }
-
         viewEventLiveData.value = ViewEvents.DeleteItem(position)
-        disposable.add(subscribeCompletable(
-            repo.delete(id),
-            { /*intentionally empty*/ },
-            { UtilExceptions.throwException(IllegalStateException("Encountered an error deleting")) },
-            schedulerProvider
-        ))
+        deleteFromRepo(id)
+    }
+
+    private fun deleteFromRepo(id: Int) {
+        disposable.add(
+            subscribeCompletable(
+                repo.delete(id),
+                { /*intentionally empty*/ },
+                { UtilExceptions.throwException(IllegalStateException("Encountered an error deleting")) },
+                schedulerProvider
+            )
+        )
     }
 
 
