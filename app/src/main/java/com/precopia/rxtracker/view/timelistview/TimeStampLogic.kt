@@ -26,6 +26,9 @@ class TimeStampLogic(
     private val viewEventLiveData = MutableLiveData<ViewEvents>()
 
 
+    private val localTimeStampList = mutableListOf<TimeStamp>()
+
+
     override fun onEvent(event: LogicEvents) {
         when (event) {
             LogicEvents.OnStart -> onStart()
@@ -43,7 +46,21 @@ class TimeStampLogic(
         observeRepo()
     }
 
+    /**
+     * When the View restart per a reconfiguration change,
+     * it will send another [LogicEvents.OnStart] event, to avoid
+     * unnecessarily invoking the Repo, I am storing the list here as well.
+     *
+     * Google recommends having a separate LiveData instance for data from the Repo.
+     * I am only exposing a single LiveData instance because I want to experiment
+     * with different ways to structure an app.
+     */
     private fun observeRepo() {
+        if (localTimeStampList.isNotEmpty()) {
+            viewEventLiveData.value = ViewEvents.DisplayList(localTimeStampList)
+            return
+        }
+
         disposable.add(
             subscribeFlowableTimeStamp(
                 repo.getAll(),
@@ -57,9 +74,14 @@ class TimeStampLogic(
     private fun evalTimeStampList(list: List<TimeStamp>) {
         if (list.isEmpty()) {
             viewEventLiveData.value = ViewEvents.DisplayError(ERROR_EMPTY_LIST)
-        } else {
-            viewEventLiveData.value = ViewEvents.DisplayList(list)
+            return
         }
+
+        with(localTimeStampList) {
+            clear()
+            addAll(list)
+        }
+        viewEventLiveData.value = ViewEvents.DisplayList(list)
     }
 
     private fun repoError(throwable: Throwable) {
