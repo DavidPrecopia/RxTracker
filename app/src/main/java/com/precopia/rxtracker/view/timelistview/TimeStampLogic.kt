@@ -8,6 +8,9 @@ import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.util.ISchedulerProviderContract
 import com.precopia.rxtracker.util.UtilExceptions
 import com.precopia.rxtracker.util.subscribeCompletable
+import com.precopia.rxtracker.util.subscribeFlowableTimeStamp
+import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
+import com.precopia.rxtracker.view.common.ERROR_GENERIC
 import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.LogicEvents
 import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.ViewEvents
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -23,32 +26,9 @@ class TimeStampLogic(
     private val viewEventLiveData = MutableLiveData<ViewEvents>()
 
 
-//    init {
-//        viewEventLiveData.value = ViewEvents.DisplayLoading
-//        disposable.add(
-//            subscribeFlowableTimeStamp(
-//                repo.getAll(),
-//                { evalTimeStampList(it) },
-//                { repoError(it) },
-//                schedulerProvider
-//            )
-//        )
-//    }
-
-    private fun evalTimeStampList(list: List<TimeStamp>) {
-        if (list.isEmpty()) {
-            viewEventLiveData.value = ViewEvents.DisplayError("LIST IS EMPTY - PLACEHOLDER")
-        } else {
-            viewEventLiveData.value = ViewEvents.DisplayList(list)
-        }
-    }
-
-    private fun repoError(throwable: Throwable) {
-    }
-
-
     override fun onEvent(event: LogicEvents) {
         when (event) {
+            LogicEvents.OnStart -> onStart()
             is LogicEvents.DeleteItem -> validateDeletePosition(event.id, event.position)
             LogicEvents.OpenAddPrescriptionView -> viewEventLiveData.setValue(ViewEvents.OpenPrescriptionView)
             LogicEvents.OpenAddTimeStampView -> viewEventLiveData.setValue(ViewEvents.OpenAddTimeStampView)
@@ -56,6 +36,36 @@ class TimeStampLogic(
     }
 
     override fun observe(): LiveData<ViewEvents> = viewEventLiveData
+
+
+    private fun onStart() {
+        viewEventLiveData.value = ViewEvents.DisplayLoading
+        observeRepo()
+    }
+
+    private fun observeRepo() {
+        disposable.add(
+            subscribeFlowableTimeStamp(
+                repo.getAll(),
+                { evalTimeStampList(it) },
+                { repoError(it) },
+                schedulerProvider
+            )
+        )
+    }
+
+    private fun evalTimeStampList(list: List<TimeStamp>) {
+        if (list.isEmpty()) {
+            viewEventLiveData.value = ViewEvents.DisplayError(ERROR_EMPTY_LIST)
+        } else {
+            viewEventLiveData.value = ViewEvents.DisplayList(list)
+        }
+    }
+
+    private fun repoError(throwable: Throwable) {
+        viewEventLiveData.value = ViewEvents.DisplayError(ERROR_GENERIC)
+        UtilExceptions.throwException(throwable)
+    }
 
 
     private fun validateDeletePosition(id: Int, position: Int) {

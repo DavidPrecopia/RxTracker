@@ -29,6 +29,7 @@ interface ITimeStampListViewContract {
     }
 
     sealed class LogicEvents {
+        object OnStart : LogicEvents()
         data class DeleteItem(val id: Int, val position: Int) : LogicEvents()
         object OpenAddPrescriptionView : LogicEvents()
         object OpenAddTimeStampView : LogicEvents()

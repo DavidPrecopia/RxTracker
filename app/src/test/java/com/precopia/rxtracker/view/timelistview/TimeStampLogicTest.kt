@@ -1,12 +1,18 @@
 package com.precopia.rxtracker.view.timelistview
 
+import androidx.lifecycle.Observer
+import com.precopia.domain.datamodel.TimeStamp
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.InstantExecutorExtension
 import com.precopia.rxtracker.SchedulerProviderMockInit
+import com.precopia.rxtracker.observeForTesting
 import com.precopia.rxtracker.util.ISchedulerProviderContract
+import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
+import com.precopia.rxtracker.view.common.ERROR_GENERIC
 import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.LogicEvents
 import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.ViewEvents
 import io.mockk.*
+import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -36,6 +42,88 @@ internal class TimeStampLogicTest {
 
 
     @Nested
+    inner class OnStart {
+        /**
+         * - Send event [ViewEvents.DisplayLoading].
+         * - Get all from the Repo - it will contain data in this test.
+         * - Send the data returned by the Repo to the View via [ViewEvents.DisplayList].
+         */
+        @Test
+        fun `onStart - normal`() {
+            val listTimeStamp = listOf(TimeStamp(0, "title", "time"))
+            val listLiveDataOutput = mutableListOf<Any>()
+            val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
+
+            every { repo.getAll() } returns Flowable.just(listTimeStamp)
+
+            logic.observe().observeForever(liveDataObserver)
+
+            logic.onEvent(LogicEvents.OnStart)
+
+            verify(exactly = 1) { repo.getAll() }
+            assertThat(listLiveDataOutput.size).isEqualTo(2)
+            assertThat(listLiveDataOutput[0]).isEqualTo(ViewEvents.DisplayLoading)
+            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.DisplayList(listTimeStamp))
+
+            logic.observe().removeObserver(liveDataObserver)
+        }
+
+        /**
+         * - Send event [ViewEvents.DisplayLoading].
+         * - Get all from the Repo - it will be empty in this test.
+         * - Send [ERROR_EMPTY_LIST] to the View via [ViewEvents.DisplayError].
+         * - Verify that [ViewEvents.DisplayList] was not sent.
+         */
+        @Test
+        fun `onStart - empty list`() {
+            val emptyList = emptyList<TimeStamp>()
+            val listLiveDataOutput = mutableListOf<Any>()
+            val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
+
+            every { repo.getAll() } returns Flowable.just(emptyList)
+
+            logic.observe().observeForever(liveDataObserver)
+
+            logic.onEvent(LogicEvents.OnStart)
+
+            verify(exactly = 1) { repo.getAll() }
+            assertThat(listLiveDataOutput.size).isEqualTo(2)
+            assertThat(listLiveDataOutput[0]).isEqualTo(ViewEvents.DisplayLoading)
+            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.DisplayError(ERROR_EMPTY_LIST))
+
+            logic.observe().removeObserver(liveDataObserver)
+        }
+
+        /**
+         * - Send event [ViewEvents.DisplayLoading].
+         * - Get all from the Repo - an exception will be returned.
+         * - Send [ERROR_GENERIC] to the View via [ViewEvents.DisplayError].
+         * - Throw the exception.
+         * - Verify that [ViewEvents.DisplayList] was not sent.
+         */
+        @Test
+        fun `onStart - error`() {
+            val throwable = mockk<Throwable>(relaxed = true)
+            val listLiveDataOutput = mutableListOf<Any>()
+            val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
+
+            every { repo.getAll() } returns Flowable.error(throwable)
+
+            logic.observe().observeForever(liveDataObserver)
+
+            logic.onEvent(LogicEvents.OnStart)
+
+            verify(exactly = 1) { repo.getAll() }
+            verify(atLeast = 1) { throwable.printStackTrace() }
+            assertThat(listLiveDataOutput.size).isEqualTo(2)
+            assertThat(listLiveDataOutput[0]).isEqualTo(ViewEvents.DisplayLoading)
+            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.DisplayError(ERROR_GENERIC))
+
+            logic.observe().removeObserver(liveDataObserver)
+        }
+    }
+
+    @Nested
     inner class OpenPrescriptionView {
         /**
          * - Send the [ViewEvents.OpenPrescriptionView] event to the View.
@@ -44,8 +132,8 @@ internal class TimeStampLogicTest {
         fun openPrescriptionViewEvent() {
             logic.onEvent(LogicEvents.OpenAddPrescriptionView)
 
-            logic.observe().observeForever {
-                assertThat(it).isEqualTo(ViewEvents.OpenPrescriptionView)
+            logic.observe().observeForTesting {
+                assertThat(logic.observe().value).isEqualTo(ViewEvents.OpenPrescriptionView)
             }
         }
     }
@@ -59,8 +147,8 @@ internal class TimeStampLogicTest {
         fun openAddTimeStampView() {
             logic.onEvent(LogicEvents.OpenAddTimeStampView)
 
-            logic.observe().observeForever {
-                assertThat(it).isEqualTo(ViewEvents.OpenAddTimeStampView)
+            logic.observe().observeForTesting {
+                assertThat(logic.observe().value).isEqualTo(ViewEvents.OpenAddTimeStampView)
             }
         }
     }
@@ -80,9 +168,10 @@ internal class TimeStampLogicTest {
 
             logic.onEvent(LogicEvents.DeleteItem(id, validPosition))
 
-            logic.observe().observeForever {
-                assertThat(it).isEqualTo(ViewEvents.DeleteItem(validPosition))
+            logic.observe().observeForTesting {
+                assertThat(logic.observe().value).isEqualTo(ViewEvents.DeleteItem(validPosition))
             }
+
             verify(exactly = 1) { repo.delete(id) }
         }
 
@@ -101,8 +190,8 @@ internal class TimeStampLogicTest {
                 logic.onEvent(LogicEvents.DeleteItem(id, invalidPosition))
             }
 
-            logic.observe().observeForever {
-                assertThat(it).isEqualTo(null)
+            logic.observe().observeForTesting {
+                assertThat(logic.observe().value).isEqualTo(null)
             }
             verify { repo wasNot Called }
         }
