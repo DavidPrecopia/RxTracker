@@ -8,7 +8,7 @@ import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 
-class PrescriptionRepo(private val dao: PrescriptionDao) : IPrescriptionRepoContract {
+internal class PrescriptionRepo(private val dao: PrescriptionDao) : IPrescriptionRepoContract {
 
     override fun getAll(): Flowable<List<Prescription>> =
         RxJavaBridge.toV3Flowable(dao.getAll())

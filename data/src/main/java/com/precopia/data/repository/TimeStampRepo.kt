@@ -9,7 +9,7 @@ import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 
-class TimeStampRepo(private val dao: TimeStampDao, private val timeUtil: ICurrentTimeUtil) :
+internal class TimeStampRepo(private val dao: TimeStampDao, private val timeUtil: ICurrentTimeUtil) :
     ITimeStampRepoContract {
 
     override fun getAll(): Flowable<List<TimeStamp>> =

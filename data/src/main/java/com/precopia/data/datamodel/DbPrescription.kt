@@ -9,7 +9,7 @@ import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_TABLE_NAME
 import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_TITLE_COLUMN
 
 @Entity(tableName = PRESCRIPTION_TABLE_NAME)
-data class DbPrescription(
+internal data class DbPrescription(
     @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = PRESCRIPTION_ID_COLUMN)

@@ -4,10 +4,11 @@ import android.app.Application
 import com.precopia.data.database.RxTrackerDatabase
 import com.precopia.data.repository.TimeStampRepo
 import com.precopia.data.util.CurrentTimeUtil
+import com.precopia.domain.repository.ITimeStampRepoContract
 
 class TimeStampRepoServiceLocator(application: Application) {
 
-    private val timeStampRepo = TimeStampRepo(
+    private val timeStampRepo: ITimeStampRepoContract = TimeStampRepo(
         dao(application),
         timeUtil()
     )

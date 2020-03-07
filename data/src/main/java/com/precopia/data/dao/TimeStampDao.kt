@@ -11,7 +11,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
-interface TimeStampDao {
+internal interface TimeStampDao {
     @Query("SELECT * FROM time_stamps ORDER BY $TIME_STAMP_DATE_COLUMN ASC")
     fun getAll(): Flowable<List<DbTimeStamp>>
 

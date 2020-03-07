@@ -10,7 +10,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
-interface PrescriptionDao {
+internal interface PrescriptionDao {
     @Query("SELECT * FROM prescriptions ORDER BY $PRESCRIPTION_TITLE_COLUMN ASC")
     fun getAll(): Flowable<List<DbPrescription>>
 

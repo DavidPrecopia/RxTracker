@@ -10,7 +10,7 @@ import com.precopia.data.database.DatabaseConstants.TIME_STAMP_TABLE_NAME
 import com.precopia.data.database.DatabaseConstants.TIME_STAMP_TITLE_COLUMN
 
 @Entity(tableName = TIME_STAMP_TABLE_NAME)
-data class DbTimeStamp(
+internal data class DbTimeStamp(
     @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = TIME_STAMP_ID_COLUMN)
