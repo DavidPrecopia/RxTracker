@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.precopia.domain.datamodel.TimeStamp
 import com.precopia.domain.repository.ITimeStampRepoContract
-import com.precopia.rxtracker.util.ISchedulerProviderContract
+import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.util.UtilExceptions
 import com.precopia.rxtracker.util.subscribeCompletable
 import com.precopia.rxtracker.util.subscribeFlowableTimeStamp
@@ -17,7 +17,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class TimeStampLogic(
     private val repo: ITimeStampRepoContract,
-    private val schedulerProvider: ISchedulerProviderContract,
+    private val utilSchedulerProvider: IUtilSchedulerProviderContract,
     private val disposable: CompositeDisposable
 ) : ViewModel(),
     ITimeStampListViewContract.Logic {
@@ -66,7 +66,7 @@ class TimeStampLogic(
                 repo.getAll(),
                 { evalTimeStampList(it) },
                 { repoError(it) },
-                schedulerProvider
+                utilSchedulerProvider
             )
         )
     }
@@ -104,7 +104,7 @@ class TimeStampLogic(
                 repo.delete(id),
                 { /*intentionally empty*/ },
                 { UtilExceptions.throwException(IllegalStateException("Encountered an error deleting")) },
-                schedulerProvider
+                utilSchedulerProvider
             )
         )
     }

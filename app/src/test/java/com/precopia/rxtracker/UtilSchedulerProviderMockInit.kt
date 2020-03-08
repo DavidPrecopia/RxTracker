@@ -1,6 +1,6 @@
 package com.precopia.rxtracker
 
-import com.precopia.rxtracker.util.ISchedulerProviderContract
+import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import io.mockk.every
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -15,9 +15,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  * all operations run on the same thread the tests are running on.
  * Otherwise, an error in thrown by the Observable.
  */
-object SchedulerProviderMockInit {
-    fun init(schedulerProvider: ISchedulerProviderContract) {
-        every { schedulerProvider.io() } returns Schedulers.trampoline()
-        every { schedulerProvider.ui() } returns Schedulers.trampoline()
+object UtilSchedulerProviderMockInit {
+    fun init(utilSchedulerProvider: IUtilSchedulerProviderContract) {
+        every { utilSchedulerProvider.io() } returns Schedulers.trampoline()
+        every { utilSchedulerProvider.ui() } returns Schedulers.trampoline()
     }
 }

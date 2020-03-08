@@ -4,9 +4,9 @@ import androidx.lifecycle.Observer
 import com.precopia.domain.datamodel.TimeStamp
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.InstantExecutorExtension
-import com.precopia.rxtracker.SchedulerProviderMockInit
+import com.precopia.rxtracker.UtilSchedulerProviderMockInit
 import com.precopia.rxtracker.observeForTesting
-import com.precopia.rxtracker.util.ISchedulerProviderContract
+import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
 import com.precopia.rxtracker.view.common.ERROR_GENERIC
 import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.LogicEvents
@@ -26,7 +26,7 @@ internal class TimeStampLogicTest {
 
     private val repo = mockk<ITimeStampRepoContract>(relaxed = true)
 
-    private val schedulerProvider = mockk<ISchedulerProviderContract>()
+    private val schedulerProvider = mockk<IUtilSchedulerProviderContract>()
 
     private val disposable = spyk<CompositeDisposable>()
 
@@ -37,7 +37,7 @@ internal class TimeStampLogicTest {
     @BeforeEach
     fun init() {
         clearAllMocks()
-        SchedulerProviderMockInit.init(schedulerProvider)
+        UtilSchedulerProviderMockInit.init(schedulerProvider)
     }
 
 
