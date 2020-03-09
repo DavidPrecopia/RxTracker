@@ -7,6 +7,11 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 /**
+ * This class was copied from:
+ * https://github.com/android/architecture-components-samples/blob/master/LiveDataSample/app/src/test/java/com/android/example/livedatabuilder/util/LiveDataTestUtil.kt#L61
+ */
+
+/**
  * Observes a [LiveData] until the `block` is done executing.
  */
 fun <T> LiveData<T>.observeForTesting(block: () -> Unit) {
