@@ -3,4 +3,7 @@
 
     <string name="content_description_overflow_menu">Overflow menu</string>
     <string name="content_description_fab_add">Add</string>
+
+    <string name="menu_item_title_prescriptions">Prescriptions</string>
+    <string name="menu_item_title_delete">Delete</string>
 </resources>
