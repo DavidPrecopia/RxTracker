@@ -2,4 +2,5 @@
     <string name="app_name">RxTracker</string>
 
     <string name="content_description_overflow_menu">Overflow menu</string>
+    <string name="content_description_fab_add">Add</string>
 </resources>
