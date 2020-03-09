@@ -2,14 +2,29 @@ package com.precopia.rxtracker.common
 
 import android.app.Application
 import android.os.Looper
+import com.precopia.rxtracker.common.buildlogic.AppComponent
+import com.precopia.rxtracker.common.buildlogic.DaggerAppComponent
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 internal abstract class RxTrackerApplicationBase : Application() {
 
+
+    lateinit var appComponent: AppComponent
+        private set
+
+
     override fun onCreate() {
         super.onCreate()
+        initAppComponent()
         initRxAndroidScheduler()
+    }
+
+    private fun initAppComponent() {
+        appComponent = DaggerAppComponent
+            .builder()
+            .application(this)
+            .build()
     }
 
     /**
