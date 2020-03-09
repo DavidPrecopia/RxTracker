@@ -3,7 +3,7 @@ package com.precopia.rxtracker.view.timelistview
 import androidx.lifecycle.LiveData
 import com.precopia.domain.datamodel.TimeStamp
 
-interface ITimeStampListViewContract {
+interface ITimeStampViewContract {
     interface View
 
     interface Adapter {

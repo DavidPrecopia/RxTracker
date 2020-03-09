@@ -11,8 +11,8 @@ import com.precopia.rxtracker.util.subscribeCompletable
 import com.precopia.rxtracker.util.subscribeFlowableTimeStamp
 import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
 import com.precopia.rxtracker.view.common.ERROR_GENERIC
-import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.LogicEvents
-import com.precopia.rxtracker.view.timelistview.ITimeStampListViewContract.ViewEvents
+import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract.LogicEvents
+import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract.ViewEvents
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class TimeStampLogic(
@@ -20,7 +20,7 @@ class TimeStampLogic(
     private val utilSchedulerProvider: IUtilSchedulerProviderContract,
     private val disposable: CompositeDisposable
 ) : ViewModel(),
-    ITimeStampListViewContract.Logic {
+    ITimeStampViewContract.Logic {
 
 
     private val viewEventLiveData = MutableLiveData<ViewEvents>()
