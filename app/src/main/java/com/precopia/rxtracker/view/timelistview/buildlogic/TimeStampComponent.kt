@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModelStore
 import com.precopia.rxtracker.common.buildlogic.ViewCommonModule
 import com.precopia.rxtracker.common.buildlogic.ViewScope
-import com.precopia.rxtracker.view.timelistview.TimeStampListView
+import com.precopia.rxtracker.view.timelistview.TimeStampView
 import dagger.BindsInstance
 import dagger.Component
 
@@ -16,7 +16,7 @@ import dagger.Component
     ]
 )
 interface TimeStampComponent {
-    fun inject(timeStampListView: TimeStampListView)
+    fun inject(timeStampView: TimeStampView)
     @Component.Builder
     interface Builder {
         fun build(): TimeStampComponent

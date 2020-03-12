@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.time_stamp_view.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-open class TimeStampListView : Fragment(R.layout.time_stamp_view),
+open class TimeStampView : Fragment(R.layout.time_stamp_view),
     ITimeStampViewContract.View {
 
 
@@ -94,7 +94,7 @@ open class TimeStampListView : Fragment(R.layout.time_stamp_view),
             setHasFixedSize(true)
             layoutManager = layoutManger.get()
             addItemDecoration(dividerItemDecorator)
-            adapter = this@TimeStampListView.adapter as RecyclerView.Adapter<*>
+            adapter = this@TimeStampView.adapter as RecyclerView.Adapter<*>
         }
     }
 
