@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-open class TimeStampView : Fragment(R.layout.time_stamp_view),
+class TimeStampView : Fragment(R.layout.time_stamp_view),
     ITimeStampViewContract.View {
 
 
