@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.timelistview
+package com.precopia.rxtracker.view.timestampview
 
 import androidx.lifecycle.LiveData
 import com.precopia.domain.datamodel.TimeStamp

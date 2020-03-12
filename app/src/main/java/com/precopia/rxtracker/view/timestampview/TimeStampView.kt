@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.timelistview
+package com.precopia.rxtracker.view.timestampview
 
 import android.content.Context
 import android.os.Bundle
@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.application
-import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract.LogicEvents
-import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract.ViewEvents
-import com.precopia.rxtracker.view.timelistview.buildlogic.DaggerTimeStampComponent
+import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.LogicEvents
+import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.ViewEvents
+import com.precopia.rxtracker.view.timestampview.buildlogic.DaggerTimeStampComponent
 import kotlinx.android.synthetic.main.time_stamp_view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject

@@ -1,13 +1,13 @@
-package com.precopia.rxtracker.view.timelistview.buildlogic
+package com.precopia.rxtracker.view.timestampview.buildlogic
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.common.buildlogic.ViewScope
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
-import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract
-import com.precopia.rxtracker.view.timelistview.TimeStampAdapter
-import com.precopia.rxtracker.view.timelistview.TimeStampLogic
+import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract
+import com.precopia.rxtracker.view.timestampview.TimeStampAdapter
+import com.precopia.rxtracker.view.timestampview.TimeStampLogic
 import dagger.Module
 import dagger.Provides
 import io.reactivex.rxjava3.disposables.CompositeDisposable

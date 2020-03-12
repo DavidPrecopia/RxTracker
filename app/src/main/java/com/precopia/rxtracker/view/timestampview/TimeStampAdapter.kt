@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.timelistview
+package com.precopia.rxtracker.view.timestampview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.precopia.domain.datamodel.TimeStamp
 import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.UtilExceptions
-import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract.LogicEvents
+import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.LogicEvents
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.time_stamp_list_item.*
 

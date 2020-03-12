@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.timelistview
+package com.precopia.rxtracker.view.timestampview
 
 import com.precopia.domain.datamodel.TimeStamp
 import org.assertj.core.api.Assertions.assertThat

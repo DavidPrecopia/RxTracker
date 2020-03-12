@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.timelistview
+package com.precopia.rxtracker.view.timestampview
 
 import androidx.recyclerview.widget.DiffUtil
 import com.precopia.domain.datamodel.TimeStamp

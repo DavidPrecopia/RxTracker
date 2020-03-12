@@ -1,10 +1,10 @@
-package com.precopia.rxtracker.view.timelistview.buildlogic
+package com.precopia.rxtracker.view.timestampview.buildlogic
 
 import android.app.Application
 import androidx.fragment.app.Fragment
 import com.precopia.rxtracker.common.buildlogic.ViewCommonModule
 import com.precopia.rxtracker.common.buildlogic.ViewScope
-import com.precopia.rxtracker.view.timelistview.TimeStampView
+import com.precopia.rxtracker.view.timestampview.TimeStampView
 import dagger.BindsInstance
 import dagger.Component
 

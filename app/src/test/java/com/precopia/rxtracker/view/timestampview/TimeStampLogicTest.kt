@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.timelistview
+package com.precopia.rxtracker.view.timestampview
 
 import androidx.lifecycle.Observer
 import com.precopia.domain.datamodel.TimeStamp
@@ -9,8 +9,8 @@ import com.precopia.rxtracker.observeForTesting
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
 import com.precopia.rxtracker.view.common.ERROR_GENERIC
-import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract.LogicEvents
-import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract.ViewEvents
+import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.LogicEvents
+import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.ViewEvents
 import io.mockk.*
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
