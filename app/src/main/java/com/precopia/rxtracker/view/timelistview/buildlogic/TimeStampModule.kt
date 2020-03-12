@@ -1,7 +1,7 @@
 package com.precopia.rxtracker.view.timelistview.buildlogic
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.common.buildlogic.ViewScope
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
@@ -17,7 +17,7 @@ class TimeStampModule {
     @ViewScope
     @Provides
     fun logic(
-        view: ViewModelStore,
+        view: Fragment,
         factory: ViewModelProvider.NewInstanceFactory
     ): ITimeStampViewContract.Logic {
         return ViewModelProvider(view, factory).get(TimeStampLogic::class.java)

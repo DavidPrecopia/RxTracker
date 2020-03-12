@@ -1,7 +1,7 @@
 package com.precopia.rxtracker.view.timelistview.buildlogic
 
 import android.app.Application
-import androidx.lifecycle.ViewModelStore
+import androidx.fragment.app.Fragment
 import com.precopia.rxtracker.common.buildlogic.ViewCommonModule
 import com.precopia.rxtracker.common.buildlogic.ViewScope
 import com.precopia.rxtracker.view.timelistview.TimeStampView
@@ -25,6 +25,6 @@ interface TimeStampComponent {
         fun application(application: Application): Builder
 
         @BindsInstance
-        fun view(view: ViewModelStore): Builder
+        fun view(view: Fragment): Builder
     }
 }
