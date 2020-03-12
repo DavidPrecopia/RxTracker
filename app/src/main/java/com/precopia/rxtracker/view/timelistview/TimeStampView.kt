@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,9 +14,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.precopia.rxtracker.R
+import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract.LogicEvents
 import com.precopia.rxtracker.view.timelistview.ITimeStampViewContract.ViewEvents
+import com.precopia.rxtracker.view.timelistview.buildlogic.DaggerTimeStampComponent
 import kotlinx.android.synthetic.main.time_stamp_view.*
+import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -42,7 +46,11 @@ open class TimeStampView : Fragment(R.layout.time_stamp_view),
     }
 
     private fun inject() {
-
+        DaggerTimeStampComponent.builder()
+            .application(application)
+            .view(this)
+            .build()
+            .inject(this)
     }
 
 
@@ -85,8 +93,13 @@ open class TimeStampView : Fragment(R.layout.time_stamp_view),
 
 
     private fun init() {
+        initToolbar()
         initRecyclerView()
         initFab()
+    }
+
+    private fun initToolbar() {
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
     }
 
     private fun initRecyclerView() {
