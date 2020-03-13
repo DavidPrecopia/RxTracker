@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">RxTracker</string>
 
+    <string name="nav_label_add_time_stamp">Time Stamp</string>
+
     <string name="content_description_overflow_menu">Overflow menu</string>
     <string name="content_description_fab_add">Add</string>
 

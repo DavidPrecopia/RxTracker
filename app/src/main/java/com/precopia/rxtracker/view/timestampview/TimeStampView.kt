@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.application
+import com.precopia.rxtracker.util.navigate
 import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.LogicEvents
 import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.ViewEvents
 import com.precopia.rxtracker.view.timestampview.buildlogic.DaggerTimeStampComponent
@@ -23,8 +24,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-class TimeStampView : Fragment(R.layout.time_stamp_view),
-    ITimeStampViewContract.View {
+class TimeStampView: Fragment(R.layout.time_stamp_view),
+        ITimeStampViewContract.View {
 
 
     @Inject
@@ -47,10 +48,10 @@ class TimeStampView : Fragment(R.layout.time_stamp_view),
 
     private fun inject() {
         DaggerTimeStampComponent.builder()
-            .application(application)
-            .view(this)
-            .build()
-            .inject(this)
+                .application(application)
+                .view(this)
+                .build()
+                .inject(this)
     }
 
 
@@ -84,7 +85,9 @@ class TimeStampView : Fragment(R.layout.time_stamp_view),
     }
 
     private fun openAddTimeStampView() {
-        TODO("Implement Navigation to the View")
+        navigate(
+                TimeStampViewDirections.actionTimesListViewToAddTimeStampView()
+        )
     }
 
     private fun openPrescriptionView() {
@@ -112,12 +115,12 @@ class TimeStampView : Fragment(R.layout.time_stamp_view),
     }
 
     private fun initFab() {
-        fab.setOnClickListener { logic.onEvent(LogicEvents.OpenAddPrescriptionView) }
+        fab.setOnClickListener { logic.onEvent(LogicEvents.OpenAddTimeStampView) }
         fabScrollListener()
     }
 
     private fun fabScrollListener() {
-        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        recycler_view.addOnScrollListener(object: RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {

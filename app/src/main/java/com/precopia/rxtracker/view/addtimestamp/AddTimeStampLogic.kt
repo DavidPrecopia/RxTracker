@@ -52,6 +52,7 @@ class AddTimeStampLogic(
 
     private fun evalPrescriptionList(list: List<Prescription>) {
         if (list.isEmpty()) {
+
             viewEventLiveData.value = ViewEvents.DisplayError(ERROR_EMPTY_LIST)
         } else {
             viewEventLiveData.value = ViewEvents.DisplayList(list)
