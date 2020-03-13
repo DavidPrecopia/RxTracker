@@ -13,7 +13,11 @@ import com.precopia.rxtracker.view.addtimestamp.IAddTimeStampContract.ViewEvents
 import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
 import com.precopia.rxtracker.view.common.ERROR_GENERIC
 import com.precopia.rxtracker.view.common.ERROR_OPERATION_FAILED
-import io.mockk.*
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.spyk
+import io.mockk.verify
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -36,7 +40,7 @@ internal class AddTimeStampLogicTest {
 
 
     private val logic =
-        AddTimeStampLogic(prescriptionRepo, timeStampRepo, schedulerProvider, disposable)
+            AddTimeStampLogic(prescriptionRepo, timeStampRepo, schedulerProvider, disposable)
 
 
     @BeforeEach
@@ -187,7 +191,7 @@ internal class AddTimeStampLogicTest {
             verify(atLeast = 1) { throwable.printStackTrace() }
             assertThat(listLiveDataOutput.size).isEqualTo(2)
             assertThat(listLiveDataOutput[0]).isEqualTo(
-                ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED)
+                    ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED)
             )
             assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.Close)
 

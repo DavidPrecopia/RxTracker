@@ -70,10 +70,10 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$rootProject.assertjVersion"
 
     // Instrumentation testing
-    implementation ("androidx.appcompat:appcompat:1.2.0-alpha02") {
+    implementation("androidx.appcompat:appcompat:1.2.0-alpha02") {
         because "Required to successfully unit test Room."
     }
-    implementation ("androidx.arch.core:core-runtime:$rootProject.androidXArchCoreVersion") {
+    implementation("androidx.arch.core:core-runtime:$rootProject.androidXArchCoreVersion") {
         because "Required to successfully test Room."
     }
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidXArchCoreVersion"

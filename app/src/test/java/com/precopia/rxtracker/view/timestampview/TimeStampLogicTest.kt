@@ -11,7 +11,12 @@ import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
 import com.precopia.rxtracker.view.common.ERROR_GENERIC
 import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.LogicEvents
 import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.ViewEvents
-import io.mockk.*
+import io.mockk.Called
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.spyk
+import io.mockk.verify
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.assertj.core.api.Assertions.assertThat
@@ -184,7 +189,7 @@ internal class TimeStampLogicTest {
         @Test
         fun `deleteItem - invalid number`() {
             val id = 1
-            val invalidPosition = -1
+            val invalidPosition = - 1
 
             assertThrows<Exception> {
                 logic.onEvent(LogicEvents.DeleteItem(id, invalidPosition))

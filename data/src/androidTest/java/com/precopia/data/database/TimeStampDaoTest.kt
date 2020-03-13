@@ -21,11 +21,11 @@ internal class TimeStampDaoTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val database = Room.inMemoryDatabaseBuilder(
-        ApplicationProvider.getApplicationContext<Application>(),
-        RxTrackerDatabase::class.java
-    )
-        .allowMainThreadQueries()
-        .build()
+                    ApplicationProvider.getApplicationContext<Application>(),
+                    RxTrackerDatabase::class.java
+            )
+            .allowMainThreadQueries()
+            .build()
 
     private val dao = database.timeStampDao()
 
@@ -53,16 +53,16 @@ internal class TimeStampDaoTest {
         dao.deleteAll()
 
         dao.add(timeStamp)
-            .test()
-            .assertComplete()
+                .test()
+                .assertComplete()
 
         dao.getAll()
-            .test()
-            .assertValue {
-                it.size == 1
-                        && it[0].title == titleString
-                        && it[0].time == timeString
-            }
+                .test()
+                .assertValue {
+                    it.size == 1
+                            && it[0].title == titleString
+                            && it[0].time == timeString
+                }
     }
 
     /**
@@ -79,19 +79,19 @@ internal class TimeStampDaoTest {
         dao.deleteAll()
 
         dao.add(timeStamp)
-            .test()
-            .assertComplete()
+                .test()
+                .assertComplete()
 
         val insertedId = dao.getAll()
-            .test()
-            .values()[0][0].id
+                .test()
+                .values()[0][0].id
 
         dao.delete(insertedId)
-            .test()
-            .assertComplete()
+                .test()
+                .assertComplete()
 
         dao.getAll()
-            .test()
-            .assertValue { it.isEmpty() }
+                .test()
+                .assertValue { it.isEmpty() }
     }
 }

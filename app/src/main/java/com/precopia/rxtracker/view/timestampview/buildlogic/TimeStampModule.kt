@@ -17,8 +17,8 @@ class TimeStampModule {
     @ViewScope
     @Provides
     fun logic(
-        view: Fragment,
-        factory: ViewModelProvider.NewInstanceFactory
+            view: Fragment,
+            factory: ViewModelProvider.NewInstanceFactory
     ): ITimeStampViewContract.Logic {
         return ViewModelProvider(view, factory).get(TimeStampLogic::class.java)
     }
@@ -26,9 +26,9 @@ class TimeStampModule {
     @ViewScope
     @Provides
     fun factory(
-        repo: ITimeStampRepoContract,
-        utilSchedulerProvider: IUtilSchedulerProviderContract,
-        disposable: CompositeDisposable
+            repo: ITimeStampRepoContract,
+            utilSchedulerProvider: IUtilSchedulerProviderContract,
+            disposable: CompositeDisposable
     ): ViewModelProvider.NewInstanceFactory {
         return TimeStampLogicFactory(repo, utilSchedulerProvider, disposable)
     }

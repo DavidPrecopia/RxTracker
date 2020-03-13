@@ -7,7 +7,7 @@ import com.precopia.rxtracker.common.buildlogic.DaggerAppComponent
 import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
-internal abstract class RxTrackerApplicationBase : Application() {
+internal abstract class RxTrackerApplicationBase: Application() {
 
 
     lateinit var appComponent: AppComponent
@@ -22,9 +22,9 @@ internal abstract class RxTrackerApplicationBase : Application() {
 
     private fun initAppComponent() {
         appComponent = DaggerAppComponent
-            .builder()
-            .application(this)
-            .build()
+                .builder()
+                .application(this)
+                .build()
     }
 
     /**

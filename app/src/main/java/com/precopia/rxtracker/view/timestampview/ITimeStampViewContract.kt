@@ -20,18 +20,18 @@ interface ITimeStampViewContract {
 
 
     sealed class ViewEvents {
-        object DisplayLoading : ViewEvents()
-        data class DisplayList(val list: List<TimeStamp>) : ViewEvents()
-        data class DisplayError(val message: String) : ViewEvents()
-        data class DeleteItem(val position: Int) : ViewEvents()
-        object OpenPrescriptionView : ViewEvents()
-        object OpenAddTimeStampView : ViewEvents()
+        object DisplayLoading: ViewEvents()
+        data class DisplayList(val list: List<TimeStamp>): ViewEvents()
+        data class DisplayError(val message: String): ViewEvents()
+        data class DeleteItem(val position: Int): ViewEvents()
+        object OpenPrescriptionView: ViewEvents()
+        object OpenAddTimeStampView: ViewEvents()
     }
 
     sealed class LogicEvents {
-        object OnStart : LogicEvents()
-        data class DeleteItem(val id: Int, val position: Int) : LogicEvents()
-        object OpenAddPrescriptionView : LogicEvents()
-        object OpenAddTimeStampView : LogicEvents()
+        object OnStart: LogicEvents()
+        data class DeleteItem(val id: Int, val position: Int): LogicEvents()
+        object OpenAddPrescriptionView: LogicEvents()
+        object OpenAddTimeStampView: LogicEvents()
     }
 }

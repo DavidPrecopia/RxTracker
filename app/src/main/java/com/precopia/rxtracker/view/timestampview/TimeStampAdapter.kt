@@ -13,13 +13,13 @@ import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.LogicEve
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.time_stamp_list_item.*
 
-class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic) :
-    ListAdapter<TimeStamp, TimeStampAdapter.TimeStampViewHolder>(TimeStampDiffCallback()),
-    ITimeStampViewContract.Adapter {
+class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
+        ListAdapter<TimeStamp, TimeStampAdapter.TimeStampViewHolder>(TimeStampDiffCallback()),
+        ITimeStampViewContract.Adapter {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = TimeStampViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.time_stamp_list_item, parent, false),
-        logic
+            LayoutInflater.from(parent.context).inflate(R.layout.time_stamp_list_item, parent, false),
+            logic
     )
 
     override fun onBindViewHolder(holder: TimeStampViewHolder, position: Int) {
@@ -37,11 +37,11 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic) :
 
 
     class TimeStampViewHolder(
-        private val view: View,
-        private val logic: ITimeStampViewContract.Logic
-    ) :
-        RecyclerView.ViewHolder(view),
-        LayoutContainer {
+            private val view: View,
+            private val logic: ITimeStampViewContract.Logic
+    ):
+            RecyclerView.ViewHolder(view),
+            LayoutContainer {
 
         override val containerView: View?
             get() = view
@@ -58,15 +58,15 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic) :
         }
 
         private fun getContextMenu(id: Int) =
-            PopupMenu(iv_overflow_menu.context, iv_overflow_menu).apply {
-                inflate(R.menu.popup_menu_list_item)
-                setOnMenuItemClickListener(getMenuClickListener(id))
-            }
+                PopupMenu(iv_overflow_menu.context, iv_overflow_menu).apply {
+                    inflate(R.menu.popup_menu_list_item)
+                    setOnMenuItemClickListener(getMenuClickListener(id))
+                }
 
         private fun getMenuClickListener(id: Int) = PopupMenu.OnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_item_delete -> logic.onEvent(
-                    LogicEvents.DeleteItem(id, adapterPosition)
+                        LogicEvents.DeleteItem(id, adapterPosition)
                 )
                 else -> UtilExceptions.throwException(IllegalArgumentException("Unknown menu ID"))
             }

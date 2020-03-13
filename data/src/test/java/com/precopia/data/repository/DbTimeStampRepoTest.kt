@@ -3,8 +3,12 @@ package com.precopia.data.repository
 import com.precopia.data.dao.TimeStampDao
 import com.precopia.data.datamodel.DbTimeStamp
 import com.precopia.data.util.ICurrentTimeUtil
-import io.mockk.*
-import io.reactivex.rxjava3.core.Completable
+import io.mockk.CapturingSlot
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
+import io.reactivex.Completable
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 

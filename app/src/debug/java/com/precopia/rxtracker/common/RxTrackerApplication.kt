@@ -2,7 +2,7 @@ package com.precopia.rxtracker.common
 
 import timber.log.Timber
 
-internal class RxTrackerApplication : RxTrackerApplicationBase() {
+internal class RxTrackerApplication: RxTrackerApplicationBase() {
     override fun onCreate() {
         super.onCreate()
         initTimber()

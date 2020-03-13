@@ -9,11 +9,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 @Suppress("UNCHECKED_CAST")
 class TimeStampLogicFactory(
-    private val repo: ITimeStampRepoContract,
-    private val utilSchedulerProvider: IUtilSchedulerProviderContract,
-    private val disposable: CompositeDisposable
-) : ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        private val repo: ITimeStampRepoContract,
+        private val utilSchedulerProvider: IUtilSchedulerProviderContract,
+        private val disposable: CompositeDisposable
+): ViewModelProvider.NewInstanceFactory() {
+    override fun <T: ViewModel?> create(modelClass: Class<T>): T {
         return TimeStampLogic(repo, utilSchedulerProvider, disposable) as T
     }
 }

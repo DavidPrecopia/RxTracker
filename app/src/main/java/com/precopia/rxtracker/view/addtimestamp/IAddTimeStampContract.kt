@@ -13,16 +13,16 @@ interface IAddTimeStampContract {
     }
 
     sealed class ViewEvents {
-        object DisplayLoading : ViewEvents()
-        data class DisplayList(val list: List<Prescription>) : ViewEvents()
-        data class DisplayError(val message: String) : ViewEvents()
-        data class DisplayMessage(val message: String) : ViewEvents()
-        object Close : ViewEvents()
+        object DisplayLoading: ViewEvents()
+        data class DisplayList(val list: List<Prescription>): ViewEvents()
+        data class DisplayError(val message: String): ViewEvents()
+        data class DisplayMessage(val message: String): ViewEvents()
+        object Close: ViewEvents()
     }
 
     sealed class LogicEvents {
-        object OnStart : LogicEvents()
-        object Cancel : LogicEvents()
-        data class Save(val rxTitle: String) : LogicEvents()
+        object OnStart: LogicEvents()
+        object Cancel: LogicEvents()
+        data class Save(val rxTitle: String): LogicEvents()
     }
 }

@@ -9,8 +9,8 @@ import com.precopia.domain.repository.ITimeStampRepoContract
 class TimeStampRepoServiceLocator(application: Application) {
 
     private val timeStampRepo: ITimeStampRepoContract = TimeStampRepo(
-        dao(application),
-        timeUtil()
+            dao(application),
+            timeUtil()
     )
 
 
@@ -18,7 +18,7 @@ class TimeStampRepoServiceLocator(application: Application) {
 
 
     private fun dao(application: Application) =
-        RxTrackerDatabase.getInstance(application).timeStampDao()
+            RxTrackerDatabase.getInstance(application).timeStampDao()
 
     private fun timeUtil() = CurrentTimeUtil()
 }

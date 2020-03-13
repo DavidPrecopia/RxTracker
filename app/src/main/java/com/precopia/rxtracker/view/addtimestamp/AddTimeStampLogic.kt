@@ -18,11 +18,11 @@ import com.precopia.rxtracker.view.common.ERROR_OPERATION_FAILED
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class AddTimeStampLogic(
-    private val prescriptionRepo: IPrescriptionRepoContract,
-    private val timeStampRepo: ITimeStampRepoContract,
-    private val utilSchedulerProvider: IUtilSchedulerProviderContract,
-    private val disposable: CompositeDisposable
-) : ViewModel(), IAddTimeStampContract.Logic {
+        private val prescriptionRepo: IPrescriptionRepoContract,
+        private val timeStampRepo: ITimeStampRepoContract,
+        private val utilSchedulerProvider: IUtilSchedulerProviderContract,
+        private val disposable: CompositeDisposable
+): ViewModel(), IAddTimeStampContract.Logic {
 
     private val viewEventLiveData = MutableLiveData<ViewEvents>()
 
@@ -41,12 +41,12 @@ class AddTimeStampLogic(
 
     private fun observePrescriptionRepo() {
         disposable.add(
-            subscribeFlowablePrescription(
-                prescriptionRepo.getAll(),
-                { evalPrescriptionList(it) },
-                { evalRepoError(it) },
-                utilSchedulerProvider
-            )
+                subscribeFlowablePrescription(
+                        prescriptionRepo.getAll(),
+                        { evalPrescriptionList(it) },
+                        { evalRepoError(it) },
+                        utilSchedulerProvider
+                )
         )
     }
 
@@ -67,16 +67,16 @@ class AddTimeStampLogic(
 
     private fun save(rxTitle: String) {
         disposable.add(
-            subscribeCompletable(
-                timeStampRepo.add(rxTitle),
-                { viewEventLiveData.value = ViewEvents.Close },
-                {
-                    UtilExceptions.throwException(it)
-                    viewEventLiveData.value = ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED)
-                    viewEventLiveData.value = ViewEvents.Close
-                },
-                utilSchedulerProvider
-            )
+                subscribeCompletable(
+                        timeStampRepo.add(rxTitle),
+                        { viewEventLiveData.value = ViewEvents.Close },
+                        {
+                            UtilExceptions.throwException(it)
+                            viewEventLiveData.value = ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED)
+                            viewEventLiveData.value = ViewEvents.Close
+                        },
+                        utilSchedulerProvider
+                )
         )
     }
 

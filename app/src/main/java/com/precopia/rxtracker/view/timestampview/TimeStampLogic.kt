@@ -16,11 +16,11 @@ import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.ViewEven
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class TimeStampLogic(
-    private val repo: ITimeStampRepoContract,
-    private val utilSchedulerProvider: IUtilSchedulerProviderContract,
-    private val disposable: CompositeDisposable
-) : ViewModel(),
-    ITimeStampViewContract.Logic {
+        private val repo: ITimeStampRepoContract,
+        private val utilSchedulerProvider: IUtilSchedulerProviderContract,
+        private val disposable: CompositeDisposable
+): ViewModel(),
+        ITimeStampViewContract.Logic {
 
 
     private val viewEventLiveData = MutableLiveData<ViewEvents>()
@@ -61,14 +61,12 @@ class TimeStampLogic(
             return
         }
 
-        disposable.add(
-            subscribeFlowableTimeStamp(
+        disposable.add(subscribeFlowableTimeStamp(
                 repo.getAll(),
                 { evalTimeStampList(it) },
                 { repoError(it) },
                 utilSchedulerProvider
-            )
-        )
+        ))
     }
 
     private fun evalTimeStampList(list: List<TimeStamp>) {
@@ -99,14 +97,16 @@ class TimeStampLogic(
     }
 
     private fun deleteFromRepo(id: Int) {
-        disposable.add(
-            subscribeCompletable(
+        disposable.add(subscribeCompletable(
                 repo.delete(id),
                 { /*intentionally empty*/ },
-                { UtilExceptions.throwException(IllegalStateException("Encountered an error deleting")) },
+                {
+                    UtilExceptions.throwException(
+                            IllegalStateException("Encountered an error deleting")
+                    )
+                },
                 utilSchedulerProvider
-            )
-        )
+        ))
     }
 
 

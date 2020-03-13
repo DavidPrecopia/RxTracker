@@ -58,8 +58,8 @@ class ViewCommonModule {
     @ViewScope
     @Provides
     fun itemDecoration(
-        application: Application,
-        layoutManager: LinearLayoutManager
+            application: Application,
+            layoutManager: LinearLayoutManager
     ): RecyclerView.ItemDecoration {
         return DividerItemDecoration(application.applicationContext, layoutManager.orientation)
     }

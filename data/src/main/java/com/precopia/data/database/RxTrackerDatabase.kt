@@ -11,19 +11,19 @@ import com.precopia.data.datamodel.DbPrescription
 import com.precopia.data.datamodel.DbTimeStamp
 
 @Database(entities = [DbTimeStamp::class, DbPrescription::class], version = 1, exportSchema = false)
-internal abstract class RxTrackerDatabase : RoomDatabase() {
+internal abstract class RxTrackerDatabase: RoomDatabase() {
     companion object {
         private var database: RxTrackerDatabase? = null
 
         fun getInstance(application: Application): RxTrackerDatabase {
             if (database === null) {
                 database = Room.databaseBuilder(
-                    application,
-                    RxTrackerDatabase::class.java,
-                    DATABASE_NAME
+                        application,
+                        RxTrackerDatabase::class.java,
+                        DATABASE_NAME
                 ).build()
             }
-            return database!!
+            return database !!
         }
     }
 

@@ -10,13 +10,14 @@ import dagger.Component
 
 @ViewScope
 @Component(
-    modules = [
-        TimeStampModule::class,
-        ViewCommonModule::class
-    ]
+        modules = [
+            TimeStampModule::class,
+            ViewCommonModule::class
+        ]
 )
 interface TimeStampComponent {
     fun inject(timeStampView: TimeStampView)
+
     @Component.Builder
     interface Builder {
         fun build(): TimeStampComponent

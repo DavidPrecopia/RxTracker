@@ -9,9 +9,9 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [
-        RepositoryModule::class
-    ]
+        modules = [
+            RepositoryModule::class
+        ]
 )
 interface AppComponent {
     fun timeStampRepo(): ITimeStampRepoContract

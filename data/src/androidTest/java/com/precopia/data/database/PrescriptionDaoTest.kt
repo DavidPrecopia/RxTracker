@@ -21,11 +21,11 @@ internal class PrescriptionDaoTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val database = Room.inMemoryDatabaseBuilder(
-        ApplicationProvider.getApplicationContext<Application>(),
-        RxTrackerDatabase::class.java
-    )
-        .allowMainThreadQueries()
-        .build()
+                    ApplicationProvider.getApplicationContext<Application>(),
+                    RxTrackerDatabase::class.java
+            )
+            .allowMainThreadQueries()
+            .build()
 
     private val dao = database.prescriptionDao()
 
@@ -51,12 +51,12 @@ internal class PrescriptionDaoTest {
         dao.deleteAll()
 
         dao.add(prescription)
-            .test()
-            .assertComplete()
+                .test()
+                .assertComplete()
 
         dao.getAll()
-            .test()
-            .assertValue { it.size == 1 && it[0].title == titleString }
+                .test()
+                .assertValue { it.size == 1 && it[0].title == titleString }
     }
 
     /**
@@ -68,7 +68,7 @@ internal class PrescriptionDaoTest {
         dao.deleteAll()
 
         dao.getAll()
-            .test()
-            .assertValue { it.isEmpty() }
+                .test()
+                .assertValue { it.isEmpty() }
     }
 }

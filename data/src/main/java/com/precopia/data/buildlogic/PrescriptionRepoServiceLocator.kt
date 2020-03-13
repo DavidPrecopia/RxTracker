@@ -8,7 +8,7 @@ import com.precopia.domain.repository.IPrescriptionRepoContract
 class PrescriptionRepoServiceLocator(application: Application) {
 
     private val prescriptionRepo: IPrescriptionRepoContract = PrescriptionRepo(
-        RxTrackerDatabase.getInstance(application).prescriptionDao()
+            RxTrackerDatabase.getInstance(application).prescriptionDao()
     )
 
     fun prescriptionRepo() = prescriptionRepo
