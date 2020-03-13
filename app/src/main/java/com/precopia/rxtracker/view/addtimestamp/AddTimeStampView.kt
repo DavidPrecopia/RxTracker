@@ -18,7 +18,6 @@ import com.precopia.rxtracker.view.addtimestamp.IAddTimeStampContract.LogicEvent
 import com.precopia.rxtracker.view.addtimestamp.IAddTimeStampContract.ViewEvents
 import com.precopia.rxtracker.view.addtimestamp.bulidlogic.DaggerAddTimeStampComponent
 import kotlinx.android.synthetic.main.add_time_stamp_view.*
-import kotlinx.android.synthetic.main.toolbar.toolbar
 import javax.inject.Inject
 
 class AddTimeStampView: Fragment(R.layout.add_time_stamp_view),
@@ -71,7 +70,13 @@ class AddTimeStampView: Fragment(R.layout.add_time_stamp_view),
 
 
     private fun initToolbar() {
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        with(toolbar) {
+            (activity as AppCompatActivity).setSupportActionBar(this)
+            (activity as AppCompatActivity).supportActionBar?.title =
+                    getString(R.string.nav_label_add_time_stamp)
+            setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
+            setNavigationOnClickListener { navigateUp() }
+        }
     }
 
     private fun initClickListeners() {
