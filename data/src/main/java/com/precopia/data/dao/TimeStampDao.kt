@@ -12,7 +12,7 @@ import io.reactivex.Flowable
 
 @Dao
 internal interface TimeStampDao {
-    @Query("SELECT * FROM time_stamps ORDER BY $TIME_STAMP_DATE_COLUMN ASC")
+    @Query("SELECT * FROM time_stamps ORDER BY $TIME_STAMP_DATE_COLUMN DESC")
     fun getAll(): Flowable<List<DbTimeStamp>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

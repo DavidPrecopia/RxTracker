@@ -30,11 +30,6 @@ internal class TimeStampDaoTest {
     private val dao = database.timeStampDao()
 
 
-    private val titleString = "title"
-    private val timeString = "time"
-    private val timeStamp = DbTimeStamp(title = titleString, time = timeString)
-
-
     @After
     fun tearDown() {
         database.close()
@@ -50,9 +45,12 @@ internal class TimeStampDaoTest {
      */
     @Test
     fun addAndGet() {
+        val titleString = "title"
+        val timeString = "time"
+
         dao.deleteAll()
 
-        dao.add(timeStamp)
+        dao.add(DbTimeStamp(title = titleString, time = timeString))
                 .test()
                 .assertComplete()
 
@@ -76,9 +74,12 @@ internal class TimeStampDaoTest {
      */
     @Test
     fun delete() {
+        val titleString = "title"
+        val timeString = "time"
+
         dao.deleteAll()
 
-        dao.add(timeStamp)
+        dao.add(DbTimeStamp(title = titleString, time = timeString))
                 .test()
                 .assertComplete()
 
