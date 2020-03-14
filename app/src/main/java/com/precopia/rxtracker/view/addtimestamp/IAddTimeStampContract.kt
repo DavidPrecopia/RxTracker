@@ -23,6 +23,6 @@ interface IAddTimeStampContract {
     sealed class LogicEvents {
         object OnStart: LogicEvents()
         object Cancel: LogicEvents()
-        data class Save(val rxTitle: String): LogicEvents()
+        data class Save(val prescription: Prescription): LogicEvents()
     }
 }
