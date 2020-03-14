@@ -8,4 +8,7 @@
 
     <string name="menu_item_title_prescriptions">Prescriptions</string>
     <string name="menu_item_title_delete">Delete</string>
+
+    <string name="button_title_save">Save</string>
+    <string name="button_title_cancel">Cancel</string>
 </resources>
