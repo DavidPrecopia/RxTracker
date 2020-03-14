@@ -195,7 +195,7 @@ internal class TimeStampLogicTest {
         @Test
         fun `deleteItem - invalid number`() {
             val id = 1
-            val invalidPosition = - 1
+            val invalidPosition = -1
 
             assertThrows<Exception> {
                 logic.onEvent(LogicEvents.DeleteItem(id, invalidPosition))

@@ -11,7 +11,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 }
 
 dependencies {
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion") {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion") {
         because "The \"Plugin version and library versions are not the same\" warning message is a false positive. " +
                 "https://stackoverflow.com/a/49956210"
     }

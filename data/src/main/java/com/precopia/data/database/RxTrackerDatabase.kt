@@ -23,7 +23,7 @@ internal abstract class RxTrackerDatabase: RoomDatabase() {
                         DATABASE_NAME
                 ).build()
             }
-            return database !!
+            return database!!
         }
     }
 
