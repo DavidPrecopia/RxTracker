@@ -36,11 +36,17 @@ internal class TimeStampLogicTest {
     private val disposable = spyk<CompositeDisposable>()
 
 
-    private val logic = TimeStampLogic(repo, schedulerProvider, disposable)
+    private lateinit var logic: TimeStampLogic
 
 
+    /**
+     * I am re-instantiating the class under test before each test
+     * to ensure that the observable returned by [ITimeStampViewContract.Logic.observe]
+     * is cleared before the following test.
+     */
     @BeforeEach
     fun init() {
+        logic = TimeStampLogic(repo, schedulerProvider, disposable)
         clearAllMocks()
         UtilSchedulerProviderMockInit.init(schedulerProvider)
     }
