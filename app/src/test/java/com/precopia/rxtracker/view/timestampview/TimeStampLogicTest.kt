@@ -56,7 +56,7 @@ internal class TimeStampLogicTest {
         @Test
         fun `onStart - normal`() {
             val listTimeStamp = listOf(TimeStamp(0, "title", "time"))
-            val listLiveDataOutput = mutableListOf<Any>()
+            val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 
             every { repo.getAll() } returns Flowable.just(listTimeStamp)
@@ -82,7 +82,7 @@ internal class TimeStampLogicTest {
         @Test
         fun `onStart - empty list`() {
             val emptyList = emptyList<TimeStamp>()
-            val listLiveDataOutput = mutableListOf<Any>()
+            val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 
             every { repo.getAll() } returns Flowable.just(emptyList)
@@ -109,7 +109,7 @@ internal class TimeStampLogicTest {
         @Test
         fun `onStart - error`() {
             val throwable = mockk<Throwable>(relaxed = true)
-            val listLiveDataOutput = mutableListOf<Any>()
+            val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 
             every { repo.getAll() } returns Flowable.error(throwable)

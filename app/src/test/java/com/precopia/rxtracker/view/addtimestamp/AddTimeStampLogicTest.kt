@@ -60,7 +60,7 @@ internal class AddTimeStampLogicTest {
         @Test
         fun `onStart - normal`() {
             val listPrescription = listOf(Prescription(0, "title"))
-            val listLiveDataOutput = mutableListOf<Any>()
+            val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 
             every { prescriptionRepo.getAll() } returns Flowable.just(listPrescription)
@@ -86,7 +86,7 @@ internal class AddTimeStampLogicTest {
         @Test
         fun `onStart - empty list`() {
             val listPrescription = emptyList<Prescription>()
-            val listLiveDataOutput = mutableListOf<Any>()
+            val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 
             every { prescriptionRepo.getAll() } returns Flowable.just(listPrescription)
@@ -112,7 +112,7 @@ internal class AddTimeStampLogicTest {
         @Test
         fun `onStart - error`() {
             val throwable = mockk<Throwable>(relaxed = true)
-            val listLiveDataOutput = mutableListOf<Any>()
+            val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 
             every { prescriptionRepo.getAll() } returns Flowable.error(throwable)
@@ -140,7 +140,7 @@ internal class AddTimeStampLogicTest {
         fun cancel() {
             logic.onEvent(LogicEvents.Cancel)
 
-            logic.observe().observeForTesting() {
+            logic.observe().observeForTesting {
                 assertThat(logic.observe().value).isEqualTo(ViewEvents.Close)
             }
         }
