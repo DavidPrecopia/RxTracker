@@ -171,4 +171,10 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
         tv_error?.text = errorMessage
         tv_error?.isVisible = true
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        recycler_view.adapter = null
+    }
 }
