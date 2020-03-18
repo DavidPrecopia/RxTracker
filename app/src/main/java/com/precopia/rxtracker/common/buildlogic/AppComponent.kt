@@ -1,22 +1,28 @@
 package com.precopia.rxtracker.common.buildlogic
 
 import android.app.Application
+import android.content.SharedPreferences
 import com.precopia.domain.repository.IPrescriptionRepoContract
 import com.precopia.domain.repository.ITimeStampRepoContract
+import com.precopia.rxtracker.util.IUtilNightModeContract
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(
-        modules = [
-            RepositoryModule::class
-        ]
-)
+@Component(modules = [
+    RepositoryModule::class,
+    UtilNightModeModule::class,
+    SharedPrefsModule::class
+])
 interface AppComponent {
     fun timeStampRepo(): ITimeStampRepoContract
 
     fun prescriptionRepo(): IPrescriptionRepoContract
+
+    fun utilNightMode(): IUtilNightModeContract
+
+    fun sharedPrefs(): SharedPreferences
 
     @Component.Builder
     interface Builder {

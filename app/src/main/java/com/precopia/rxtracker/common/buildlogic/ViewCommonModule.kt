@@ -1,12 +1,14 @@
 package com.precopia.rxtracker.common.buildlogic
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.precopia.domain.repository.IPrescriptionRepoContract
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.common.RxTrackerApplication
+import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.util.UtilSchedulerProvider
 import dagger.Module
@@ -26,6 +28,19 @@ class ViewCommonModule {
     fun prescriptionRepo(appComponent: AppComponent): IPrescriptionRepoContract {
         return appComponent.prescriptionRepo()
     }
+
+    @ViewScope
+    @Provides
+    fun utilNightMode(appComponent: AppComponent): IUtilNightModeContract {
+        return appComponent.utilNightMode()
+    }
+
+    @ViewScope
+    @Provides
+    fun sharedPrefs(appComponent: AppComponent): SharedPreferences {
+        return appComponent.sharedPrefs()
+    }
+
 
     @ViewScope
     @Provides
