@@ -31,6 +31,7 @@ interface ITimeStampViewContract {
     sealed class LogicEvents {
         object OnStart: LogicEvents()
         data class DeleteItem(val id: Int, val position: Int): LogicEvents()
+        data class SetNightMode(val nightModeEnabled: Boolean): LogicEvents()
         object OpenAddPrescriptionView: LogicEvents()
         object OpenAddTimeStampView: LogicEvents()
     }

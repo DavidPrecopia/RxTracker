@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.precopia.rxtracker.R
+import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.util.navigate
 import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.LogicEvents
@@ -30,6 +31,9 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
 
     @Inject
     lateinit var logic: ITimeStampViewContract.Logic
+
+    @Inject
+    lateinit var nightMode: IUtilNightModeContract
 
     @Inject
     lateinit var adapter: ITimeStampViewContract.Adapter
@@ -137,15 +141,25 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
+        initMenuSetCheckedState(menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.menu_id_prescriptions -> {
-            logic.onEvent(LogicEvents.OpenAddPrescriptionView)
-            true
+    private fun initMenuSetCheckedState(menu: Menu) {
+        menu.findItem(R.id.menu_id_night_mode).isChecked = nightMode.nightModeEnabled
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_id_prescriptions -> logic.onEvent(LogicEvents.OpenAddPrescriptionView)
+            R.id.menu_id_night_mode -> {
+                with(item.isChecked) {
+                    logic.onEvent(LogicEvents.SetNightMode(this))
+                    this.not()
+                }
+            }
         }
-        else -> super.onOptionsItemSelected(item)
+        return super.onOptionsItemSelected(item)
     }
 
 

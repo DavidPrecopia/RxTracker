@@ -1,6 +1,8 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="AppThemeDay" />
+
+    <style name="AppThemeDay" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -14,7 +16,9 @@
         <item name="elevation">@dimen/elevation_app_bar</item>
     </style>
 
-    <style name="ToolbarStyle">
+    <style name="ToolbarStyle" parent="ToolbarStyleDay" />
+
+    <style name="ToolbarStyleDay">
         <item name="popupTheme">@style/ThemeOverlay.MaterialComponents.Light</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="AppThemeNight" />
+
+    <style name="AppThemeNight" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--On some devices (e.g., Samsung) the nav bar is white by default-->
+        <item name="android:navigationBarColor">@color/black</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="ToolbarStyleNight" />
+
+    <style name="ToolbarStyleNight">
+        <item name="color">@color/colorPrimary</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="layout_scrollFlags">scroll|enterAlways</item>
+    </style>
+
+</resources>
