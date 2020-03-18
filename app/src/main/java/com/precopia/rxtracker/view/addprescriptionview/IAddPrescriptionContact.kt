@@ -26,6 +26,6 @@ interface IAddPrescriptionContact {
 
     sealed class LogicEvents {
         object OnStart: LogicEvents()
-        data class Save(val prescription: Prescription): LogicEvents()
+        data class Save(val rxTitle: String): LogicEvents()
     }
 }

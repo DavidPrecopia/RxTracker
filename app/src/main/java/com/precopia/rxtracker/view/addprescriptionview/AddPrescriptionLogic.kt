@@ -2,6 +2,7 @@ package com.precopia.rxtracker.view.addprescriptionview
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.precopia.domain.datamodel.Prescription
 import com.precopia.domain.repository.IPrescriptionRepoContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
@@ -20,7 +21,7 @@ class AddPrescriptionLogic(
         private val repo: IPrescriptionRepoContract,
         private val utilSchedulerProvider: IUtilSchedulerProviderContract,
         private val disposable: CompositeDisposable
-): IAddPrescriptionContact.Logic {
+): ViewModel(), IAddPrescriptionContact.Logic {
 
     private val viewEventLiveData = MutableLiveData<ViewEvents>()
 
@@ -28,7 +29,7 @@ class AddPrescriptionLogic(
     override fun onEvent(event: LogicEvents) {
         when (event) {
             LogicEvents.OnStart -> onStart()
-            is LogicEvents.Save -> save(event.prescription.title)
+            is LogicEvents.Save -> save(event.rxTitle)
         }
     }
 
@@ -75,4 +76,10 @@ class AddPrescriptionLogic(
 
 
     override fun observe(): LiveData<ViewEvents> = viewEventLiveData
+
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.clear()
+    }
 }

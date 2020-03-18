@@ -91,7 +91,9 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
     }
 
     private fun openPrescriptionView() {
-        TODO("Implement Navigation to the View")
+        navigate(
+                TimeStampViewDirections.actionTimesListViewToAddPrescriptionView()
+        )
     }
 
 

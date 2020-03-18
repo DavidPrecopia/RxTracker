@@ -143,13 +143,13 @@ internal class AddPrescriptionLogicTest {
          */
         @Test
         fun `save - successful`() {
-            val prescription = Prescription(0, "title")
+            val title = "title"
 
-            every { repo.add(prescription.title) } returns Completable.complete()
+            every { repo.add(title) } returns Completable.complete()
 
-            logic.onEvent(IAddPrescriptionContact.LogicEvents.Save(prescription))
+            logic.onEvent(IAddPrescriptionContact.LogicEvents.Save(title))
 
-            verify(exactly = 1) { repo.add(prescription.title) }
+            verify(exactly = 1) { repo.add(title) }
             logic.observe().observeForTesting {
                 assertThat(logic.observe().value).isEqualTo(ViewEvents.DisplayMessage(MSG_SUCCESSFULLY_SAVE))
             }
@@ -164,13 +164,13 @@ internal class AddPrescriptionLogicTest {
         @Test
         fun `save - failure`() {
             val throwable = mockk<Throwable>(relaxed = true)
-            val prescription = Prescription(0, "title")
+            val title = "title"
 
-            every { repo.add(prescription.title) } returns Completable.error(throwable)
+            every { repo.add(title) } returns Completable.error(throwable)
 
-            logic.onEvent(IAddPrescriptionContact.LogicEvents.Save(prescription))
+            logic.onEvent(IAddPrescriptionContact.LogicEvents.Save(title))
 
-            verify(exactly = 1) { repo.add(prescription.title) }
+            verify(exactly = 1) { repo.add(title) }
             verify(atLeast = 1) { throwable.printStackTrace() }
             logic.observe().observeForTesting {
                 assertThat(logic.observe().value).isEqualTo(ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED))

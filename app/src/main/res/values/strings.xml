@@ -2,6 +2,7 @@
     <string name="app_name">RxTracker</string>
 
     <string name="nav_label_add_time_stamp">Time Stamp</string>
+    <string name="nav_label_add_prescription">Prescriptions</string>
 
     <string name="content_description_overflow_menu">Overflow menu</string>
     <string name="content_description_fab_add">Add</string>
@@ -11,4 +12,7 @@
 
     <string name="button_title_save">Save</string>
     <string name="button_title_cancel">Cancel</string>
+
+    <string name="edit_text_hint_prescription">Prescription</string>
+    <string name="recycler_view_label_prescriptions">Added Prescriptions:</string>
 </resources>

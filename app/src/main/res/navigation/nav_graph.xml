@@ -17,6 +17,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_timesListView_to_addPrescriptionView"
+            app:destination="@id/addPrescriptionView"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -24,4 +31,10 @@
         android:name="com.precopia.rxtracker.view.addtimestamp.AddTimeStampView"
         android:label="@string/nav_label_add_time_stamp"
         tools:layout="@layout/add_time_stamp_view" />
+
+    <fragment
+        android:id="@+id/addPrescriptionView"
+        android:name="com.precopia.rxtracker.view.addprescriptionview.AddPrescriptionView"
+        android:label="@string/nav_label_add_prescription"
+        tools:layout="@layout/add_prescription_view" />
 </navigation>
