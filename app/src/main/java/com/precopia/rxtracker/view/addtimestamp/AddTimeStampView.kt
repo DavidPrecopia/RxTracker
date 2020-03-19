@@ -27,7 +27,7 @@ class AddTimeStampView: Fragment(R.layout.add_time_stamp_view),
     lateinit var logic: IAddTimeStampContract.Logic
 
     @Inject
-    lateinit var adapter: ArrayAdapter<Prescription>
+    lateinit var adapter: ArrayAdapter<String>
 
 
     override fun onAttach(context: Context) {
@@ -98,7 +98,7 @@ class AddTimeStampView: Fragment(R.layout.add_time_stamp_view),
         progress_bar.isVisible = true
     }
 
-    private fun displayList(list: List<Prescription>) {
+    private fun displayList(list: List<String>) {
         tv_error.isGone = true
         progress_bar.isGone = true
         group.isVisible = true

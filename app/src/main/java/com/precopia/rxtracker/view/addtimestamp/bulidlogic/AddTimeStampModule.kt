@@ -4,7 +4,6 @@ import android.app.Application
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.precopia.domain.datamodel.Prescription
 import com.precopia.domain.repository.IPrescriptionRepoContract
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.common.buildlogic.ViewScope
@@ -41,8 +40,8 @@ class AddTimeStampModule {
 
     @ViewScope
     @Provides
-    fun adapter(application: Application): ArrayAdapter<Prescription> {
-        return ArrayAdapter<Prescription>(
+    fun adapter(application: Application): ArrayAdapter<String> {
+        return ArrayAdapter<String>(
                 application,
                 android.R.layout.simple_spinner_item
         ).apply {

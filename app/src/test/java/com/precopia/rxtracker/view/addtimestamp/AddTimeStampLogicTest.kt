@@ -60,11 +60,12 @@ internal class AddTimeStampLogicTest {
         /**
          * - Send event [ViewEvents.DisplayLoading].
          * - Get all from the Repo - it will contain data in this test.
-         * - Send the data returned by the Repo to the View via [ViewEvents.DisplayList].
+         * - Map the data to a List of Strings and send it to the View via [ViewEvents.DisplayList].
          */
         @Test
         fun `onStart - normal`() {
             val listPrescription = listOf(Prescription(0, "title"))
+            val listString = listOf(listPrescription[0].title)
             val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 
@@ -77,7 +78,7 @@ internal class AddTimeStampLogicTest {
             verify(exactly = 1) { prescriptionRepo.getAll() }
             assertThat(listLiveDataOutput.size).isEqualTo(2)
             assertThat(listLiveDataOutput[0]).isEqualTo(ViewEvents.DisplayLoading)
-            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.DisplayList(listPrescription))
+            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.DisplayList(listString))
 
             logic.observe().removeObserver(liveDataObserver)
         }

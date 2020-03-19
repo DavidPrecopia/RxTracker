@@ -55,7 +55,7 @@ class AddTimeStampLogic(
 
             viewEventLiveData.value = ViewEvents.DisplayError(ERROR_EMPTY_LIST)
         } else {
-            viewEventLiveData.value = ViewEvents.DisplayList(list)
+            viewEventLiveData.value = ViewEvents.DisplayList(list.map { it.title })
         }
     }
 
