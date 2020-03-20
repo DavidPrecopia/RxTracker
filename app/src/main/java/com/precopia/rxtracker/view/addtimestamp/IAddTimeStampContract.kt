@@ -21,7 +21,6 @@ interface IAddTimeStampContract {
 
     sealed class LogicEvents {
         object OnStart: LogicEvents()
-        object Cancel: LogicEvents()
         data class Save(val title: String): LogicEvents()
     }
 }

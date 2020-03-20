@@ -29,7 +29,6 @@ class AddTimeStampLogic(
     override fun onEvent(event: LogicEvents) {
         when (event) {
             LogicEvents.OnStart -> onStart()
-            LogicEvents.Cancel -> viewEventLiveData.value = ViewEvents.Close
             is LogicEvents.Save -> save(event.title)
         }
     }

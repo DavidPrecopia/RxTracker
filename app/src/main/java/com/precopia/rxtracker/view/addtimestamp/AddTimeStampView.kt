@@ -79,8 +79,6 @@ class AddTimeStampView: Fragment(R.layout.add_time_stamp_view),
     }
 
     private fun initClickListeners() {
-        button_cancel.setOnClickListener { logic.onEvent(LogicEvents.Cancel) }
-
         button_confirm.setOnClickListener {
             logic.onEvent(LogicEvents.Save(getCurrentSpinnerValue()))
         }

@@ -137,20 +137,6 @@ internal class AddTimeStampLogicTest {
         }
     }
 
-    @Nested
-    inner class Cancel {
-        /**
-         * - Send [ViewEvents.Close] to the View.
-         */
-        @Test
-        fun cancel() {
-            logic.onEvent(LogicEvents.Cancel)
-
-            logic.observe().observeForTesting {
-                assertThat(logic.observe().value).isEqualTo(ViewEvents.Close)
-            }
-        }
-    }
 
     @Nested
     inner class Save {
