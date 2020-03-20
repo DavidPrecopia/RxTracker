@@ -30,7 +30,7 @@ class AddTimeStampLogic(
         when (event) {
             LogicEvents.OnStart -> onStart()
             LogicEvents.Cancel -> viewEventLiveData.value = ViewEvents.Close
-            is LogicEvents.Save -> save(event.prescription.title)
+            is LogicEvents.Save -> save(event.title)
         }
     }
 

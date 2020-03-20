@@ -162,11 +162,10 @@ internal class AddTimeStampLogicTest {
         @Test
         fun `save - successful`() {
             val title = "title"
-            val prescription = Prescription(0, title)
 
             every { timeStampRepo.add(title) } returns Completable.complete()
 
-            logic.onEvent(LogicEvents.Save(prescription))
+            logic.onEvent(LogicEvents.Save(title))
 
             verify(exactly = 1) { timeStampRepo.add(title) }
             logic.observe().observeForTesting {
@@ -184,7 +183,6 @@ internal class AddTimeStampLogicTest {
         @Test
         fun `save - failed`() {
             val title = "title"
-            val prescription = Prescription(0, title)
 
             val throwable = mockk<Throwable>(relaxed = true)
             val listLiveDataOutput = mutableListOf<Any>()
@@ -194,7 +192,7 @@ internal class AddTimeStampLogicTest {
 
             logic.observe().observeForever(liveDataObserver)
 
-            logic.onEvent(LogicEvents.Save(prescription))
+            logic.onEvent(LogicEvents.Save(title))
 
             verify(exactly = 1) { timeStampRepo.add(title) }
             verify(atLeast = 1) { throwable.printStackTrace() }

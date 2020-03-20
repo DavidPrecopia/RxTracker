@@ -9,7 +9,6 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.precopia.domain.datamodel.Prescription
 import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.util.navigateUp
@@ -119,5 +118,5 @@ class AddTimeStampView: Fragment(R.layout.add_time_stamp_view),
     }
 
 
-    private fun getCurrentSpinnerValue() = spinner.selectedItem as Prescription
+    private fun getCurrentSpinnerValue() = spinner.selectedItem as String
 }
