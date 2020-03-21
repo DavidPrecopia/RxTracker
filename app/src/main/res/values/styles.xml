@@ -2,12 +2,12 @@
 
     <style name="AppTheme" parent="AppThemeDay" />
 
-    <style name="AppThemeDay" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppThemeDay" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="spinnerStyle">@style/SpinnerStyle</item>
     </style>
-
 
     <style name="AppBarStyle">
         <item name="android:theme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
@@ -54,8 +54,18 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:drawableTop">@drawable/ic_error_24dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/black_day_white_night</item>
         <item name="android:textSize">16sp</item>
         <item name="android:visibility">gone</item>
+    </style>
+
+
+    <style name="HintTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/black_day_white_night</item>
+    </style>
+
+
+    <style name="SpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 </resources>
