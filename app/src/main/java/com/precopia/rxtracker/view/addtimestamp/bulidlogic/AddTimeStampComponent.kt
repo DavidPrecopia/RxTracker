@@ -1,6 +1,7 @@
 package com.precopia.rxtracker.view.addtimestamp.bulidlogic
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.precopia.rxtracker.common.buildlogic.ViewCommonModule
 import com.precopia.rxtracker.common.buildlogic.ViewScope
@@ -22,6 +23,9 @@ interface AddTimeStampComponent {
 
         @BindsInstance
         fun application(application: Application): Builder
+
+        @BindsInstance
+        fun activity(activity: AppCompatActivity): Builder
 
         @BindsInstance
         fun view(view: Fragment): Builder

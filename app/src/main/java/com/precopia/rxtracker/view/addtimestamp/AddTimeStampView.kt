@@ -37,6 +37,7 @@ class AddTimeStampView: Fragment(R.layout.add_time_stamp_view),
     private fun inject() {
         DaggerAddTimeStampComponent.builder()
                 .application(application)
+                .activity((activity as AppCompatActivity))
                 .view(this)
                 .build()
                 .inject(this)

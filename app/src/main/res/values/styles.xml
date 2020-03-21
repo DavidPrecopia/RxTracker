@@ -6,8 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="spinnerStyle">@style/SpinnerStyle</item>
     </style>
-
 
     <style name="AppBarStyle">
         <item name="android:theme">@style/ThemeOverlay.MaterialComponents.Dark.ActionBar</item>
@@ -62,5 +62,10 @@
 
     <style name="HintTextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/black_day_white_night</item>
+    </style>
+
+
+    <style name="SpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 </resources>
