@@ -41,6 +41,10 @@ Add a new time stamp.
 
 <img src="screenshots/add_time_stamp_view.jpg" width=30% />
 
+Night mode
+
+<img src="screenshots/night_mode.jpg" width=30% />
+
 ## License
 
     Copyright (c) 2020-present, David M Precopia.
