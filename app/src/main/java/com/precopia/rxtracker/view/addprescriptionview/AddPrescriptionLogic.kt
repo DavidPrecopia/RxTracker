@@ -14,6 +14,7 @@ import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.V
 import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
 import com.precopia.rxtracker.view.common.ERROR_GENERIC
 import com.precopia.rxtracker.view.common.ERROR_OPERATION_FAILED
+import com.precopia.rxtracker.view.common.ERROR_TITLE
 import com.precopia.rxtracker.view.common.MSG_SUCCESSFULLY_SAVE
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
@@ -63,6 +64,11 @@ class AddPrescriptionLogic(
 
 
     private fun save(title: String) {
+        if (title.isEmpty()) viewEventLiveData.value = ViewEvents.DisplayMessage(ERROR_TITLE)
+        else saveToRepo(title)
+    }
+
+    private fun saveToRepo(title: String) {
         disposable.add(subscribeCompletable(
                 repo.add(title),
                 { viewEventLiveData.value = ViewEvents.DisplayMessage(MSG_SUCCESSFULLY_SAVE) },

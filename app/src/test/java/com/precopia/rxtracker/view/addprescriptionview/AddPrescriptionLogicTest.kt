@@ -9,10 +9,8 @@ import com.precopia.rxtracker.observeForTesting
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.Logic
 import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.ViewEvents
-import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
-import com.precopia.rxtracker.view.common.ERROR_GENERIC
-import com.precopia.rxtracker.view.common.ERROR_OPERATION_FAILED
-import com.precopia.rxtracker.view.common.MSG_SUCCESSFULLY_SAVE
+import com.precopia.rxtracker.view.common.*
+import io.mockk.Called
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -174,6 +172,23 @@ internal class AddPrescriptionLogicTest {
             verify(atLeast = 1) { throwable.printStackTrace() }
             logic.observe().observeForTesting {
                 assertThat(logic.observe().value).isEqualTo(ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED))
+            }
+        }
+
+        /**
+         * - Pass an empty title
+         * - Send [ViewEvents.DisplayMessage] to the View with [ERROR_TITLE].
+         * - Verify the Repo was not called.
+         */
+        @Test
+        fun `save - empty title`() {
+            val emptyTitle = ""
+
+            logic.onEvent(IAddPrescriptionContact.LogicEvents.Save(emptyTitle))
+
+            verify { repo wasNot Called }
+            logic.observe().observeForTesting {
+                assertThat(logic.observe().value).isEqualTo(ViewEvents.DisplayMessage(ERROR_TITLE))
             }
         }
     }
