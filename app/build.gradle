@@ -47,6 +47,7 @@ android {
         }
         debug {
             applicationIdSuffix ".debug"
+            ext.enableCrashlytics = false
         }
     }
     compileOptions {
