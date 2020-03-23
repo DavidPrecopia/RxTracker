@@ -101,7 +101,7 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
         text_input_edit_text.setOnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
-                logic.onEvent(LogicEvents.Save(text_input_edit_text.text.toString()))
+                logic.onEvent(LogicEvents.Save(getEnteredText()))
                 text_input_edit_text.text?.clear()
                 handled = true
             }
@@ -122,11 +122,16 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
     private fun initClickListeners() {
         button_save.setOnClickListener {
             with(text_input_edit_text) {
-                logic.onEvent(LogicEvents.Save(text.toString()))
+                logic.onEvent(LogicEvents.Save(getEnteredText()))
                 text?.clear()
             }
         }
     }
+
+
+    private fun getEnteredText() =
+            text_input_edit_text.text.toString().trim { it <= ' ' }
+
 
 
     private fun displayLoading() {
