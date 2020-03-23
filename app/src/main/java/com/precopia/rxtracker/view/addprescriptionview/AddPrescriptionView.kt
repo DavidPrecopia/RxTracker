@@ -3,6 +3,7 @@ package com.precopia.rxtracker.view.addprescriptionview
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -76,7 +77,7 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
 
     private fun init() {
         initToolbar()
-        initEditTextHint()
+        initEditText()
         initRecyclerView()
         initClickListeners()
     }
@@ -91,9 +92,23 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
         }
     }
 
-    private fun initEditTextHint() {
+    private fun initEditText() {
         text_input_layout.hint = getString(R.string.edit_text_hint_prescription)
+        initEditTextListener()
     }
+
+    private fun initEditTextListener() {
+        text_input_edit_text.setOnEditorActionListener { _, actionId, _ ->
+            var handled = false
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
+                logic.onEvent(LogicEvents.Save(text_input_edit_text.text.toString()))
+                text_input_edit_text.text?.clear()
+                handled = true
+            }
+            handled
+        }
+    }
+
 
     private fun initRecyclerView() {
         recycler_view.apply {
