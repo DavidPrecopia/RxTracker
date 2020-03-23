@@ -11,7 +11,6 @@
     <string name="menu_item_title_delete">Delete</string>
 
     <string name="button_title_save">Save</string>
-    <string name="button_title_cancel">Cancel</string>
 
     <string name="edit_text_hint_prescription">Prescription</string>
     <string name="recycler_view_label_prescriptions">Added Prescriptions:</string>
