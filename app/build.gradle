@@ -90,7 +90,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navVersion"
 
     // Crashlytics
-    releaseImplementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta02'
+    releaseImplementation "com.google.firebase:firebase-crashlytics:$rootProject.crashlyticsVersion"
 
     // RxJava
     implementation "io.reactivex.rxjava3:rxandroid:$rootProject.rxAndroidVersion"
