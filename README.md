@@ -2,7 +2,7 @@
 
 This helps you keep track of when you take prescriptions.
 
-An APK is [available](https://github.com/DavidPrecopia/RxTracker/releases/download/beta-03/rxtracker-beta-03.apk).
+An APK is [available](https://github.com/DavidPrecopia/RxTracker/releases/download/v1.0/rxtracker-v1.0.apk).
 
 **Technical Features**
 
