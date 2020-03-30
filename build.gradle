@@ -5,8 +5,8 @@ buildscript {
         minSdkVersion = 21
         targetSdkVersion = 29
 
-        versionCode = 3
-        versionName = "beta-03"
+        versionCode = 4
+        versionName = "1.0"
 
         resConfigs = "en"
 
