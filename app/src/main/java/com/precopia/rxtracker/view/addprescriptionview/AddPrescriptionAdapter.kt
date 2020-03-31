@@ -10,7 +10,7 @@ import com.precopia.rxtracker.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.time_stamp_list_item.*
 
-class AddPrescriptionAdapter():
+class AddPrescriptionAdapter:
         ListAdapter<Prescription, AddPrescriptionAdapter.PrescriptionViewHolder>(PrescriptionDiffCallback()),
         IAddPrescriptionContact.Adapter {
 
