@@ -12,7 +12,7 @@ import io.reactivex.Completable
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-internal class DbTimeStampRepoTest {
+internal class TimeStampRepoTest {
 
 
     private val dao = mockk<TimeStampDao>(relaxUnitFun = true)
