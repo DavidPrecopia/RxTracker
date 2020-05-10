@@ -27,7 +27,7 @@ buildscript {
         rxJavaVersion = '3.0.1'
         crashlyticsVersion = "17.0.0"
         timberVersion = "4.7.1"
-        leakCanaryVersion = "2.2"
+        leakCanaryVersion = "2.3"
         junitVersion = "5.5.2"
         assertjVersion = "3.13.2"
         androidXArchCoreVersion = "2.1.0"
