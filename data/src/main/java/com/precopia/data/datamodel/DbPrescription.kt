@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_ID_COLUMN
+import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_POSITION_COLUMN
 import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_TABLE_NAME
 import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_TITLE_COLUMN
 
@@ -16,5 +17,8 @@ internal data class DbPrescription(
         val id: Int = 0,
         @NonNull
         @ColumnInfo(name = PRESCRIPTION_TITLE_COLUMN)
-        val title: String
+        val title: String,
+        @NonNull
+        @ColumnInfo(name = PRESCRIPTION_POSITION_COLUMN, defaultValue = "0.0")
+        var position: Double = 0.0
 )

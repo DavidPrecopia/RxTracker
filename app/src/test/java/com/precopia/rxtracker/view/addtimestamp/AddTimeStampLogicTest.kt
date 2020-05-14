@@ -64,7 +64,7 @@ internal class AddTimeStampLogicTest {
          */
         @Test
         fun `onStart - normal`() {
-            val listPrescription = listOf(Prescription(0, "title"))
+            val listPrescription = listOf(Prescription(0, "title", 0))
             val listString = listOf(listPrescription[0].title)
             val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }

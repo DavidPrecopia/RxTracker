@@ -11,4 +11,5 @@ internal object DatabaseConstants {
     const val PRESCRIPTION_TABLE_NAME = "prescriptions"
     const val PRESCRIPTION_ID_COLUMN = "id"
     const val PRESCRIPTION_TITLE_COLUMN = "title"
+    const val PRESCRIPTION_POSITION_COLUMN = "position"
 }

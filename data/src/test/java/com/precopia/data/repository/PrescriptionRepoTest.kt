@@ -15,8 +15,10 @@ internal class PrescriptionRepoTest {
 
     private val dao = mockk<PrescriptionDao>()
 
+    private val prescriptionPositions = mockk<PrescriptionPositions>(relaxed = true)
 
-    private val repo = PrescriptionRepo(dao)
+
+    private val repo = PrescriptionRepo(dao, prescriptionPositions)
 
 
     @BeforeEach
@@ -90,6 +92,48 @@ internal class PrescriptionRepoTest {
             every { dao.add(dbPrescription) } returns io.reactivex.Completable.error(throwable)
 
             repo.add(dbPrescription.title)
+                    .test()
+                    .assertError(throwable)
+        }
+    }
+
+    @Nested
+    inner class UpdatePosition {
+        /**
+         * - Verify that an RxJava 3 Completable is returned.
+         * - It will complete in this test.
+         */
+        @Test
+        fun `updatePosition - complete`() {
+            val id = 100
+            val oldPosition = 1
+            val newPosition = 2
+
+            every {
+                prescriptionPositions.update(id, oldPosition, newPosition)
+            } returns io.reactivex.Completable.complete()
+
+            repo.updatePosition(id, oldPosition, newPosition)
+                    .test()
+                    .assertComplete()
+        }
+
+        /**
+         * - Verify that an RxJava 3 Completable is returned.
+         * - It will error in this test.
+         */
+        @Test
+        fun `updatePosition - error`() {
+            val id = 100
+            val oldPosition = 1
+            val newPosition = 2
+            val throwable = mockk<Throwable>(relaxed = true)
+
+            every {
+                prescriptionPositions.update(id, oldPosition, newPosition)
+            } returns io.reactivex.Completable.error(throwable)
+
+            repo.updatePosition(id, oldPosition, newPosition)
                     .test()
                     .assertError(throwable)
         }

@@ -9,7 +9,11 @@ import com.precopia.rxtracker.observeForTesting
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.Logic
 import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.ViewEvents
-import com.precopia.rxtracker.view.common.*
+import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
+import com.precopia.rxtracker.view.common.ERROR_GENERIC
+import com.precopia.rxtracker.view.common.ERROR_OPERATION_FAILED
+import com.precopia.rxtracker.view.common.ERROR_TITLE
+import com.precopia.rxtracker.view.common.MSG_SUCCESSFULLY_SAVE
 import io.mockk.Called
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -60,7 +64,7 @@ internal class AddPrescriptionLogicTest {
          */
         @Test
         fun `onStart - normal`() {
-            val listPrescription = listOf(Prescription(0, "title"), Prescription(1, "titleOne"))
+            val listPrescription = listOf(Prescription(0, "title", 0), Prescription(1, "titleOne", 0))
             val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 
 internal class PrescriptionDiffCallbackTest {
 
-    private val one = Prescription(0, "titleOne")
-    private val two = Prescription(1, "titleTwo")
+    private val one = Prescription(0, "titleOne", 0)
+    private val two = Prescription(1, "titleTwo", 1)
 
 
     private val diffCallback = PrescriptionDiffCallback()
