@@ -3,8 +3,8 @@ package com.precopia.data.util
 import java.text.SimpleDateFormat
 import java.util.*
 
-internal class CurrentTimeUtil: ICurrentTimeUtil {
-    override fun currentTime(): String = getFormattedDate()
+internal class TimeUtil: ITimeUtil {
+    override fun getCurrentTime(): String = getFormattedDate()
 
     override fun calendarToString(calendar: Calendar): String =
             getFormattedDate(calendar)

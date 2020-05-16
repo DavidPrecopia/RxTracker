@@ -2,7 +2,7 @@ package com.precopia.data.repository
 
 import com.precopia.data.dao.TimeStampDao
 import com.precopia.data.datamodel.DbTimeStamp
-import com.precopia.data.util.ICurrentTimeUtil
+import com.precopia.data.util.ITimeUtil
 import com.precopia.domain.datamodel.TimeStamp
 import io.mockk.CapturingSlot
 import io.mockk.clearAllMocks
@@ -19,7 +19,7 @@ internal class TimeStampRepoTest {
 
     private val dao = mockk<TimeStampDao>(relaxUnitFun = true)
 
-    private val timeUtil = mockk<ICurrentTimeUtil>(relaxUnitFun = true)
+    private val timeUtil = mockk<ITimeUtil>(relaxUnitFun = true)
 
 
     private val repo = TimeStampRepo(dao, timeUtil)
@@ -78,7 +78,7 @@ internal class TimeStampRepoTest {
             val dbTimeStamp = DbTimeStamp(0, "title", "time")
 
             every { dao.add(dbTimeStamp) } returns io.reactivex.Completable.complete()
-            every { timeUtil.currentTime() } returns dbTimeStamp.time
+            every { timeUtil.getCurrentTime() } returns dbTimeStamp.time
 
             repo.add(dbTimeStamp.title)
                     .test()
@@ -95,7 +95,7 @@ internal class TimeStampRepoTest {
             val throwable = mockk<Throwable>(relaxed = true)
 
             every { dao.add(dbTimeStamp) } returns io.reactivex.Completable.error(throwable)
-            every { timeUtil.currentTime() } returns dbTimeStamp.time
+            every { timeUtil.getCurrentTime() } returns dbTimeStamp.time
 
             repo.add(dbTimeStamp.title)
                     .test()
@@ -118,7 +118,7 @@ internal class TimeStampRepoTest {
             val rxTitle = "title"
             val currentTimeString = "time"
 
-            every { timeUtil.currentTime() } returns currentTimeString
+            every { timeUtil.getCurrentTime() } returns currentTimeString
             every { dao.add(timeStamp = capture(capturedArg)) } answers {
                 io.reactivex.Completable.complete()
             }
