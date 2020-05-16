@@ -10,13 +10,11 @@ internal class TimeUtil: ITimeUtil {
             getFormattedDate(calendar)
 
 
-    private fun getFormattedDate(calendar: Calendar = Calendar.getInstance()): String {
-        val format = "MM/dd/yyyy HH:mm"
-        return SimpleDateFormat(
-                format,
-                Locale.US
-        ).format(
-                calendar.time
-        )
-    }
+    private fun getFormattedDate(calendar: Calendar = Calendar.getInstance()) =
+            SimpleDateFormat(
+                    TIME_UTIL_FORMAT,
+                    Locale.US
+            ).format(
+                    calendar.time
+            )
 }
