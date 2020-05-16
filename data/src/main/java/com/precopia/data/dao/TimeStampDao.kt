@@ -26,7 +26,7 @@ internal interface TimeStampDao {
 
 
     /**
-     * TESTING PURPOSES ONLY
+     * EXCLUSIVELY FOR TESTING
      */
     @Query("DELETE FROM time_stamps")
     fun deleteAll()

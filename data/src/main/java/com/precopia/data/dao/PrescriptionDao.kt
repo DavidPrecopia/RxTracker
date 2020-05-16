@@ -40,7 +40,7 @@ internal interface PrescriptionDao {
 
 
     /**
-     * TESTING PURPOSES ONLY
+     * EXCLUSIVELY FOR TESTING
      */
     @Query("DELETE FROM prescriptions")
     fun deleteAll()
