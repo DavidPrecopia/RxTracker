@@ -8,6 +8,7 @@ import com.precopia.domain.repository.ITimeStampRepoContract
 import hu.akarnokd.rxjava3.bridge.RxJavaBridge
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
+import java.util.*
 
 internal class TimeStampRepo(private val dao: TimeStampDao, private val timeUtil: ICurrentTimeUtil):
         ITimeStampRepoContract {
@@ -21,6 +22,9 @@ internal class TimeStampRepo(private val dao: TimeStampDao, private val timeUtil
 
     override fun delete(id: Int): Completable =
             RxJavaBridge.toV3Completable(dao.delete(id))
+
+    override fun modifyTime(id: Int, calendar: Calendar): Completable =
+        RxJavaBridge.toV3Completable(dao.modifyTime(id, timeUtil.calendarToString(calendar)))
 
 
     private fun mapDbTimeStamp(list: List<DbTimeStamp>) = list.map {

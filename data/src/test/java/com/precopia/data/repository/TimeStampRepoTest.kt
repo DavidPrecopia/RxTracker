@@ -12,6 +12,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import java.util.*
 
 internal class TimeStampRepoTest {
 
@@ -125,6 +126,47 @@ internal class TimeStampRepoTest {
             repo.add(rxTitle)
 
             verify { dao.add(capturedArg.captured) }
+        }
+    }
+
+
+    @Nested
+    inner class ModifyTime {
+        /**
+         * - Verify that an RxJava 3 Completable is returned.
+         * - It will complete in this test.
+         */
+        @Test
+        fun `modifyTime - success`() {
+            val id = 1
+            val calendar = mockk<Calendar>()
+            val timeString = "current time"
+
+            every { timeUtil.calendarToString(calendar) } returns timeString
+            every { dao.modifyTime(id, timeString) } returns io.reactivex.Completable.complete()
+
+            repo.modifyTime(id, calendar)
+                    .test()
+                    .assertComplete()
+        }
+
+        /**
+         * - Verify that an RxJava 3 Completable is returned.
+         * - It will error in this test.
+         */
+        @Test
+        fun `modifyTime - failure`() {
+            val id = 1
+            val calendar = mockk<Calendar>()
+            val timeString = "current time"
+            val throwable = mockk<Throwable>(relaxed = true)
+
+            every { timeUtil.calendarToString(calendar) } returns timeString
+            every { dao.modifyTime(id, timeString) } returns io.reactivex.Completable.error(throwable)
+
+            repo.modifyTime(id, calendar)
+                    .test()
+                    .assertError(throwable)
         }
     }
 }

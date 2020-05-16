@@ -95,4 +95,37 @@ internal class TimeStampDaoTest {
                 .test()
                 .assertValue { it.isEmpty() }
     }
+
+    /**
+     * - Clear the database.
+     * - Add a [DbTimeStamp].
+     * - Retrieve it to get its ID.
+     * - Verify that is was successfully added.
+     * - Modify its time with its ID.
+     * - Retrieve the inserted [DbTimeStamp] and verify the change was made.
+     */
+    @Test
+    fun modifyTime() {
+        val title = "title"
+        val timeOriginal = "time"
+        val timeModified = "timeModified"
+
+        dao.deleteAll()
+
+        dao.add(DbTimeStamp(title = title, time = timeOriginal))
+                .test()
+                .assertComplete()
+
+        val insertedId = dao.getAll()
+                .test()
+                .values()[0][0].id
+
+        dao.modifyTime(insertedId, timeModified)
+                .test()
+                .assertComplete()
+
+        dao.getAll()
+                .test()
+                .assertValue { it[0].time == timeModified }
+    }
 }

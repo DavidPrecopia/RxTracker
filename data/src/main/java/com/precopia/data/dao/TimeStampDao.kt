@@ -21,6 +21,9 @@ internal interface TimeStampDao {
     @Query("DELETE FROM time_stamps WHERE $TIME_STAMP_ID_COLUMN = :id")
     fun delete(id: Int): Completable
 
+    @Query("UPDATE time_stamps SET $TIME_STAMP_DATE_COLUMN = :time WHERE $TIME_STAMP_ID_COLUMN = :id")
+    fun modifyTime(id: Int, time: String): Completable
+
 
     /**
      * TESTING PURPOSES ONLY

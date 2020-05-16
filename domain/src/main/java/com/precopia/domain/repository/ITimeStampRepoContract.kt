@@ -3,6 +3,7 @@ package com.precopia.domain.repository
 import com.precopia.domain.datamodel.TimeStamp
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
+import java.util.*
 
 interface ITimeStampRepoContract {
     fun getAll(): Flowable<List<TimeStamp>>
@@ -10,4 +11,6 @@ interface ITimeStampRepoContract {
     fun add(rxTitle: String): Completable
 
     fun delete(id: Int): Completable
+
+    fun modifyTime(id: Int, calendar: Calendar): Completable
 }
