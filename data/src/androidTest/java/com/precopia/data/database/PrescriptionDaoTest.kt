@@ -30,9 +30,6 @@ internal class PrescriptionDaoTest {
 
     private val dao = database.prescriptionDao()
 
-    private val titleString = "title"
-    private val prescription = DbPrescription(title = titleString)
-
 
     @After
     fun tearDown() {
@@ -49,6 +46,9 @@ internal class PrescriptionDaoTest {
      */
     @Test
     fun addAndGet() {
+        val titleString = "title"
+        val prescription = DbPrescription(title = titleString)
+
         dao.deleteAll()
 
         dao.add(prescription)
