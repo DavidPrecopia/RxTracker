@@ -68,6 +68,9 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
                 R.id.menu_item_delete -> logic.onEvent(
                         LogicEvents.DeleteItem(id, adapterPosition)
                 )
+                R.id.menu_item_edit_time -> logic.onEvent(
+                        LogicEvents.EditTime(id)
+                )
                 else -> UtilExceptions.throwException(IllegalArgumentException("Unknown menu ID"))
             }
             true

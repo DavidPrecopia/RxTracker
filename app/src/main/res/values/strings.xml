@@ -3,11 +3,13 @@
 
     <string name="nav_label_add_time_stamp">Time Stamp</string>
     <string name="nav_label_add_prescription">Prescriptions</string>
+    <string name="nav_label_edit_time">Edit time</string>
 
     <string name="content_description_overflow_menu">Overflow menu</string>
     <string name="content_description_fab_add">Add</string>
 
     <string name="menu_item_title_prescriptions">Prescriptions</string>
+    <string name="menu_item_title_edit_time">Edit Time</string>
     <string name="menu_item_title_delete">Delete</string>
 
     <string name="button_title_save">Save</string>

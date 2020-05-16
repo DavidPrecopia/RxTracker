@@ -34,6 +34,7 @@ class TimeStampLogic(
     override fun onEvent(event: LogicEvents) {
         when (event) {
             LogicEvents.OnStart -> onStart()
+            is LogicEvents.EditTime -> viewEventLiveData.setValue(ViewEvents.OpenEditTimeView(event.id))
             is LogicEvents.DeleteItem -> validateDeletePosition(event.id, event.position)
             LogicEvents.OpenAddPrescriptionView -> viewEventLiveData.setValue(ViewEvents.OpenPrescriptionView)
             LogicEvents.OpenAddTimeStampView -> viewEventLiveData.setValue(ViewEvents.OpenAddTimeStampView)
