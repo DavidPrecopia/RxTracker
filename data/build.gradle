@@ -79,10 +79,10 @@ dependencies {
 
     // Instrumentation testing
     implementation("androidx.appcompat:appcompat:$rootProject.appCompatVersion") {
-        because "Required to successfully unit test Room."
+        because "Required to test Room."
     }
     implementation("androidx.arch.core:core-runtime:$rootProject.androidXArchCoreVersion") {
-        because "Required to successfully test Room."
+        because "Required to test Room."
     }
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidXArchCoreVersion"
