@@ -1,24 +1,24 @@
 package com.precopia.rxtracker.view.edittimeview
 
-import android.app.Dialog
-import android.app.TimePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
-import android.text.format.DateFormat
-import android.widget.TimePicker
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.navArgs
 import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.view.edittimeview.IEditTimeContract.LogicEvents
 import com.precopia.rxtracker.view.edittimeview.buildlogic.DaggerEditTimeComponent
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import java.util.*
 import javax.inject.Inject
 
 class EditTimeView: DialogFragment(),
+        IEditTimeContract.View,
         TimePickerDialog.OnTimeSetListener,
-        IEditTimeContract.View {
+        DialogInterface.OnDismissListener {
+
+    @Inject
+    lateinit var dialog: TimePickerDialog
 
     @Inject
     lateinit var logic: IEditTimeContract.Logic
@@ -38,29 +38,23 @@ class EditTimeView: DialogFragment(),
         DaggerEditTimeComponent.builder()
                 .application(application)
                 .view(this)
+                .onTimeSetListener(this)
+                .dismissListener(this)
                 .build()
                 .inject(this)
     }
 
-    @NonNull
-    override fun onCreateDialog(@Nullable savedInstanceState: Bundle?): Dialog {
-        return TimePickerDialog(
-                context,
-                this,
-                getCurrentHour(),
-                getCurrentMinute(),
-                getIs24Hour()
-        )
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        dialog.show(requireActivity().supportFragmentManager, "TAG")
     }
 
-    private fun getCurrentHour() = calendar.get(Calendar.HOUR_OF_DAY)
 
-    private fun getCurrentMinute() = calendar.get(Calendar.MINUTE)
-
-    private fun getIs24Hour() = DateFormat.is24HourFormat(context)
-
-
-    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+    override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {
         logic.onEvent(LogicEvents.UpdateTime(args.id, hourOfDay, minute))
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.dismiss()
     }
 }

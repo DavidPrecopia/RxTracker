@@ -1,12 +1,18 @@
 package com.precopia.rxtracker.view.edittimeview.buildlogic
 
+import android.app.Application
+import android.content.DialogInterface
+import android.text.format.DateFormat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.common.buildlogic.ViewScope
+import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.edittimeview.EditTimeLogic
 import com.precopia.rxtracker.view.edittimeview.IEditTimeContract
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog.Version.VERSION_2
 import dagger.Module
 import dagger.Provides
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -14,6 +20,31 @@ import java.util.*
 
 @Module
 class EditTimeModule {
+    @ViewScope
+    @Provides
+    fun dialog(onTimeSetListener: TimePickerDialog.OnTimeSetListener,
+               calendar: Calendar,
+               application: Application,
+               dismissListener: DialogInterface.OnDismissListener,
+               utilNightMode: IUtilNightModeContract
+    ): TimePickerDialog {
+        val white = "#FFFFFF"
+
+        return TimePickerDialog.newInstance(
+                onTimeSetListener,
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                DateFormat.is24HourFormat(application)
+        ).apply {
+            version = VERSION_2
+            isThemeDark = utilNightMode.nightModeEnabled
+            setOnDismissListener(dismissListener)
+            dismissOnPause(true)
+            setCancelColor(white)
+            setOkColor(white)
+        }
+    }
+
     @ViewScope
     @Provides
     fun logic(view: Fragment,
