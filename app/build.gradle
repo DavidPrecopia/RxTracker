@@ -75,6 +75,7 @@ dependencies {
     }
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "com.wdullaer:materialdatetimepicker:$rootProject.materialDateTimePickerVersion"
 
     // Anko
     implementation "org.jetbrains.anko:anko-commons:$rootProject.ankoVersion"
