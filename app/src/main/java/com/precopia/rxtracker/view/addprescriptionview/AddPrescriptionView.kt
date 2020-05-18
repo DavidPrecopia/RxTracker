@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.util.navigateUp
@@ -115,7 +116,9 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
             setHasFixedSize(true)
             layoutManager = layoutManger.get()
             addItemDecoration(dividerItemDecorator)
-            adapter = this@AddPrescriptionView.adapter as RecyclerView.Adapter<*>
+            adapter = (this@AddPrescriptionView.adapter as RecyclerView.Adapter<*>).apply {
+                stateRestorationPolicy = PREVENT_WHEN_EMPTY
+            }
         }
     }
 
