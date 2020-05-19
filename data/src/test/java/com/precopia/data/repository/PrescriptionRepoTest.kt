@@ -97,6 +97,43 @@ internal class PrescriptionRepoTest {
         }
     }
 
+
+    @Nested
+    inner class Delete {
+        /**
+         * - Verify that an RxJava 3 Completable is returned.
+         * - It will complete in this test.
+         */
+        @Test
+        fun `delete - complete`() {
+            val id = 1
+
+            every { dao.delete(id) } returns io.reactivex.Completable.complete()
+
+            repo.delete(id)
+                    .test()
+                    .assertComplete()
+        }
+
+        /**
+         * - Verify that an RxJava 3 Completable is returned.
+         * - It will error in this test.
+         */
+        @Test
+        fun `delete - error`() {
+            val id = 1
+            val throwable = mockk<Throwable>(relaxed = true)
+
+            every { dao.delete(id) } returns io.reactivex.Completable.error(throwable)
+
+            repo.delete(id)
+                    .test()
+                    .assertError(throwable)
+        }
+
+    }
+
+
     @Nested
     inner class UpdatePosition {
         /**

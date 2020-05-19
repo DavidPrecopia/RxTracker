@@ -20,6 +20,9 @@ internal interface PrescriptionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun add(prescription: DbPrescription): Completable
 
+    @Query("DELETE FROM prescriptions WHERE $PRESCRIPTION_ID_COLUMN = :id")
+    fun delete(id: Int): Completable
+
 
     @Transaction
     fun updatePositionAndGetAll(id: Int, newPosition: Double): MutableList<DbPrescription> {

@@ -20,6 +20,9 @@ internal class PrescriptionRepo(private val dao: PrescriptionDao,
                     DbPrescription(title = rxTitle, position = position.toDouble())
             ))
 
+    override fun delete(id: Int): Completable =
+            RxJavaBridge.toV3Completable(dao.delete(id))
+
     override fun updatePosition(id: Int, oldPosition: Int, newPosition: Int): Completable =
             RxJavaBridge.toV3Completable(prescriptionPositions.update(id, oldPosition, newPosition))
 

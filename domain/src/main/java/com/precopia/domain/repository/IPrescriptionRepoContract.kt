@@ -9,5 +9,7 @@ interface IPrescriptionRepoContract {
 
     fun add(rxTitle: String, position: Int): Completable
 
+    fun delete(id: Int): Completable
+
     fun updatePosition(id: Int, oldPosition: Int, newPosition: Int): Completable
 }

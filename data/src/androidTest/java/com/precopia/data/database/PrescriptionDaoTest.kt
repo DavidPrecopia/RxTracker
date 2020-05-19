@@ -63,6 +63,34 @@ internal class PrescriptionDaoTest {
     /**
      * - Clear the database.
      * - Add a [DbPrescription].
+     * - Verify that it was successful added.
+     * - Retrieve it to get its ID.
+     * - Delete it with its ID.
+     * - Get all and verify the returned List is empty.
+     */
+    @Test
+    fun delete() {
+        val title = "title"
+        val position = 0.0
+
+        dao.deleteAll()
+
+        dao.add(DbPrescription(title = title, position = position))
+                .test()
+                .assertComplete()
+
+        val insertedId = dao.getAllSynchronously()[0].id
+
+        dao.delete(insertedId)
+                .test()
+                .assertComplete()
+
+        assertThat(dao.getAllSynchronously().isEmpty()).isTrue()
+    }
+
+    /**
+     * - Clear the database.
+     * - Add a [DbPrescription].
      * - Retrieve it to gets its ID.
      * - Update is position and verify the change was made.
      */
