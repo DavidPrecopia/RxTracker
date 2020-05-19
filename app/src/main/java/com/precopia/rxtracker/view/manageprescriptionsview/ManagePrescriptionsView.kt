@@ -19,7 +19,7 @@ import com.precopia.rxtracker.util.navigateUp
 import com.precopia.rxtracker.util.toast
 import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.LogicEvents
 import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.ViewEvents
-import com.precopia.rxtracker.view.manageprescriptionsview.buildlogic.DaggerAddPrescriptionComponent
+import com.precopia.rxtracker.view.manageprescriptionsview.buildlogic.DaggerManagePrescriptionsComponent
 import kotlinx.android.synthetic.main.add_prescription_view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -51,7 +51,7 @@ class ManagePrescriptionsView: Fragment(R.layout.add_prescription_view),
     }
 
     private fun inject() {
-        DaggerAddPrescriptionComponent.builder()
+        DaggerManagePrescriptionsComponent.builder()
                 .application(application)
                 .view(this)
                 .movementCallback(this)

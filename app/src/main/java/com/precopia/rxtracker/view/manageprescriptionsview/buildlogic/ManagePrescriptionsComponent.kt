@@ -11,15 +11,15 @@ import dagger.Component
 
 @ViewScope
 @Component(modules = [
-    AddPrescriptionModule::class,
+    ManagePrescriptionsModule::class,
     ViewCommonModule::class
 ])
-interface AddPrescriptionComponent {
+interface ManagePrescriptionsComponent {
     fun inject(view: ManagePrescriptionsView)
 
     @Component.Builder
     interface Builder {
-        fun build(): AddPrescriptionComponent
+        fun build(): ManagePrescriptionsComponent
 
         @BindsInstance
         fun application(application: Application): Builder

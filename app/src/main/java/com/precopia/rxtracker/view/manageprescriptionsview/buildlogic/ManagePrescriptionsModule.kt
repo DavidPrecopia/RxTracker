@@ -14,7 +14,7 @@ import dagger.Provides
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 @Module
-class AddPrescriptionModule {
+class ManagePrescriptionsModule {
     @ViewScope
     @Provides
     fun logic(
@@ -31,7 +31,7 @@ class AddPrescriptionModule {
             utilSchedulerProvider: IUtilSchedulerProviderContract,
             disposable: CompositeDisposable
     ): ViewModelProvider.NewInstanceFactory {
-        return AddPrescriptionLogicFactory(repo, utilSchedulerProvider, disposable)
+        return ManagePrescriptionsLogicFactory(repo, utilSchedulerProvider, disposable)
     }
 
     @ViewScope

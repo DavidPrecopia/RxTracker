@@ -8,7 +8,7 @@ import com.precopia.rxtracker.view.manageprescriptionsview.ManagePrescriptionsLo
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 @Suppress("UNCHECKED_CAST")
-class AddPrescriptionLogicFactory(
+class ManagePrescriptionsLogicFactory(
         private val repo: IPrescriptionRepoContract,
         private val utilSchedulerProvider: IUtilSchedulerProviderContract,
         private val disposable: CompositeDisposable
