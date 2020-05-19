@@ -8,14 +8,13 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_ID_COLUMN
 import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_POSITION_COLUMN
-import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_TITLE_COLUMN
 import com.precopia.data.datamodel.DbPrescription
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
 internal interface PrescriptionDao {
-    @Query("SELECT * FROM prescriptions ORDER BY $PRESCRIPTION_TITLE_COLUMN ASC")
+    @Query("SELECT * FROM prescriptions ORDER BY $PRESCRIPTION_POSITION_COLUMN ASC")
     fun getAll(): Flowable<List<DbPrescription>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
