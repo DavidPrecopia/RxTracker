@@ -16,7 +16,7 @@ class AddPrescriptionAdapter:
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PrescriptionViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.prescription_list_view, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.prescription_list_item, parent, false)
     )
 
     override fun onBindViewHolder(holder: PrescriptionViewHolder, position: Int) {
