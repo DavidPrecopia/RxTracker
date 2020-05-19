@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Flowable
 interface IPrescriptionRepoContract {
     fun getAll(): Flowable<List<Prescription>>
 
-    fun add(rxTitle: String): Completable
+    fun add(rxTitle: String, position: Int): Completable
 
     fun updatePosition(id: Int, oldPosition: Int, newPosition: Int): Completable
 }

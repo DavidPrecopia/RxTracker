@@ -15,8 +15,10 @@ internal class PrescriptionRepo(private val dao: PrescriptionDao,
             RxJavaBridge.toV3Flowable(dao.getAll())
                     .map { mapDbPrescription(it) }
 
-    override fun add(rxTitle: String): Completable =
-            RxJavaBridge.toV3Completable(dao.add(DbPrescription(title = rxTitle)))
+    override fun add(rxTitle: String, position: Int): Completable =
+            RxJavaBridge.toV3Completable(dao.add(
+                    DbPrescription(title = rxTitle, position = position.toDouble())
+            ))
 
     override fun updatePosition(id: Int, oldPosition: Int, newPosition: Int): Completable =
             RxJavaBridge.toV3Completable(prescriptionPositions.update(id, oldPosition, newPosition))

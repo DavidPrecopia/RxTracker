@@ -143,16 +143,21 @@ internal class ManagePrescriptionsLogicTest {
          * - Save to the repo - verify the title is unchanged.
          * - In this test the repo will indicate that the save was successful.
          * - Send [ViewEvents.DisplayMessage] to the View with [MSG_SUCCESSFULLY_SAVE].
+         *
+         * - BE MINDFUL OF: the position sent to [IPrescriptionRepoContract.add]
+         * will always be 0 because the class get the position from its internal list,
+         * which is only initialized, not populated with data.
          */
         @Test
         fun `save - successful`() {
             val title = "title"
+            val position = 0
 
-            every { repo.add(title) } returns Completable.complete()
+            every { repo.add(title, position) } returns Completable.complete()
 
             logic.onEvent(LogicEvents.Save(title))
 
-            verify(exactly = 1) { repo.add(title) }
+            verify(exactly = 1) { repo.add(title, position) }
             logic.observe().observeForTesting {
                 assertThat(logic.observe().value).isEqualTo(ViewEvents.DisplayMessage(MSG_SUCCESSFULLY_SAVE))
             }
@@ -163,17 +168,22 @@ internal class ManagePrescriptionsLogicTest {
          * - In this test the repo will indicate that the save failed.
          * - Throw the Exception returned by the repo.
          * - Send [ViewEvents.DisplayMessage] to the View with [ERROR_OPERATION_FAILED].
+         *
+         * - BE MINDFUL OF: the position sent to [IPrescriptionRepoContract.add]
+         * will always be 0 because the class get the position from its internal list,
+         * which is only initialized, not populated with data.
          */
         @Test
         fun `save - failure`() {
             val throwable = mockk<Throwable>(relaxed = true)
             val title = "title"
+            val position = 0
 
-            every { repo.add(title) } returns Completable.error(throwable)
+            every { repo.add(title, position) } returns Completable.error(throwable)
 
             logic.onEvent(LogicEvents.Save(title))
 
-            verify(exactly = 1) { repo.add(title) }
+            verify(exactly = 1) { repo.add(title, position) }
             verify(atLeast = 1) { throwable.printStackTrace() }
             logic.observe().observeForTesting {
                 assertThat(logic.observe().value).isEqualTo(ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED))

@@ -71,11 +71,11 @@ internal class PrescriptionRepoTest {
          */
         @Test
         fun `add - complete`() {
-            val dbPrescription = DbPrescription(0, "title")
+            val dbPrescription = DbPrescription(0, "title", 1.0)
 
             every { dao.add(dbPrescription) } returns io.reactivex.Completable.complete()
 
-            repo.add(dbPrescription.title)
+            repo.add(dbPrescription.title, dbPrescription.position.toInt())
                     .test()
                     .assertComplete()
         }
@@ -86,12 +86,12 @@ internal class PrescriptionRepoTest {
          */
         @Test
         fun `add - error`() {
-            val dbPrescription = DbPrescription(0, "title")
+            val dbPrescription = DbPrescription(0, "title", 1.0)
             val throwable = mockk<Throwable>(relaxed = true)
 
             every { dao.add(dbPrescription) } returns io.reactivex.Completable.error(throwable)
 
-            repo.add(dbPrescription.title)
+            repo.add(dbPrescription.title, dbPrescription.position.toInt())
                     .test()
                     .assertError(throwable)
         }

@@ -78,7 +78,7 @@ class ManagePrescriptionsLogic(
 
     private fun saveToRepo(title: String) {
         disposable.add(subscribeCompletable(
-                repo.add(title),
+                repo.add(title, prescriptionList.size),
                 { viewEventLiveData.value = ViewEvents.DisplayMessage(MSG_SUCCESSFULLY_SAVE) },
                 {
                     UtilExceptions.throwException(it)
