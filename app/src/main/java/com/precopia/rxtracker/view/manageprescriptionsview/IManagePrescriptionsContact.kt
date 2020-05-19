@@ -10,6 +10,8 @@ interface IManagePrescriptionsContact {
         fun displayList(list: List<Prescription>)
 
         fun move(fromPosition: Int, toPosition: Int)
+
+        fun delete(position: Int)
     }
 
     interface Logic {
@@ -25,6 +27,7 @@ interface IManagePrescriptionsContact {
         data class DisplayError(val message: String): ViewEvents()
         data class DisplayMessage(val message: String): ViewEvents()
         data class Dragging(val fromPosition: Int, val toPosition: Int): ViewEvents()
+        data class DeleteItem(val position: Int): ViewEvents()
     }
 
     sealed class LogicEvents {
@@ -32,5 +35,6 @@ interface IManagePrescriptionsContact {
         data class Save(val rxTitle: String): LogicEvents()
         data class Dragging(val fromPosition: Int, val toPosition: Int): LogicEvents()
         data class PermanentlyMoved(val newPosition: Int): LogicEvents()
+        data class DeleteItem(val id: Int, val position: Int): LogicEvents()
     }
 }

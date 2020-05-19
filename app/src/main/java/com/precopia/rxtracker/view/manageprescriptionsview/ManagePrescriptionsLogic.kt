@@ -36,6 +36,7 @@ class ManagePrescriptionsLogic(
             is LogicEvents.Save -> save(event.rxTitle)
             is LogicEvents.Dragging -> dragging(event.fromPosition, event.toPosition)
             is LogicEvents.PermanentlyMoved -> permanentlyMoved(event.newPosition)
+            is LogicEvents.DeleteItem -> deleteItem(event.id, event.position)
         }
     }
 
@@ -98,6 +99,24 @@ class ManagePrescriptionsLogic(
         val prescription = prescriptionList[newPosition]
         disposable.add(subscribeCompletable(
                 repo.updatePosition(prescription.id, prescription.position, newPosition),
+                { /*intentionally blank*/ },
+                { UtilExceptions.throwException(it) },
+                utilSchedulerProvider
+        ))
+    }
+
+
+    private fun deleteItem(id: Int, position: Int) {
+        if (position < 0) {
+            UtilExceptions.throwException(IllegalArgumentException("Is less then 0."))
+        }
+        viewEventLiveData.value = ViewEvents.DeleteItem(position)
+        deleteFromRepo(id)
+    }
+
+    private fun deleteFromRepo(id: Int) {
+        disposable.add(subscribeCompletable(
+                repo.delete(id),
                 { /*intentionally blank*/ },
                 { UtilExceptions.throwException(it) },
                 utilSchedulerProvider

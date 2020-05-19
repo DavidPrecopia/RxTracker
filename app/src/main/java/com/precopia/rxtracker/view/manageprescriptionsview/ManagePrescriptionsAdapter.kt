@@ -4,22 +4,27 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.precopia.domain.datamodel.Prescription
 import com.precopia.rxtracker.R
+import com.precopia.rxtracker.util.UtilExceptions
+import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.LogicEvents
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.prescription_list_item.*
 import kotlinx.android.synthetic.main.time_stamp_list_item.tv_title
 
-class ManagePrescriptionsAdapter(private val itemTouchHelper: ItemTouchHelper):
+class ManagePrescriptionsAdapter(private val logic: IManagePrescriptionsContact.Logic,
+                                 private val itemTouchHelper: ItemTouchHelper):
         ListAdapter<Prescription, ManagePrescriptionsAdapter.PrescriptionViewHolder>(PrescriptionDiffCallback()),
         IManagePrescriptionsContact.Adapter {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PrescriptionViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.prescription_list_item, parent, false),
+            logic,
             itemTouchHelper
     )
 
@@ -36,8 +41,13 @@ class ManagePrescriptionsAdapter(private val itemTouchHelper: ItemTouchHelper):
         notifyItemMoved(fromPosition, toPosition)
     }
 
+    override fun delete(position: Int) {
+        notifyItemRemoved(position)
+    }
+
 
     class PrescriptionViewHolder(private val view: View,
+                                 private val logic: IManagePrescriptionsContact.Logic,
                                  private val itemTouchHelper: ItemTouchHelper):
             RecyclerView.ViewHolder(view),
             LayoutContainer {
@@ -48,6 +58,7 @@ class ManagePrescriptionsAdapter(private val itemTouchHelper: ItemTouchHelper):
 
         fun bindView(prescription: Prescription) {
             initDragHandle()
+            initContextMenu(prescription.id)
             tv_title.text = prescription.title
         }
 
@@ -59,6 +70,26 @@ class ManagePrescriptionsAdapter(private val itemTouchHelper: ItemTouchHelper):
                 view.performClick()
                 true
             }
+        }
+
+        private fun initContextMenu(id: Int) {
+            iv_overflow_menu.setOnClickListener { getContextMenu(id).show() }
+        }
+
+        private fun getContextMenu(id: Int) =
+                PopupMenu(iv_overflow_menu.context, iv_overflow_menu).apply {
+                    inflate(R.menu.prescription_popup_menu_list_item)
+                    setOnMenuItemClickListener(getMenuClickListener(id))
+                }
+
+        private fun getMenuClickListener(id: Int) = PopupMenu.OnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.menu_item_delete_prescription -> logic.onEvent(
+                        LogicEvents.DeleteItem(id, bindingAdapterPosition)
+                )
+                else -> UtilExceptions.throwException(IllegalArgumentException("Unknown menu ID"))
+            }
+            true
         }
     }
 }

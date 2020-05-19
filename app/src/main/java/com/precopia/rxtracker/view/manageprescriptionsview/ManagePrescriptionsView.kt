@@ -79,6 +79,7 @@ class ManagePrescriptionsView: Fragment(R.layout.add_prescription_view),
             is ViewEvents.DisplayError -> displayError(event.message)
             is ViewEvents.DisplayMessage -> toast(event.message)
             is ViewEvents.Dragging -> adapter.move(event.fromPosition, event.toPosition)
+            is ViewEvents.DeleteItem -> adapter.delete(event.position)
         }
     }
 

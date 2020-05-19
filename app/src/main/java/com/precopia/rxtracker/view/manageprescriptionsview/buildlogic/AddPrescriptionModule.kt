@@ -36,7 +36,9 @@ class AddPrescriptionModule {
 
     @ViewScope
     @Provides
-    fun adapter(itemTouchHelper: ItemTouchHelper): IManagePrescriptionsContact.Adapter {
-        return ManagePrescriptionsAdapter(itemTouchHelper)
+    fun adapter(logic: IManagePrescriptionsContact.Logic,
+                itemTouchHelper: ItemTouchHelper
+    ): IManagePrescriptionsContact.Adapter {
+        return ManagePrescriptionsAdapter(logic, itemTouchHelper)
     }
 }

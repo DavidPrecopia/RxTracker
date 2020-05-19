@@ -28,6 +28,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(value = [InstantExecutorExtension::class])
@@ -298,6 +299,70 @@ internal class ManagePrescriptionsLogicTest {
 
             logic.onEvent(LogicEvents.PermanentlyMoved(newPosition))
 
+            verify(atLeast = 1) { throwable.printStackTrace() }
+        }
+    }
+
+
+    @Nested
+    inner class DeleteItem {
+        /**
+         * - Send [ViewEvents.DeleteItem] to the View with the passed-in position.
+         * - Send the passed-in ID to the Repo.
+         *   - In this test the Repo will successfully complete.
+         */
+        @Test
+        fun `delete - success`() {
+            val id = 0
+            val position = 1
+
+            every { repo.delete(id) } returns Completable.complete()
+
+            logic.onEvent(LogicEvents.DeleteItem(id, position))
+
+            logic.observe().observeForTesting {
+                assertThat(logic.observe().value).isEqualTo(ViewEvents.DeleteItem(position))
+            }
+            verify(exactly = 1) { repo.delete(id) }
+        }
+
+        /**
+         * - Pass an invalid position.
+         * - Exception is thrown.
+         * - Verify that the Repo was not called.
+         */
+        @Test
+        fun `delete - invalid position`() {
+            val id = 0
+            val invalidPosition = -1
+
+            assertThrows<Exception> {
+                logic.onEvent(LogicEvents.DeleteItem(id, invalidPosition))
+            }
+
+            verify { repo wasNot Called }
+        }
+
+        /**
+         * - Send [ViewEvents.DeleteItem] to the View with the passed-in position.
+         * - Send the passed-in ID to the Repo.
+         *   - In this test the Repo will return a Throwable.
+         *   - Verify that the Throwable was thrown.
+         */
+        @Test
+        fun `delete - error`() {
+            val id = 0
+            val position = 1
+            val throwable = mockk<Throwable>()
+
+            every { repo.delete(id) } returns Completable.error(throwable)
+
+            logic.onEvent(LogicEvents.DeleteItem(id, position))
+
+            logic.observe().observeForTesting {
+                assertThat(logic.observe().value).isEqualTo(ViewEvents.DeleteItem(position))
+            }
+            verify(exactly = 1) { repo.delete(id) }
             verify(atLeast = 1) { throwable.printStackTrace() }
         }
     }
