@@ -9,6 +9,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
@@ -24,7 +25,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
+class AddPrescriptionView: Fragment(R.layout.add_prescription_view),
+        ItemTouchHelperCallback.MovementCallback {
 
 
     @Inject
@@ -39,6 +41,9 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
     @Inject
     lateinit var dividerItemDecorator: RecyclerView.ItemDecoration
 
+    @Inject
+    lateinit var itemTouchHelper: ItemTouchHelper
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,6 +54,7 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
         DaggerAddPrescriptionComponent.builder()
                 .application(application)
                 .view(this)
+                .movementCallback(this)
                 .build()
                 .inject(this)
     }
@@ -72,6 +78,7 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
             }
             is ViewEvents.DisplayError -> displayError(event.message)
             is ViewEvents.DisplayMessage -> toast(event.message)
+            is ViewEvents.Dragging -> adapter.move(event.fromPosition, event.toPosition)
         }
     }
 
@@ -116,6 +123,7 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
             setHasFixedSize(true)
             layoutManager = layoutManger.get()
             addItemDecoration(dividerItemDecorator)
+            itemTouchHelper.attachToRecyclerView(this)
             adapter = (this@AddPrescriptionView.adapter as RecyclerView.Adapter<*>).apply {
                 stateRestorationPolicy = PREVENT_WHEN_EMPTY
             }
@@ -135,6 +143,14 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view) {
     private fun getEnteredText() =
             text_input_edit_text.text.toString().trim { it <= ' ' }
 
+
+    override fun dragging(fromPosition: Int, toPosition: Int) {
+        logic.onEvent(LogicEvents.Dragging(fromPosition, toPosition))
+    }
+
+    override fun movedPermanently(newPosition: Int) {
+        logic.onEvent(LogicEvents.PermanentlyMoved(newPosition))
+    }
 
 
     private fun displayLoading() {

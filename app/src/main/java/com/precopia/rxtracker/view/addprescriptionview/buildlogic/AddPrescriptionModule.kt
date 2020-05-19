@@ -2,6 +2,7 @@ package com.precopia.rxtracker.view.addprescriptionview.buildlogic
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.precopia.domain.repository.IPrescriptionRepoContract
 import com.precopia.rxtracker.common.buildlogic.ViewScope
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
@@ -35,7 +36,7 @@ class AddPrescriptionModule {
 
     @ViewScope
     @Provides
-    fun adapter(): IAddPrescriptionContact.Adapter {
-        return AddPrescriptionAdapter()
+    fun adapter(itemTouchHelper: ItemTouchHelper): IAddPrescriptionContact.Adapter {
+        return AddPrescriptionAdapter(itemTouchHelper)
     }
 }

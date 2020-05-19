@@ -17,12 +17,15 @@ import com.precopia.rxtracker.view.common.ERROR_OPERATION_FAILED
 import com.precopia.rxtracker.view.common.ERROR_TITLE
 import com.precopia.rxtracker.view.common.MSG_SUCCESSFULLY_SAVE
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import java.util.*
 
 class AddPrescriptionLogic(
         private val repo: IPrescriptionRepoContract,
         private val utilSchedulerProvider: IUtilSchedulerProviderContract,
         private val disposable: CompositeDisposable
 ): ViewModel(), IAddPrescriptionContact.Logic {
+
+    private var prescriptionList: MutableList<Prescription> = ArrayList()
 
     private val viewEventLiveData = MutableLiveData<ViewEvents>()
 
@@ -31,6 +34,8 @@ class AddPrescriptionLogic(
         when (event) {
             LogicEvents.OnStart -> onStart()
             is LogicEvents.Save -> save(event.rxTitle)
+            is LogicEvents.Dragging -> dragging(event.fromPosition, event.toPosition)
+            is LogicEvents.PermanentlyMoved -> permanentlyMoved(event.newPosition)
         }
     }
 
@@ -43,17 +48,20 @@ class AddPrescriptionLogic(
     private fun observeRepo() {
         disposable.add(subscribeFlowablePrescription(
                 repo.getAll(),
-                { evalRepoData(it) },
+                {
+                    prescriptionList = it.toMutableList()
+                    evalRepoData()
+                },
                 { evalRepoError(it) },
                 utilSchedulerProvider
         ))
     }
 
-    private fun evalRepoData(list: List<Prescription>) {
-        if (list.isEmpty()) {
+    private fun evalRepoData() {
+        if (prescriptionList.isEmpty()) {
             viewEventLiveData.value = ViewEvents.DisplayError(ERROR_EMPTY_LIST)
         } else {
-            viewEventLiveData.value = ViewEvents.DisplayList(list)
+            viewEventLiveData.value = ViewEvents.DisplayList(prescriptionList)
         }
     }
 
@@ -76,6 +84,22 @@ class AddPrescriptionLogic(
                     UtilExceptions.throwException(it)
                     viewEventLiveData.value = ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED)
                 },
+                utilSchedulerProvider
+        ))
+    }
+
+
+    private fun dragging(fromPosition: Int, toPosition: Int) {
+        viewEventLiveData.value = ViewEvents.Dragging(fromPosition, toPosition)
+        Collections.swap(prescriptionList, fromPosition, toPosition)
+    }
+
+    private fun permanentlyMoved(newPosition: Int) {
+        val prescription = prescriptionList[newPosition]
+        disposable.add(subscribeCompletable(
+                repo.updatePosition(prescription.id, prescription.position, newPosition),
+                { /*intentionally blank*/ },
+                { UtilExceptions.throwException(it) },
                 utilSchedulerProvider
         ))
     }

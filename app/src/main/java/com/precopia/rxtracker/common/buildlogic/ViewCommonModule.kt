@@ -3,6 +3,7 @@ package com.precopia.rxtracker.common.buildlogic
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.precopia.domain.repository.IPrescriptionRepoContract
@@ -11,6 +12,7 @@ import com.precopia.rxtracker.common.RxTrackerApplication
 import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.util.UtilSchedulerProvider
+import com.precopia.rxtracker.view.addprescriptionview.ItemTouchHelperCallback
 import dagger.Module
 import dagger.Provides
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -77,5 +79,11 @@ class ViewCommonModule {
             layoutManager: LinearLayoutManager
     ): RecyclerView.ItemDecoration {
         return DividerItemDecoration(application.applicationContext, layoutManager.orientation)
+    }
+
+    @ViewScope
+    @Provides
+    fun itemTouchHelperCallback(movementCallback: ItemTouchHelperCallback.MovementCallback): ItemTouchHelper {
+        return ItemTouchHelper(ItemTouchHelperCallback(movementCallback))
     }
 }
