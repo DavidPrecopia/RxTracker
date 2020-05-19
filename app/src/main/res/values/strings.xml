@@ -7,6 +7,7 @@
 
     <string name="content_description_overflow_menu">Overflow menu</string>
     <string name="content_description_fab_add">Add</string>
+    <string name="content_description_drag_handle">Hold to drag</string>
 
     <string name="menu_item_title_prescriptions">Prescriptions</string>
     <string name="menu_item_title_edit_time">Edit Time</string>
