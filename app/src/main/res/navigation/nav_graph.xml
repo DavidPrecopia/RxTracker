@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/addPrescriptionView"
-        android:name="com.precopia.rxtracker.view.addprescriptionview.AddPrescriptionView"
+        android:name="com.precopia.rxtracker.view.manageprescriptionsview.ManagePrescriptionsView"
         android:label="@string/nav_label_add_prescription"
         tools:layout="@layout/add_prescription_view" />
 

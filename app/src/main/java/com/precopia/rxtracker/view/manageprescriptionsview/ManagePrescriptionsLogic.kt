@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.addprescriptionview
+package com.precopia.rxtracker.view.manageprescriptionsview
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,21 +9,21 @@ import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.util.UtilExceptions
 import com.precopia.rxtracker.util.subscribeCompletable
 import com.precopia.rxtracker.util.subscribeFlowablePrescription
-import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.LogicEvents
-import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.ViewEvents
 import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
 import com.precopia.rxtracker.view.common.ERROR_GENERIC
 import com.precopia.rxtracker.view.common.ERROR_OPERATION_FAILED
 import com.precopia.rxtracker.view.common.ERROR_TITLE
 import com.precopia.rxtracker.view.common.MSG_SUCCESSFULLY_SAVE
+import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.LogicEvents
+import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.ViewEvents
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.*
 
-class AddPrescriptionLogic(
+class ManagePrescriptionsLogic(
         private val repo: IPrescriptionRepoContract,
         private val utilSchedulerProvider: IUtilSchedulerProviderContract,
         private val disposable: CompositeDisposable
-): ViewModel(), IAddPrescriptionContact.Logic {
+): ViewModel(), IManagePrescriptionsContact.Logic {
 
     private var prescriptionList: MutableList<Prescription> = ArrayList()
 

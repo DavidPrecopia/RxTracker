@@ -1,9 +1,9 @@
-package com.precopia.rxtracker.view.addprescriptionview
+package com.precopia.rxtracker.view.manageprescriptionsview
 
 import androidx.lifecycle.LiveData
 import com.precopia.domain.datamodel.Prescription
 
-interface IAddPrescriptionContact {
+interface IManagePrescriptionsContact {
     interface View
 
     interface Adapter {

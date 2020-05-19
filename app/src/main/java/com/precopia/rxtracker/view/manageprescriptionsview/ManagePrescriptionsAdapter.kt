@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.addprescriptionview
+package com.precopia.rxtracker.view.manageprescriptionsview
 
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -13,9 +13,9 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.prescription_list_item.*
 import kotlinx.android.synthetic.main.time_stamp_list_item.tv_title
 
-class AddPrescriptionAdapter(private val itemTouchHelper: ItemTouchHelper):
-        ListAdapter<Prescription, AddPrescriptionAdapter.PrescriptionViewHolder>(PrescriptionDiffCallback()),
-        IAddPrescriptionContact.Adapter {
+class ManagePrescriptionsAdapter(private val itemTouchHelper: ItemTouchHelper):
+        ListAdapter<Prescription, ManagePrescriptionsAdapter.PrescriptionViewHolder>(PrescriptionDiffCallback()),
+        IManagePrescriptionsContact.Adapter {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PrescriptionViewHolder(

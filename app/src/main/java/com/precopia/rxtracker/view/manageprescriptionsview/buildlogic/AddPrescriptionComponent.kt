@@ -1,11 +1,11 @@
-package com.precopia.rxtracker.view.addprescriptionview.buildlogic
+package com.precopia.rxtracker.view.manageprescriptionsview.buildlogic
 
 import android.app.Application
 import androidx.fragment.app.Fragment
 import com.precopia.rxtracker.common.buildlogic.ViewCommonModule
 import com.precopia.rxtracker.common.buildlogic.ViewScope
-import com.precopia.rxtracker.view.addprescriptionview.AddPrescriptionView
-import com.precopia.rxtracker.view.addprescriptionview.ItemTouchHelperCallback
+import com.precopia.rxtracker.view.manageprescriptionsview.ItemTouchHelperCallback
+import com.precopia.rxtracker.view.manageprescriptionsview.ManagePrescriptionsView
 import dagger.BindsInstance
 import dagger.Component
 
@@ -15,7 +15,7 @@ import dagger.Component
     ViewCommonModule::class
 ])
 interface AddPrescriptionComponent {
-    fun inject(view: AddPrescriptionView)
+    fun inject(view: ManagePrescriptionsView)
 
     @Component.Builder
     interface Builder {

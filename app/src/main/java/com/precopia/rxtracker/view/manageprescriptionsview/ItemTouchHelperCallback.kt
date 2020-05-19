@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.addprescriptionview
+package com.precopia.rxtracker.view.manageprescriptionsview
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

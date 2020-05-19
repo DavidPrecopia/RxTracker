@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.addprescriptionview
+package com.precopia.rxtracker.view.manageprescriptionsview
 
 import android.content.Context
 import android.os.Bundle
@@ -17,23 +17,23 @@ import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.util.navigateUp
 import com.precopia.rxtracker.util.toast
-import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.LogicEvents
-import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.ViewEvents
-import com.precopia.rxtracker.view.addprescriptionview.buildlogic.DaggerAddPrescriptionComponent
+import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.LogicEvents
+import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.ViewEvents
+import com.precopia.rxtracker.view.manageprescriptionsview.buildlogic.DaggerAddPrescriptionComponent
 import kotlinx.android.synthetic.main.add_prescription_view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 import javax.inject.Provider
 
-class AddPrescriptionView: Fragment(R.layout.add_prescription_view),
+class ManagePrescriptionsView: Fragment(R.layout.add_prescription_view),
         ItemTouchHelperCallback.MovementCallback {
 
 
     @Inject
-    lateinit var logic: IAddPrescriptionContact.Logic
+    lateinit var logic: IManagePrescriptionsContact.Logic
 
     @Inject
-    lateinit var adapter: IAddPrescriptionContact.Adapter
+    lateinit var adapter: IManagePrescriptionsContact.Adapter
 
     @Inject
     lateinit var layoutManger: Provider<LinearLayoutManager>
@@ -124,7 +124,7 @@ class AddPrescriptionView: Fragment(R.layout.add_prescription_view),
             layoutManager = layoutManger.get()
             addItemDecoration(dividerItemDecorator)
             itemTouchHelper.attachToRecyclerView(this)
-            adapter = (this@AddPrescriptionView.adapter as RecyclerView.Adapter<*>).apply {
+            adapter = (this@ManagePrescriptionsView.adapter as RecyclerView.Adapter<*>).apply {
                 stateRestorationPolicy = PREVENT_WHEN_EMPTY
             }
         }

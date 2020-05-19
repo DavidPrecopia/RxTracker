@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.addprescriptionview
+package com.precopia.rxtracker.view.manageprescriptionsview
 
 import androidx.lifecycle.Observer
 import com.precopia.domain.datamodel.Prescription
@@ -7,14 +7,14 @@ import com.precopia.rxtracker.InstantExecutorExtension
 import com.precopia.rxtracker.UtilSchedulerProviderMockInit
 import com.precopia.rxtracker.observeForTesting
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
-import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.Logic
-import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.LogicEvents
-import com.precopia.rxtracker.view.addprescriptionview.IAddPrescriptionContact.ViewEvents
 import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
 import com.precopia.rxtracker.view.common.ERROR_GENERIC
 import com.precopia.rxtracker.view.common.ERROR_OPERATION_FAILED
 import com.precopia.rxtracker.view.common.ERROR_TITLE
 import com.precopia.rxtracker.view.common.MSG_SUCCESSFULLY_SAVE
+import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.Logic
+import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.LogicEvents
+import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.ViewEvents
 import io.mockk.Called
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(value = [InstantExecutorExtension::class])
-internal class AddPrescriptionLogicTest {
+internal class ManagePrescriptionsLogicTest {
 
     private val repo = mockk<IPrescriptionRepoContract>()
 
@@ -40,7 +40,7 @@ internal class AddPrescriptionLogicTest {
     private val disposable = spyk<CompositeDisposable>()
 
 
-    private lateinit var logic: AddPrescriptionLogic
+    private lateinit var logic: ManagePrescriptionsLogic
 
 
     /**
@@ -50,7 +50,7 @@ internal class AddPrescriptionLogicTest {
      */
     @BeforeEach
     fun setUp() {
-        logic = AddPrescriptionLogic(repo, schedulerProvider, disposable)
+        logic = ManagePrescriptionsLogic(repo, schedulerProvider, disposable)
         clearAllMocks()
         UtilSchedulerProviderMockInit.init(schedulerProvider)
     }
@@ -202,7 +202,7 @@ internal class AddPrescriptionLogicTest {
     @Nested
     inner class Dragging {
         /**
-         * - Prepare the class via [LogicEvents.OnStart] - load [AddPrescriptionLogic]'s
+         * - Prepare the class via [LogicEvents.OnStart] - load [ManagePrescriptionsLogic]'s
          * internal List with data.
          * - Send [ViewEvents.Dragging] to the View with both of the passed-in positions.
          */
@@ -231,7 +231,7 @@ internal class AddPrescriptionLogicTest {
     @Nested
     inner class PermanentlyMoved {
         /**
-         * - Prepare the class via [LogicEvents.OnStart] - load [AddPrescriptionLogic]'s
+         * - Prepare the class via [LogicEvents.OnStart] - load [ManagePrescriptionsLogic]'s
          * internal List with data.
          * - Send the ID, old position, and new position to the Repo.
          * - Verify they were sent to the Repo unmodified.
@@ -262,7 +262,7 @@ internal class AddPrescriptionLogicTest {
 
 
         /**
-         * - Prepare the class via [LogicEvents.OnStart] - load [AddPrescriptionLogic]'s
+         * - Prepare the class via [LogicEvents.OnStart] - load [ManagePrescriptionsLogic]'s
          * internal List with data.
          * - Send the ID, old position, and new position to the Repo.
          * - In this test, the Repo will return [Completable.error].

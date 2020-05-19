@@ -12,7 +12,7 @@ import com.precopia.rxtracker.common.RxTrackerApplication
 import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.util.UtilSchedulerProvider
-import com.precopia.rxtracker.view.addprescriptionview.ItemTouchHelperCallback
+import com.precopia.rxtracker.view.manageprescriptionsview.ItemTouchHelperCallback
 import dagger.Module
 import dagger.Provides
 import io.reactivex.rxjava3.disposables.CompositeDisposable

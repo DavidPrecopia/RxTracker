@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.addprescriptionview
+package com.precopia.rxtracker.view.manageprescriptionsview
 
 import androidx.recyclerview.widget.DiffUtil
 import com.precopia.domain.datamodel.Prescription

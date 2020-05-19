@@ -1,4 +1,4 @@
-package com.precopia.rxtracker.view.addprescriptionview
+package com.precopia.rxtracker.view.manageprescriptionsview
 
 import com.precopia.domain.datamodel.Prescription
 import org.assertj.core.api.Assertions.assertThat
