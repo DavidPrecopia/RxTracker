@@ -104,11 +104,7 @@ class TimeStampLogic(
         disposable.add(subscribeCompletable(
                 repo.delete(id),
                 { /*intentionally empty*/ },
-                {
-                    UtilExceptions.throwException(
-                            IllegalStateException("Encountered an error deleting")
-                    )
-                },
+                { UtilExceptions.throwException(it) },
                 utilSchedulerProvider
         ))
     }
