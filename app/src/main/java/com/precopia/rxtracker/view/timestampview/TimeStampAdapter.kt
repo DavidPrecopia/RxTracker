@@ -59,13 +59,13 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
 
         private fun getContextMenu(id: Int) =
                 PopupMenu(iv_overflow_menu.context, iv_overflow_menu).apply {
-                    inflate(R.menu.popup_menu_list_item)
+                    inflate(R.menu.timestamp_popup_menu_list_item)
                     setOnMenuItemClickListener(getMenuClickListener(id))
                 }
 
         private fun getMenuClickListener(id: Int) = PopupMenu.OnMenuItemClickListener {
             when (it.itemId) {
-                R.id.menu_item_delete -> logic.onEvent(
+                R.id.menu_item_delete_timestamp -> logic.onEvent(
                         LogicEvents.DeleteItem(id, bindingAdapterPosition)
                 )
                 R.id.menu_item_edit_time -> logic.onEvent(

@@ -4,6 +4,6 @@
         android:id="@+id/menu_item_edit_time"
         android:title="@string/menu_item_title_edit_time" />
     <item
-        android:id="@+id/menu_item_delete"
+        android:id="@+id/menu_item_delete_timestamp"
         android:title="@string/menu_item_title_delete" />
 </menu>
