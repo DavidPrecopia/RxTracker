@@ -8,13 +8,13 @@ import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.timestampview.TimeStampLogic
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-@Suppress("UNCHECKED_CAST")
 class TimeStampLogicFactory(
         private val repo: ITimeStampRepoContract,
         private val utilSchedulerProvider: IUtilSchedulerProviderContract,
         private val disposable: CompositeDisposable,
         private val utilNightMode: IUtilNightModeContract
 ): ViewModelProvider.NewInstanceFactory() {
+    @Suppress("UNCHECKED_CAST")
     override fun <T: ViewModel?> create(modelClass: Class<T>): T {
         return TimeStampLogic(repo, utilSchedulerProvider, disposable, utilNightMode) as T
     }

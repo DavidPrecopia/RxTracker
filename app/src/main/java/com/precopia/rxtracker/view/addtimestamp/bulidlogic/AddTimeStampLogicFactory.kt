@@ -8,13 +8,13 @@ import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.addtimestamp.AddTimeStampLogic
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
-@Suppress("UNCHECKED_CAST")
 class AddTimeStampLogicFactory(
         private val prescriptionRepo: IPrescriptionRepoContract,
         private val timeStampRepo: ITimeStampRepoContract,
         private val utilSchedulerProvider: IUtilSchedulerProviderContract,
         private val disposable: CompositeDisposable
 ): ViewModelProvider.NewInstanceFactory() {
+    @Suppress("UNCHECKED_CAST")
     override fun <T: ViewModel?> create(modelClass: Class<T>): T {
         return AddTimeStampLogic(
                 prescriptionRepo, timeStampRepo, utilSchedulerProvider, disposable
