@@ -42,7 +42,7 @@ class ManagePrescriptionsAdapter(private val logic: IManagePrescriptionsContact.
     }
 
     override fun delete(position: Int) {
-        notifyItemRemoved(position)
+        notifyItemRangeRemoved(position, currentList.size)
     }
 
 

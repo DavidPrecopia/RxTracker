@@ -32,7 +32,7 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
     }
 
     override fun delete(position: Int) {
-        notifyItemRemoved(position)
+        notifyItemRangeRemoved(position, currentList.size)
     }
 
 
