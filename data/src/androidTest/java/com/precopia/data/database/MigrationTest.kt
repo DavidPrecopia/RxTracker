@@ -25,6 +25,9 @@ internal class MigrationTest {
             FrameworkSQLiteOpenHelperFactory()
     )
 
+    /**
+     * Test migration from v1 to v2.
+     */
     @Test
     @Throws(IOException::class)
     fun migrate1To2() {

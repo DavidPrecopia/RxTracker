@@ -28,7 +28,7 @@ internal class PrescriptionPositionsTest {
 
 
     @Nested
-    inner class Error {
+    inner class Update {
         /**
          * - The old and the new positions are the same.
          * - Returns [Completable.complete].
@@ -61,77 +61,75 @@ internal class PrescriptionPositionsTest {
 
             verify { dao wasNot Called }
         }
-    }
 
-    /**
-     * - The old position is less than new position.
-     * - Pass the (newPosition + 0.5) to the DAO.
-     * - Update the positions of all items so they are consecutive.
-     * - Pass the update list of items back to the DAO.
-     * - Verify all positions are consecutive.
-     */
-    @Test
-    fun `update - old position is less than new position`() {
-        val id = 100
-        val oldPosition = 0
-        val newPosition = 1
-        val updatedTempPosition = (newPosition + 0.5)
-        val prescriptionListTempPosition = mutableListOf(
-                DbPrescription(200, "title1", 1.0),
-                DbPrescription(id, "title0", updatedTempPosition),
-                DbPrescription(300, "title2", 2.0)
-        )
-        val prescriptionListPostPositionUpdates = mutableListOf(
-                DbPrescription(200, "title1", 0.0),
-                DbPrescription(id, "title0", 1.0),
-                DbPrescription(300, "title2", 2.0)
-        )
+        /**
+         * - The old position is less than new position.
+         * - Pass (newPosition + 0.5) to the DAO.
+         * - Pass the update List of items back to the DAO, verify that
+         * all of its items have consecutive positions.
+         */
+        @Test
+        fun `update - old position is less than new position`() {
+            val id = 100
+            val oldPosition = 0
+            val newPosition = 1
+            val updatedTempPosition = (newPosition + 0.5)
+            val prescriptionListTempPosition = mutableListOf(
+                    DbPrescription(200, "title1", 1.0),
+                    DbPrescription(id, "title0", updatedTempPosition),
+                    DbPrescription(300, "title2", 2.0)
+            )
+            val prescriptionListPostPositionUpdates = mutableListOf(
+                    DbPrescription(200, "title1", 0.0),
+                    DbPrescription(id, "title0", 1.0),
+                    DbPrescription(300, "title2", 2.0)
+            )
 
-        every { dao.updatePositionAndGetAll(id, updatedTempPosition) } returns prescriptionListTempPosition
-        every { dao.updateAllPositions(prescriptionListPostPositionUpdates) } returns Completable.complete()
+            every { dao.updatePositionAndGetAll(id, updatedTempPosition) } returns prescriptionListTempPosition
+            // This verifies that all positions are consecutive. This test will fail if the list do not match.
+            every { dao.updateAllPositions(prescriptionListPostPositionUpdates) } returns Completable.complete()
 
-        prescriptionPositions.update(id, oldPosition, newPosition)
-                .test()
-                .assertComplete()
+            prescriptionPositions.update(id, oldPosition, newPosition)
+                    .test()
+                    .assertComplete()
 
-        verify(exactly = 1) { dao.updatePositionAndGetAll(id, updatedTempPosition) }
-        verify(exactly = 1) { dao.updateAllPositions(prescriptionListPostPositionUpdates) }
-    }
+            verify(exactly = 1) { dao.updatePositionAndGetAll(id, updatedTempPosition) }
+            verify(exactly = 1) { dao.updateAllPositions(prescriptionListPostPositionUpdates) }
+        }
 
-    /**
-     * - The old position is less than new position.
-     * - Start a transaction via the database.
-     * - Pass the (newPosition - 0.5) to the DAO.
-     * - Retrieve all items via the DAO.
-     * - Update the positions of all items so they are consecutive.
-     * - Pass the update list of items back to the DAO.
-     * - Verify all positions are consecutive.
-     */
-    @Test
-    fun `update - old position is greater than new position`() {
-        val id = 200
-        val oldPosition = 1
-        val newPosition = 0
-        val updatedTempPosition = (newPosition - 0.5)
-        val prescriptionListTempPosition = mutableListOf(
-                DbPrescription(id, "title1", updatedTempPosition),
-                DbPrescription(100, "title0", 0.0),
-                DbPrescription(300, "title2", 2.0)
-        )
-        val prescriptionListPostModification = mutableListOf(
-                DbPrescription(id, "title1", 0.0),
-                DbPrescription(100, "title0", 1.0),
-                DbPrescription(300, "title2", 2.0)
-        )
+        /**
+         * - The old position is less than new position.
+         * - Pass the (newPosition - 0.5) to the DAO.
+         * - Pass the update List of items back to the DAO, verify that
+         * all of its items have consecutive positions.
+         */
+        @Test
+        fun `update - old position is greater than new position`() {
+            val id = 200
+            val oldPosition = 1
+            val newPosition = 0
+            val updatedTempPosition = (newPosition - 0.5)
+            val prescriptionListTempPosition = mutableListOf(
+                    DbPrescription(id, "title1", updatedTempPosition),
+                    DbPrescription(100, "title0", 0.0),
+                    DbPrescription(300, "title2", 2.0)
+            )
+            val prescriptionListPostModification = mutableListOf(
+                    DbPrescription(id, "title1", 0.0),
+                    DbPrescription(100, "title0", 1.0),
+                    DbPrescription(300, "title2", 2.0)
+            )
 
-        every { dao.updatePositionAndGetAll(id, updatedTempPosition) } returns prescriptionListTempPosition
-        every { dao.updateAllPositions(prescriptionListPostModification) } returns Completable.complete()
+            every { dao.updatePositionAndGetAll(id, updatedTempPosition) } returns prescriptionListTempPosition
+            // This verifies that all positions are consecutive. This test will fail if the list do not match.
+            every { dao.updateAllPositions(prescriptionListPostModification) } returns Completable.complete()
 
-        prescriptionPositions.update(id, oldPosition, newPosition)
-                .test()
-                .assertComplete()
+            prescriptionPositions.update(id, oldPosition, newPosition)
+                    .test()
+                    .assertComplete()
 
-        verify(exactly = 1) { dao.updatePositionAndGetAll(id, updatedTempPosition) }
-        verify(exactly = 1) { dao.updateAllPositions(prescriptionListPostModification) }
+            verify(exactly = 1) { dao.updatePositionAndGetAll(id, updatedTempPosition) }
+            verify(exactly = 1) { dao.updateAllPositions(prescriptionListPostModification) }
+        }
     }
 }

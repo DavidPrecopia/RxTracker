@@ -2,7 +2,6 @@ package com.precopia.data.repository
 
 import com.precopia.data.dao.PrescriptionDao
 import com.precopia.data.datamodel.DbPrescription
-import com.precopia.domain.datamodel.Prescription
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
@@ -30,8 +29,8 @@ internal class PrescriptionRepoTest {
     @Nested
     inner class GetAll {
         /**
-         * - Verify that an RxJava 3 Flowable is returned of type [Prescription].
-         * - It will be successful in this test.
+         * - Verify that an RxJava 3 Flowable is returned of.
+         * - It will complete in this test.
          */
         @Test
         fun `getAll - success`() {
@@ -47,8 +46,8 @@ internal class PrescriptionRepoTest {
         }
 
         /**
-         * - Verify that an RxJava 3 Flowable is returned of type [Prescription].
-         * - It will return an Throwable in this test.
+         * - Verify that an RxJava 3 Flowable is returned.
+         * - It will error in this test.
          */
         @Test
         fun `getAll - failure`() {

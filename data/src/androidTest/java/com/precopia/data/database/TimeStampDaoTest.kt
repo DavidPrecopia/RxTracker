@@ -39,9 +39,7 @@ internal class TimeStampDaoTest {
     /**
      * - Clear the database.
      * - Add a [DbTimeStamp].
-     * - Verify that is was successfully added.
-     * - Retrieve it.
-     * - Verify that it is unmodified.
+     * - Retrieve it and verify that it is unmodified.
      */
     @Test
     fun addAndGet() {
@@ -66,10 +64,8 @@ internal class TimeStampDaoTest {
     /**
      * - Clear the database.
      * - Add a [DbTimeStamp].
-     * - Verify that is was successfully added.
      * - Retrieve it to get its ID.
      * - Delete it.
-     * - Verify that it was successfully deleted.
      * - Get all and verify that it is not in the returned list.
      */
     @Test
@@ -100,9 +96,8 @@ internal class TimeStampDaoTest {
      * - Clear the database.
      * - Add a [DbTimeStamp].
      * - Retrieve it to get its ID.
-     * - Verify that is was successfully added.
      * - Modify its time with its ID.
-     * - Retrieve the inserted [DbTimeStamp] and verify the change was made.
+     * - Retrieve it and verify the change was made.
      */
     @Test
     fun modifyTime() {

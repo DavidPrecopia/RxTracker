@@ -40,7 +40,6 @@ internal class PrescriptionDaoTest {
     /**
      * - Clear the database.
      * - Add a [DbPrescription].
-     * - Verify that it was successful added.
      * - Retrieve it.
      * - Verify that it is unmodified.
      */
@@ -63,7 +62,6 @@ internal class PrescriptionDaoTest {
     /**
      * - Clear the database.
      * - Add a [DbPrescription].
-     * - Verify that it was successful added.
      * - Retrieve it to get its ID.
      * - Delete it with its ID.
      * - Get all and verify the returned List is empty.
@@ -121,7 +119,7 @@ internal class PrescriptionDaoTest {
      * - Clear the database.
      * - Add a [DbPrescription].
      * - Retrieve it to get its ID.
-     * - Modify its position with its ID.
+     * - Updated its position with its ID.
      * - Retrieve the inserted [DbPrescription] and verify the change was made.
      */
     @Test
@@ -150,8 +148,7 @@ internal class PrescriptionDaoTest {
     /**
      * - Clear the database.
      * - Add a [DbPrescription].
-     * - Retrieve it.
-     * - Verify that it is unmodified.
+     * - Retrieve it and verify that it is unmodified.
      */
     @Test
     fun getAllSynchronously() {
@@ -173,9 +170,8 @@ internal class PrescriptionDaoTest {
     /**
      * - Clear the database.
      * - Add two [DbPrescription].
-     * - Retrieve both.
-     * - Modify both of their respective positions.
-     * - Retrieve both are verify that the changes have been made.
+     * - Retrieve both and update both of their positions.
+     * - Retrieve both are verify that the changes were made.
      */
     @Test
     fun updateAllPositions() {
@@ -211,7 +207,7 @@ internal class PrescriptionDaoTest {
 
     /**
      * - Clear the database.
-     * - An empty database should return an empty List.
+     * - Verify that an empty List is returned from the database.
      */
     @Test
     fun emptyDatabaseReturnsNothing() {

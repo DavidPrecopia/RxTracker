@@ -3,7 +3,6 @@ package com.precopia.data.repository
 import com.precopia.data.dao.TimeStampDao
 import com.precopia.data.datamodel.DbTimeStamp
 import com.precopia.data.util.ITimeUtil
-import com.precopia.domain.datamodel.TimeStamp
 import io.mockk.CapturingSlot
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -34,8 +33,8 @@ internal class TimeStampRepoTest {
     @Nested
     inner class GetAll {
         /**
-         * - Verify that an RxJava 3 Flowable is returned of type [TimeStamp].
-         * - It will be successful in this test.
+         * - Verify that an RxJava 3 Flowable is returned.
+         * - It will complete in this test.
          */
         @Test
         fun `getAll - success`() {
@@ -51,8 +50,8 @@ internal class TimeStampRepoTest {
         }
 
         /**
-         * - Verify that an RxJava 3 Flowable is returned of type [TimeStamp].
-         * - It will return an Throwable in this test.
+         * - Verify that an RxJava 3 Flowable is returned.
+         * - It will error in this test.
          */
         @Test
         fun `getAll - failure`() {
@@ -107,9 +106,9 @@ internal class TimeStampRepoTest {
     @Nested
     inner class Delete {
         /**
-         * - Accept the prescription's title as a parameter.
          * - Acquire the current date and time.
-         * - Create a new instance of [DbTimeStamp].
+         * - Create a new instance of [DbTimeStamp] with passed-in title
+         * and said date and time.
          * - Pass the instance to the Dao.
          */
         @Test
