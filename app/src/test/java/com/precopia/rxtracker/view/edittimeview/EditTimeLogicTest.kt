@@ -43,8 +43,8 @@ internal class EditTimeLogicTest {
         /**
          * - Pass the ID, hour, and minute via [LogicEvents.UpdateTime].
          * - Verify that the arguments passed to [ITimeStampRepoContract.modifyTime]
-         * have not been modified.
-         *   - The ID is unmodified and the [Calendar] instance has the same hour and minute.
+         * have not been modified - the ID is unmodified and the [Calendar] instance
+         * has the same hour and minute.
          * - The repo will return [Completable.complete].
          */
         @Test

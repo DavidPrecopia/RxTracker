@@ -7,14 +7,14 @@ import org.junit.jupiter.api.assertThrows
 
 class UtilExceptionsTest {
     @Test
-    fun `Throw RuntimeException`() {
+    fun `throwException - RuntimeException`() {
         assertThrows<RuntimeException> {
             UtilExceptions.throwException(RuntimeException())
         }
     }
 
     @Test
-    fun `Throw ThrowableException`() {
+    fun `throwException - Throwable`() {
         val throwableMock = mockk<Throwable>(relaxed = true)
 
         UtilExceptions.throwException(throwableMock)

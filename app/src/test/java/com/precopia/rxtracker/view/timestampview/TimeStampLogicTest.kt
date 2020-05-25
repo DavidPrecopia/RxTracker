@@ -58,7 +58,7 @@ internal class TimeStampLogicTest {
     @Nested
     inner class OnStart {
         /**
-         * - Send event [ViewEvents.DisplayLoading].
+         * - Send [ViewEvents.DisplayLoading].
          * - Get all from the Repo - it will contain data in this test.
          * - Send the data returned by the Repo to the View via [ViewEvents.DisplayList].
          */
@@ -83,7 +83,7 @@ internal class TimeStampLogicTest {
         }
 
         /**
-         * - Send event [ViewEvents.DisplayLoading].
+         * - Send [ViewEvents.DisplayLoading].
          * - Get all from the Repo - it will be empty in this test.
          * - Send [ERROR_EMPTY_LIST] to the View via [ViewEvents.DisplayError].
          * - Verify that [ViewEvents.DisplayList] was not sent.
@@ -109,7 +109,7 @@ internal class TimeStampLogicTest {
         }
 
         /**
-         * - Send event [ViewEvents.DisplayLoading].
+         * - Send [ViewEvents.DisplayLoading].
          * - Get all from the Repo - an exception will be returned.
          * - Send [ERROR_GENERIC] to the View via [ViewEvents.DisplayError].
          * - Throw the exception.
@@ -140,7 +140,8 @@ internal class TimeStampLogicTest {
     @Nested
     inner class OpenPrescriptionView {
         /**
-         * - Send the [ViewEvents.OpenPrescriptionView] event to the View.
+         * - Send [LogicEvents.OpenAddPrescriptionView].
+         * - Send [ViewEvents.OpenPrescriptionView] to the View.
          */
         @Test
         fun openPrescriptionViewEvent() {
@@ -155,7 +156,8 @@ internal class TimeStampLogicTest {
     @Nested
     inner class OpenAddTimeStampView {
         /**
-         * - Send the [ViewEvents.OpenAddTimeStampView] event to the View.
+         * - Send [LogicEvents.OpenAddTimeStampView].
+         * - Send [ViewEvents.OpenAddTimeStampView] to the View.
          */
         @Test
         fun openAddTimeStampView() {
@@ -170,7 +172,7 @@ internal class TimeStampLogicTest {
     @Nested
     inner class DeleteItem {
         /**
-         * - Pass the function the position of the list item.
+         * - Pass the position of the list item.
          *   - In this test it will be 0 or greater, thus valid.
          * -  Pass the position to the View via the [ViewEvents.DeleteItem] event.
          * - Pass the ID to the repo.
@@ -190,7 +192,7 @@ internal class TimeStampLogicTest {
         }
 
         /**
-         * - Pass the function the position of the list item.
+         * - Pass the position of the list item.
          *   - In this test it will be less than 0, thus invalid.
          * - An Exception will be thrown.
          * - Verify no events were sent to the View and the Repo was not called.
@@ -215,7 +217,7 @@ internal class TimeStampLogicTest {
     @Nested
     inner class NightMode {
         /**
-         * - It will be enable at the start of the test.
+         * - Night mode will be enable at the start of the test.
          * - Set day.
          */
         @Test
@@ -226,7 +228,7 @@ internal class TimeStampLogicTest {
         }
 
         /**
-         * - It will be enable at the start of the test.
+         * - Night mode will be enable at the start of the test.
          * - Set day.
          */
         @Test

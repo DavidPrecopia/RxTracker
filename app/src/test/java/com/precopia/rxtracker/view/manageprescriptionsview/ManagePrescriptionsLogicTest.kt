@@ -60,9 +60,9 @@ internal class ManagePrescriptionsLogicTest {
     @Nested
     inner class OnStart {
         /**
-         * - Send event [ViewEvents.DisplayLoading].
+         * - Send [ViewEvents.DisplayLoading].
          * - Get all from the Repo - in this test a List of data will be returned.
-         * - Sent event [ViewEvents.DisplayList].
+         * - Sent [ViewEvents.DisplayList] to the View.
          */
         @Test
         fun `onStart - normal`() {
@@ -85,9 +85,9 @@ internal class ManagePrescriptionsLogicTest {
         }
 
         /**
-         * - Send event [ViewEvents.DisplayLoading].
+         * - Send [ViewEvents.DisplayLoading].
          * - Get all from the Repo - in this test an empty List will be returned.
-         * - Sent event [ViewEvents.DisplayError] with [ERROR_EMPTY_LIST].
+         * - Sent [ViewEvents.DisplayError] with [ERROR_EMPTY_LIST] to the View.
          */
         @Test
         fun `onStart - empty list`() {
@@ -110,10 +110,10 @@ internal class ManagePrescriptionsLogicTest {
         }
 
         /**
-         * - Send event [ViewEvents.DisplayLoading].
+         * - Send [ViewEvents.DisplayLoading].
          * - Get all from the Repo - in this test the repo will return an error.
          * - Throw the Exception returned by the repo.
-         * - Sent event [ViewEvents.DisplayError] with [ERROR_GENERIC].
+         * - Sent [ViewEvents.DisplayError] with [ERROR_GENERIC] to the View.
          */
         @Test
         fun `onStart - error`() {
@@ -142,7 +142,7 @@ internal class ManagePrescriptionsLogicTest {
     inner class Save {
         /**
          * - Save to the repo - verify the title is unchanged.
-         * - In this test the repo will indicate that the save was successful.
+         * - It will complete in this test.
          * - Send [ViewEvents.DisplayMessage] to the View with [MSG_SUCCESSFULLY_SAVE].
          *
          * - BE MINDFUL OF: the position sent to [IPrescriptionRepoContract.add]
@@ -166,7 +166,7 @@ internal class ManagePrescriptionsLogicTest {
 
         /**
          * - Save to the repo - verify the title is unchanged.
-         * - In this test the repo will indicate that the save failed.
+         * - It will error in this test.
          * - Throw the Exception returned by the repo.
          * - Send [ViewEvents.DisplayMessage] to the View with [ERROR_OPERATION_FAILED].
          *
@@ -244,8 +244,8 @@ internal class ManagePrescriptionsLogicTest {
         /**
          * - Prepare the class via [LogicEvents.OnStart] - load [ManagePrescriptionsLogic]'s
          * internal List with data.
-         * - Send the ID, old position, and new position to the Repo.
-         * - Verify they were sent to the Repo unmodified.
+         * - Send the ID, old position, and new position to the Repo, verify they were
+         * sent unmodified.
          * - In this test, the Repo will return [Completable.complete].
          */
         @Test
@@ -276,8 +276,7 @@ internal class ManagePrescriptionsLogicTest {
          * - Prepare the class via [LogicEvents.OnStart] - load [ManagePrescriptionsLogic]'s
          * internal List with data.
          * - Send the ID, old position, and new position to the Repo.
-         * - In this test, the Repo will return [Completable.error].
-         * - Verify that it was thrown.
+         * - In this test, the Repo will return [Completable.error], verify it was thrown.
          */
         @Test
         fun `permanentlyMoved - failure`() {
@@ -309,7 +308,7 @@ internal class ManagePrescriptionsLogicTest {
         /**
          * - Send [ViewEvents.DeleteItem] to the View with the passed-in position.
          * - Send the passed-in ID to the Repo.
-         *   - In this test the Repo will successfully complete.
+         * - It will complete in this test.
          */
         @Test
         fun `delete - success`() {
@@ -346,8 +345,8 @@ internal class ManagePrescriptionsLogicTest {
         /**
          * - Send [ViewEvents.DeleteItem] to the View with the passed-in position.
          * - Send the passed-in ID to the Repo.
-         *   - In this test the Repo will return a Throwable.
-         *   - Verify that the Throwable was thrown.
+         * - In this test the Repo will return a Throwable.
+         * - Verify that the Throwable was thrown.
          */
         @Test
         fun `delete - error`() {

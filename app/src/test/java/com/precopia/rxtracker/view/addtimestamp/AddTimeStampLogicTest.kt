@@ -58,7 +58,7 @@ internal class AddTimeStampLogicTest {
     @Nested
     inner class OnStart {
         /**
-         * - Send event [ViewEvents.DisplayLoading].
+         * - Send [ViewEvents.DisplayLoading].
          * - Get all from the Repo - it will contain data in this test.
          * - Map the data to a List of Strings and send it to the View via [ViewEvents.DisplayList].
          */
@@ -84,7 +84,7 @@ internal class AddTimeStampLogicTest {
         }
 
         /**
-         * - Send event [ViewEvents.DisplayLoading].
+         * - Send [ViewEvents.DisplayLoading].
          * - Get all from the Repo - it will be empty in this test.
          * - Send [ViewEvents.DisplayError] to the View with the message [ERROR_EMPTY_LIST].
          * - Verify that [ViewEvents.DisplayList] was not sent.
@@ -110,7 +110,7 @@ internal class AddTimeStampLogicTest {
         }
 
         /**
-         * - Send event [ViewEvents.DisplayLoading].
+         * - Send [ViewEvents.DisplayLoading].
          * - Get all from the Repo - a Throwable will be returned in this test.
          * - Send [ViewEvents.DisplayError] to the View with the message [ERROR_GENERIC].
          * - Verify that the Throwable was thrown.
@@ -142,7 +142,7 @@ internal class AddTimeStampLogicTest {
     inner class Save {
         /**
          * - Pass [LogicEvents.Save]'s argument to [ITimeStampRepoContract].
-         *   - It will be successfully added in this test.
+         * - It will complete in this test.
          * - Send [ViewEvents.Close] to the View.
          */
         @Test
@@ -161,7 +161,7 @@ internal class AddTimeStampLogicTest {
 
         /**
          * - Pass [LogicEvents.Save]'s argument to [ITimeStampRepoContract].
-         *   - It will fail in this test.
+         * - It will error in this test.
          * - Throw the returned Throwable.
          * - Send [ViewEvents.DisplayMessage] to the View with [ERROR_OPERATION_FAILED].
          * - Send [ViewEvents.Close] to the View.
