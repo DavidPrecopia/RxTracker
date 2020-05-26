@@ -25,17 +25,19 @@ class EditTimeModule {
     @ViewScope
     @Provides
     fun dialog(onTimeSetListener: TimePickerDialog.OnTimeSetListener,
-               calendar: Calendar,
+               dateTime: String,
+               utilParseDateTime: IUtilParseDateTime,
                application: Application,
                dismissListener: DialogInterface.OnDismissListener,
                utilNightMode: IUtilNightModeContract
     ): TimePickerDialog {
+        val parsedTime = utilParseDateTime.parsedTime(dateTime)
         val white = "#FFFFFF"
 
         return TimePickerDialog.newInstance(
                 onTimeSetListener,
-                calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE),
+                parsedTime[0],
+                parsedTime[1],
                 DateFormat.is24HourFormat(application)
         ).apply {
             version = VERSION_2

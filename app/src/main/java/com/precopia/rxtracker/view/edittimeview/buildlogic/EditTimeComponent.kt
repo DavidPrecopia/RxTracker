@@ -33,5 +33,8 @@ interface EditTimeComponent {
 
         @BindsInstance
         fun dismissListener(dismissListener: DialogInterface.OnDismissListener): Builder
+
+        @BindsInstance
+        fun dateTime(dateTime: String): Builder
     }
 }

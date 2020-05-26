@@ -40,6 +40,7 @@ class EditTimeView: DialogFragment(),
                 .view(this)
                 .onTimeSetListener(this)
                 .dismissListener(this)
+                .dateTime(args.dateTime)
                 .build()
                 .inject(this)
     }
