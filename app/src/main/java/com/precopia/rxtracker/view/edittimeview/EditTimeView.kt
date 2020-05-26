@@ -51,7 +51,7 @@ class EditTimeView: DialogFragment(),
 
 
     override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {
-        logic.onEvent(LogicEvents.UpdateTime(args.id, hourOfDay, minute))
+        logic.onEvent(LogicEvents.UpdateTime(args.id, args.dateTime, hourOfDay, minute))
     }
 
     override fun onDismiss(dialog: DialogInterface) {

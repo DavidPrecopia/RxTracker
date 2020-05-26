@@ -50,26 +50,26 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
         fun bindView(timeStamp: TimeStamp) {
             tv_title.text = timeStamp.title
             tv_time.text = timeStamp.time
-            initContextMenu(timeStamp.id)
+            initContextMenu(timeStamp)
         }
 
-        private fun initContextMenu(id: Int) {
-            iv_overflow_menu.setOnClickListener { getContextMenu(id).show() }
+        private fun initContextMenu(timeStamp: TimeStamp) {
+            iv_overflow_menu.setOnClickListener { getContextMenu(timeStamp).show() }
         }
 
-        private fun getContextMenu(id: Int) =
+        private fun getContextMenu(timeStamp: TimeStamp) =
                 PopupMenu(iv_overflow_menu.context, iv_overflow_menu).apply {
                     inflate(R.menu.timestamp_popup_menu_list_item)
-                    setOnMenuItemClickListener(getMenuClickListener(id))
+                    setOnMenuItemClickListener(getMenuClickListener(timeStamp))
                 }
 
-        private fun getMenuClickListener(id: Int) = PopupMenu.OnMenuItemClickListener {
+        private fun getMenuClickListener(timeStamp: TimeStamp) = PopupMenu.OnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_item_delete_timestamp -> logic.onEvent(
-                        LogicEvents.DeleteItem(id, bindingAdapterPosition)
+                        LogicEvents.DeleteItem(timeStamp.id, bindingAdapterPosition)
                 )
                 R.id.menu_item_edit_time -> logic.onEvent(
-                        LogicEvents.EditTime(id)
+                        LogicEvents.EditTime(timeStamp.id, timeStamp.time)
                 )
                 else -> UtilExceptions.throwException(IllegalArgumentException("Unknown menu ID"))
             }

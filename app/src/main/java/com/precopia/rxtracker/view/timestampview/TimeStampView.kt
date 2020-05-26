@@ -86,7 +86,7 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
             is ViewEvents.DeleteItem -> adapter.delete(event.position)
             ViewEvents.OpenAddTimeStampView -> openAddTimeStampView()
             ViewEvents.OpenPrescriptionView -> openPrescriptionView()
-            is ViewEvents.OpenEditTimeView -> openEditTimeView(event.id)
+            is ViewEvents.OpenEditTimeView -> openEditTimeView(event.id, event.dateTime)
         }
     }
 
@@ -102,9 +102,9 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
         )
     }
 
-    private fun openEditTimeView(id: Int) {
+    private fun openEditTimeView(id: Int, time: String) {
         navigate(
-                TimeStampViewDirections.actionTimesListViewToEditTimeView(id)
+                TimeStampViewDirections.actionTimesListViewToEditTimeView(id, time)
         )
     }
 

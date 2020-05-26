@@ -170,6 +170,25 @@ internal class TimeStampLogicTest {
     }
 
     @Nested
+    inner class EditTime {
+        /**
+         * - Send [LogicEvents.EditTime].
+         * - Send [ViewEvents.OpenEditTimeView] to the View.
+         */
+        @Test
+        fun editTime() {
+            val id = 100
+            val time = "time"
+
+            logic.onEvent(LogicEvents.EditTime(id, time))
+
+            logic.observe().observeForTesting {
+                assertThat(logic.observe().value).isEqualTo(ViewEvents.OpenEditTimeView(id, time))
+            }
+        }
+    }
+
+    @Nested
     inner class DeleteItem {
         /**
          * - Pass the position of the list item.

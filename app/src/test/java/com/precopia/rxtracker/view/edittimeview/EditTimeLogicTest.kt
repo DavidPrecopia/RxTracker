@@ -2,6 +2,7 @@ package com.precopia.rxtracker.view.edittimeview
 
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.UtilSchedulerProviderMockInit
+import com.precopia.rxtracker.util.IUtilParseDateTime
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.edittimeview.IEditTimeContract.LogicEvents
 import io.mockk.CapturingSlot
@@ -27,8 +28,12 @@ internal class EditTimeLogicTest {
 
     private val disposable = spyk<CompositeDisposable>()
 
+    private val utilParseDateTime = mockk<IUtilParseDateTime>()
 
-    private val logic = EditTimeLogic(repo, schedulerProvider, disposable)
+
+    private val logic = EditTimeLogic(
+            repo, schedulerProvider, disposable, utilParseDateTime
+    )
 
 
     @BeforeEach
@@ -52,9 +57,16 @@ internal class EditTimeLogicTest {
             val captureId = CapturingSlot<Int>()
             val captureCalendar = CapturingSlot<Calendar>()
             val id = 1
-            val hour = 1
-            val minute = 1
+            val month = "01"
+            val day = "01"
+            val year = "2020"
+            val hour = "12"
+            val minute = "00"
+            val dateTime = "$month/$day/$year $hour:$minute"
 
+            every {
+                utilParseDateTime.parsedDate(dateTime)
+            } returns listOf(month.toInt(), day.toInt(), year.toInt())
             every {
                 repo.modifyTime(
                         id = capture(captureId),
@@ -62,11 +74,15 @@ internal class EditTimeLogicTest {
                 )
             } returns Completable.complete()
 
-            logic.onEvent(LogicEvents.UpdateTime(id, hour, minute))
+            logic.onEvent(LogicEvents.UpdateTime(id, dateTime, hour.toInt(), minute.toInt()))
 
             assertThat(captureId.captured).isEqualTo(id)
-            assertThat(captureCalendar.captured[Calendar.MINUTE]).isEqualTo(minute)
-            assertThat(captureCalendar.captured[Calendar.HOUR_OF_DAY]).isEqualTo(hour)
+            // Decrementing month by 1 due to how Calendar store months.
+            assertThat(captureCalendar.captured[Calendar.MONTH]).isEqualTo(month.toInt() - 1)
+            assertThat(captureCalendar.captured[Calendar.DATE]).isEqualTo(day.toInt())
+            assertThat(captureCalendar.captured[Calendar.YEAR]).isEqualTo(year.toInt())
+            assertThat(captureCalendar.captured[Calendar.MINUTE]).isEqualTo(minute.toInt())
+            assertThat(captureCalendar.captured[Calendar.HOUR_OF_DAY]).isEqualTo(hour.toInt())
         }
 
         /**
@@ -76,14 +92,21 @@ internal class EditTimeLogicTest {
          */
         @Test
         fun `onEvent - update time - error`() {
-            val id = 1
-            val hour = 1
-            val minute = 1
             val throwable = mockk<Throwable>(relaxed = true)
+            val id = 1
+            val month = "01"
+            val day = "01"
+            val year = "2020"
+            val hour = "01"
+            val minute = "01"
+            val dateTime = "$month/$day/$year $hour:$minute"
 
+            every {
+                utilParseDateTime.parsedDate(dateTime)
+            } returns listOf(month.toInt(), day.toInt(), year.toInt())
             every { repo.modifyTime(any(), any()) } returns Completable.error(throwable)
 
-            logic.onEvent(LogicEvents.UpdateTime(id, hour, minute))
+            logic.onEvent(LogicEvents.UpdateTime(id, dateTime, hour.toInt(), minute.toInt()))
 
             verify(atLeast = 1) { throwable.printStackTrace() }
         }

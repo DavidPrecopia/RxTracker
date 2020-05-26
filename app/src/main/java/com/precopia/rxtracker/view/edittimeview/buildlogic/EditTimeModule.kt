@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.common.buildlogic.ViewScope
 import com.precopia.rxtracker.util.IUtilNightModeContract
+import com.precopia.rxtracker.util.IUtilParseDateTime
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
+import com.precopia.rxtracker.util.UtilParseDateTime
 import com.precopia.rxtracker.view.edittimeview.EditTimeLogic
 import com.precopia.rxtracker.view.edittimeview.IEditTimeContract
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
@@ -57,9 +59,18 @@ class EditTimeModule {
     @Provides
     fun factory(repo: ITimeStampRepoContract,
                 utilSchedulerProvider: IUtilSchedulerProviderContract,
-                disposable: CompositeDisposable
+                disposable: CompositeDisposable,
+                utilParseDateTime: IUtilParseDateTime
     ): ViewModelProvider.NewInstanceFactory {
-        return EditTimeLogicFactory(repo, utilSchedulerProvider, disposable)
+        return EditTimeLogicFactory(
+                repo, utilSchedulerProvider, disposable, utilParseDateTime
+        )
+    }
+
+    @ViewScope
+    @Provides
+    fun utilParseDateTime(): IUtilParseDateTime {
+        return UtilParseDateTime()
     }
 
     @ViewScope

@@ -8,6 +8,6 @@ interface IEditTimeContract {
     }
 
     sealed class LogicEvents {
-        data class UpdateTime(val id: Int, val hourOfDay: Int, val minute: Int): LogicEvents()
+        data class UpdateTime(val id: Int, val dateTime: String, val hourOfDay: Int, val minute: Int): LogicEvents()
     }
 }
