@@ -1,5 +1,6 @@
 package com.precopia.data.util
 
+import com.precopia.domain.time.TIME_FORMAT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.text.SimpleDateFormat
@@ -48,7 +49,7 @@ internal class TimeUtilTest {
 
     private fun properlyFormattedDate(calendar: Calendar) =
             SimpleDateFormat(
-                    TIME_UTIL_FORMAT,
+                    TIME_FORMAT,
                     Locale.US
             ).format(
                     calendar.time

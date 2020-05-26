@@ -1,5 +1,6 @@
 package com.precopia.data.util
 
+import com.precopia.domain.time.TIME_FORMAT
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -12,7 +13,7 @@ internal class TimeUtil: ITimeUtil {
 
     private fun getFormattedDate(calendar: Calendar = Calendar.getInstance()) =
             SimpleDateFormat(
-                    TIME_UTIL_FORMAT,
+                    TIME_FORMAT,
                     Locale.US
             ).format(
                     calendar.time
