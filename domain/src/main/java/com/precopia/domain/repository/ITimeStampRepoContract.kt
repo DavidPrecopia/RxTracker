@@ -12,5 +12,5 @@ interface ITimeStampRepoContract {
 
     fun delete(id: Int): Completable
 
-    fun modifyTime(id: Int, calendar: Calendar): Completable
+    fun modifyDateTime(id: Int, calendar: Calendar): Completable
 }

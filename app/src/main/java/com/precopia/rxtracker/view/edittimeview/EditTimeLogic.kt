@@ -26,7 +26,7 @@ class EditTimeLogic(private val repo: ITimeStampRepoContract,
 
     private fun updateTime(id: Int, dateTime: String, hourOfDay: Int, minute: Int) {
         disposable.add(subscribeCompletable(
-                repo.modifyTime(id, getCalendar(dateTime, hourOfDay, minute)),
+                repo.modifyDateTime(id, getCalendar(dateTime, hourOfDay, minute)),
                 { /*intentionally blank*/ },
                 { UtilExceptions.throwException(it) },
                 utilSchedulerProvider

@@ -38,6 +38,10 @@ class TimeStampLogic(
                 viewEventLiveData.setValue(ViewEvents.OpenEditTimeView(
                         event.id, event.dateTime
                 ))
+            is LogicEvents.EditDate ->
+                viewEventLiveData.setValue(ViewEvents.OpenEditDateView(
+                        event.id, event.dateTime
+                ))
             is LogicEvents.DeleteItem -> validateDeletePosition(event.id, event.position)
             LogicEvents.OpenAddPrescriptionView -> viewEventLiveData.setValue(ViewEvents.OpenPrescriptionView)
             LogicEvents.OpenAddTimeStampView -> viewEventLiveData.setValue(ViewEvents.OpenAddTimeStampView)

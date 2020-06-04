@@ -11,6 +11,7 @@
 
     <string name="menu_item_title_prescriptions">Prescriptions</string>
     <string name="menu_item_title_edit_time">Edit Time</string>
+    <string name="menu_item_title_edit_date">Edit Date</string>
     <string name="menu_item_title_delete">Delete</string>
 
     <string name="button_title_save">Save</string>

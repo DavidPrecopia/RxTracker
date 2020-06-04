@@ -31,6 +31,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_timesListView_to_editDateView"
+            app:destination="@id/editDateView"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -49,6 +56,18 @@
         android:id="@+id/editTimeView"
         android:name="com.precopia.rxtracker.view.edittimeview.EditTimeView"
         android:label="@string/nav_label_edit_time">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="dateTime"
+            app:argType="string" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/editDateView"
+        android:name="com.precopia.rxtracker.view.editdateview.EditDateView"
+        android:label="EditDateView">
         <argument
             android:name="id"
             app:argType="integer" />
