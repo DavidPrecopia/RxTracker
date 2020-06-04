@@ -77,8 +77,7 @@ internal class EditTimeLogicTest {
             logic.onEvent(LogicEvents.UpdateTime(id, dateTime, hour.toInt(), minute.toInt()))
 
             assertThat(captureId.captured).isEqualTo(id)
-            // Decrementing month by 1 due to how Calendar store months.
-            assertThat(captureCalendar.captured[Calendar.MONTH]).isEqualTo(month.toInt() - 1)
+            assertThat(captureCalendar.captured[Calendar.MONTH]).isEqualTo(month.toInt())
             assertThat(captureCalendar.captured[Calendar.DATE]).isEqualTo(day.toInt())
             assertThat(captureCalendar.captured[Calendar.YEAR]).isEqualTo(year.toInt())
             assertThat(captureCalendar.captured[Calendar.MINUTE]).isEqualTo(minute.toInt())

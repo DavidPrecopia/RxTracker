@@ -36,8 +36,7 @@ class EditTimeLogic(private val repo: ITimeStampRepoContract,
     private fun getCalendar(dateTime: String, hourOfDay: Int, minute: Int): Calendar {
         val dateList = utilParseDateTime.parsedDate(dateTime)
         return Calendar.getInstance().apply {
-            // Decrementing month by 1 due to how Calendar store months.
-            set(Calendar.MONTH, (dateList[0] - 1))
+            set(Calendar.MONTH, (dateList[0]))
             set(Calendar.DATE, dateList[1])
             set(Calendar.YEAR, dateList[2])
             set(Calendar.HOUR_OF_DAY, hourOfDay)
