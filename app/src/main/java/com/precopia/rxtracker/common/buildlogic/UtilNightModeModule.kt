@@ -7,7 +7,6 @@ import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.UtilNightMode
 import dagger.Module
 import dagger.Provides
-import org.jetbrains.anko.defaultSharedPreferences
 import javax.inject.Singleton
 
 @Module

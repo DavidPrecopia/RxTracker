@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
-import org.intellij.lang.annotations.PrintFormat
 import org.jetbrains.anko.defaultSharedPreferences
 import javax.inject.Singleton
 
