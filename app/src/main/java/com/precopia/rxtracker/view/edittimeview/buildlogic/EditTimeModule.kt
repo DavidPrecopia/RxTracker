@@ -18,7 +18,6 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog.Version.VERSION
 import dagger.Module
 import dagger.Provides
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import java.util.*
 
 @Module
 class EditTimeModule {
@@ -73,11 +72,5 @@ class EditTimeModule {
     @Provides
     fun utilParseDateTime(): IUtilParseDateTime {
         return UtilParseDateTime()
-    }
-
-    @ViewScope
-    @Provides
-    fun calendar(): Calendar {
-        return Calendar.getInstance()
     }
 }

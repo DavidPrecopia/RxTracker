@@ -9,7 +9,6 @@ import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.view.edittimeview.IEditTimeContract.LogicEvents
 import com.precopia.rxtracker.view.edittimeview.buildlogic.DaggerEditTimeComponent
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
-import java.util.*
 import javax.inject.Inject
 
 class EditTimeView: DialogFragment(),
@@ -22,9 +21,6 @@ class EditTimeView: DialogFragment(),
 
     @Inject
     lateinit var logic: IEditTimeContract.Logic
-
-    @Inject
-    lateinit var calendar: Calendar
 
     private val args: EditTimeViewArgs by navArgs()
 
