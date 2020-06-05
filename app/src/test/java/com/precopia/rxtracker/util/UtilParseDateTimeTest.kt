@@ -3,6 +3,7 @@ package com.precopia.rxtracker.util
 import com.precopia.domain.time.TIME_FORMAT
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.util.*
 
 /**
  * [UtilParseDateTime] operates on the assumption that the date and time String
@@ -14,6 +15,11 @@ internal class UtilParseDateTimeTest {
     private val util = UtilParseDateTime()
 
 
+    /**
+     * The returned month is formatted for use with [Calendar];
+     * it is decremented by 1 due to the way [Calendar]
+     * stores months - i.e., January is 0.
+     */
     @Test
     fun parsedDate() {
         val month = "01"
@@ -21,7 +27,7 @@ internal class UtilParseDateTimeTest {
         val year = "2020"
         val dateTime = "$month/$day/$year 12:00"
 
-        val parsedList = listOf(month.toInt(), day.toInt(), year.toInt())
+        val parsedList = listOf(month.toInt() - 1, day.toInt(), year.toInt())
 
         assertThat(
                 util.parsedDate(dateTime)
