@@ -12,7 +12,6 @@ import com.precopia.rxtracker.view.common.ERROR_GENERIC
 import com.precopia.rxtracker.view.common.ERROR_OPERATION_FAILED
 import com.precopia.rxtracker.view.common.ERROR_TITLE
 import com.precopia.rxtracker.view.common.MSG_SUCCESSFULLY_SAVE
-import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.Logic
 import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.LogicEvents
 import com.precopia.rxtracker.view.manageprescriptionsview.IManagePrescriptionsContact.ViewEvents
 import io.mockk.Called
@@ -41,17 +40,13 @@ internal class ManagePrescriptionsLogicTest {
     private val disposable = spyk<CompositeDisposable>()
 
 
-    private lateinit var logic: ManagePrescriptionsLogic
+    private val logic = ManagePrescriptionsLogic(
+            repo, schedulerProvider, disposable
+    )
 
 
-    /**
-     * I am re-instantiating the class under test before each test.
-     * to ensure that the observable returned by [Logic.observe].
-     * is cleared before the following test.
-     */
     @BeforeEach
     fun setUp() {
-        logic = ManagePrescriptionsLogic(repo, schedulerProvider, disposable)
         clearAllMocks()
         UtilSchedulerProviderMockInit.init(schedulerProvider)
     }

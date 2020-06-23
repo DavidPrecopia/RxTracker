@@ -39,17 +39,13 @@ internal class TimeStampLogicTest {
     private val utilNightMode = mockk<IUtilNightModeContract>(relaxUnitFun = true)
 
 
-    private lateinit var logic: TimeStampLogic
+    private val logic = TimeStampLogic(
+            repo, schedulerProvider, disposable, utilNightMode
+    )
 
 
-    /**
-     * I am re-instantiating the class under test before each test
-     * to ensure that the observable returned by [ITimeStampViewContract.Logic.observe]
-     * is cleared before the following test.
-     */
     @BeforeEach
     fun init() {
-        logic = TimeStampLogic(repo, schedulerProvider, disposable, utilNightMode)
         clearAllMocks()
         UtilSchedulerProviderMockInit.init(schedulerProvider)
     }
