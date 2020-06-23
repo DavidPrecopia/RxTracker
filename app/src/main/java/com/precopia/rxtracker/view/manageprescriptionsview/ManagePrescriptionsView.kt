@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.util.navigateUp
@@ -125,9 +124,7 @@ class ManagePrescriptionsView: Fragment(R.layout.add_prescription_view),
             layoutManager = layoutManger.get()
             addItemDecoration(dividerItemDecorator)
             itemTouchHelper.attachToRecyclerView(this)
-            adapter = (this@ManagePrescriptionsView.adapter as RecyclerView.Adapter<*>).apply {
-                stateRestorationPolicy = PREVENT_WHEN_EMPTY
-            }
+            adapter = (this@ManagePrescriptionsView.adapter as RecyclerView.Adapter<*>)
         }
     }
 

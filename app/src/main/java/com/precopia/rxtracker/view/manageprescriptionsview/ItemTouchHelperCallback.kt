@@ -24,7 +24,7 @@ class ItemTouchHelperCallback(private val movementCallback: MovementCallback) : 
 
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-        movementCallback.dragging(viewHolder.bindingAdapterPosition, target.bindingAdapterPosition)
+        movementCallback.dragging(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
 
@@ -36,6 +36,6 @@ class ItemTouchHelperCallback(private val movementCallback: MovementCallback) : 
      */
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
-        movementCallback.movedPermanently(viewHolder.bindingAdapterPosition)
+        movementCallback.movedPermanently(viewHolder.adapterPosition)
     }
 }

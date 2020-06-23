@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.application
@@ -131,9 +130,7 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
             setHasFixedSize(true)
             layoutManager = layoutManger.get()
             addItemDecoration(dividerItemDecorator)
-            adapter = (this@TimeStampView.adapter as RecyclerView.Adapter<*>).apply {
-                stateRestorationPolicy = PREVENT_WHEN_EMPTY
-            }
+            adapter = (this@TimeStampView.adapter as RecyclerView.Adapter<*>)
         }
     }
 

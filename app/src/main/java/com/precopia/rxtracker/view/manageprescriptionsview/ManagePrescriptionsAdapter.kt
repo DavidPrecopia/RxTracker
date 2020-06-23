@@ -85,7 +85,7 @@ class ManagePrescriptionsAdapter(private val logic: IManagePrescriptionsContact.
         private fun getMenuClickListener(id: Int) = PopupMenu.OnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menu_item_delete_prescription -> logic.onEvent(
-                        LogicEvents.DeleteItem(id, bindingAdapterPosition)
+                        LogicEvents.DeleteItem(id, adapterPosition)
                 )
                 else -> UtilExceptions.throwException(IllegalArgumentException("Unknown menu ID"))
             }
