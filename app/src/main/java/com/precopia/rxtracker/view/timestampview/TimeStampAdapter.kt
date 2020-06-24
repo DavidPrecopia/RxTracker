@@ -43,6 +43,28 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             RecyclerView.ViewHolder(view),
             LayoutContainer {
 
+        private var isSelected = false
+
+        init {
+            initLongClickListener()
+            initOnClickListener()
+        }
+
+        private fun initLongClickListener() {
+            time_stamp_list_item_root.setOnLongClickListener {
+                displayCheckbox()
+                isSelected = true
+                true
+            }
+        }
+
+        private fun initOnClickListener() {
+            time_stamp_list_item_root.setOnClickListener {
+                if (isSelected) displayOverflow()
+            }
+        }
+
+
         override val containerView: View?
             get() = view
 
@@ -77,6 +99,17 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
                 else -> UtilExceptions.throwException(IllegalArgumentException("Unknown menu ID"))
             }
             true
+        }
+
+
+        private fun displayOverflow() {
+            selection_checkbox.visibility = View.GONE
+            iv_overflow_menu.visibility = View.VISIBLE
+        }
+
+        private fun displayCheckbox() {
+            iv_overflow_menu.visibility = View.GONE
+            selection_checkbox.visibility = View.VISIBLE
         }
     }
 }
