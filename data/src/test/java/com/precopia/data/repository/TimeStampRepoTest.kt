@@ -2,6 +2,7 @@ package com.precopia.data.repository
 
 import com.precopia.data.dao.TimeStampDao
 import com.precopia.data.datamodel.DbTimeStamp
+import com.precopia.data.datamodel.DbTimeStampDelete
 import com.precopia.data.util.ITimeUtil
 import io.mockk.CapturingSlot
 import io.mockk.clearAllMocks
@@ -125,6 +126,51 @@ internal class TimeStampRepoTest {
             repo.add(rxTitle)
 
             verify { dao.add(capturedArg.captured) }
+        }
+    }
+
+
+    @Nested
+    inner class DeleteAll {
+        /**
+         * - Verify that an RxJava 3 Completable is returned.
+         * - It will complete in this test.
+         */
+        @Test
+        fun `deleteAll - complete`() {
+            val idOne = 1
+            val idTwo = 2
+            val listOfIds = listOf(idOne, idTwo)
+            val listOfTimeStampDelete = listOfIds.map { DbTimeStampDelete(it) }
+
+            every { dao.deleteAll(listOfTimeStampDelete) } answers {
+                io.reactivex.Completable.complete()
+            }
+
+            repo.deleteAll(listOfIds)
+                    .test()
+                    .assertComplete()
+        }
+
+        /**
+         * - Verify that an RxJava 3 Error is returned.
+         * - It will error in this test.
+         */
+        @Test
+        fun `deleteAll - error`() {
+            val idOne = 1
+            val idTwo = 2
+            val listOfIds = listOf(idOne, idTwo)
+            val listOfTimeStampDelete = listOfIds.map { DbTimeStampDelete(it) }
+            val throwable = mockk<Throwable>(relaxed = true)
+
+            every { dao.deleteAll(listOfTimeStampDelete) } answers {
+                io.reactivex.Completable.error(throwable)
+            }
+
+            repo.deleteAll(listOfIds)
+                    .test()
+                    .assertError(throwable)
         }
     }
 

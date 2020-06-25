@@ -29,6 +29,9 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
         ITimeStampViewContract.View {
 
 
+    private lateinit var menu: Menu
+
+
     @Inject
     lateinit var logic: ITimeStampViewContract.Logic
 
@@ -87,6 +90,8 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
             ViewEvents.OpenPrescriptionView -> openPrescriptionView()
             is ViewEvents.OpenEditTimeView -> openEditTimeView(event.id, event.dateTime)
             is ViewEvents.OpenEditDateView -> openEditDateView(event.id, event.dateTime)
+            ViewEvents.DisplayDeleteButton -> changeVisibilityDeleteButton(true)
+            ViewEvents.HideDeleteButton -> changeVisibilityDeleteButton(false)
         }
     }
 
@@ -112,6 +117,11 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
         navigate(
                 TimeStampViewDirections.actionTimesListViewToEditDateView(id, time)
         )
+    }
+
+
+    private fun changeVisibilityDeleteButton(visible: Boolean) {
+        menu.findItem(R.id.menu_id_delete_all).isVisible = visible
     }
 
 
@@ -156,6 +166,7 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
         initMenuSetCheckedState(menu)
+        this.menu = menu
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -172,6 +183,7 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
                     this.not()
                 }
             }
+            R.id.menu_id_delete_all -> logic.onEvent(LogicEvents.DeleteAll)
         }
         return super.onOptionsItemSelected(item)
     }
