@@ -42,7 +42,7 @@ class ManagePrescriptionsLogic(
 
 
     private fun onStart() {
-        viewEventLiveData.value = ViewEvents.DisplayLoading
+        viewEvent(ViewEvents.DisplayLoading)
         observeRepo()
     }
 
@@ -60,30 +60,30 @@ class ManagePrescriptionsLogic(
 
     private fun evalRepoData() {
         if (prescriptionList.isEmpty()) {
-            viewEventLiveData.value = ViewEvents.DisplayError(ERROR_EMPTY_LIST)
+            viewEvent(ViewEvents.DisplayError(ERROR_EMPTY_LIST))
         } else {
-            viewEventLiveData.value = ViewEvents.DisplayList(prescriptionList)
+            viewEvent(ViewEvents.DisplayList(prescriptionList))
         }
     }
 
     private fun evalRepoError(throwable: Throwable) {
         UtilExceptions.throwException(throwable)
-        viewEventLiveData.value = ViewEvents.DisplayError(ERROR_GENERIC)
+        viewEvent(ViewEvents.DisplayError(ERROR_GENERIC))
     }
 
 
     private fun save(title: String) {
-        if (title.isEmpty()) viewEventLiveData.value = ViewEvents.DisplayMessage(ERROR_TITLE)
+        if (title.isEmpty()) viewEvent(ViewEvents.DisplayMessage(ERROR_TITLE))
         else saveToRepo(title)
     }
 
     private fun saveToRepo(title: String) {
         disposable.add(subscribeCompletable(
                 repo.add(title, prescriptionList.size),
-                { viewEventLiveData.value = ViewEvents.DisplayMessage(MSG_SUCCESSFULLY_SAVE) },
+                { viewEvent(ViewEvents.DisplayMessage(MSG_SUCCESSFULLY_SAVE)) },
                 {
                     UtilExceptions.throwException(it)
-                    viewEventLiveData.value = ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED)
+                    viewEvent(ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED))
                 },
                 utilSchedulerProvider
         ))
@@ -91,7 +91,7 @@ class ManagePrescriptionsLogic(
 
 
     private fun dragging(fromPosition: Int, toPosition: Int) {
-        viewEventLiveData.value = ViewEvents.Dragging(fromPosition, toPosition)
+        viewEvent(ViewEvents.Dragging(fromPosition, toPosition))
         Collections.swap(prescriptionList, fromPosition, toPosition)
     }
 
@@ -110,7 +110,7 @@ class ManagePrescriptionsLogic(
         if (position < 0) {
             UtilExceptions.throwException(IllegalArgumentException("Is less then 0."))
         }
-        viewEventLiveData.value = ViewEvents.DeleteItem(position)
+        viewEvent(ViewEvents.DeleteItem(position))
         deleteFromRepo(id)
     }
 
@@ -123,6 +123,10 @@ class ManagePrescriptionsLogic(
         ))
     }
 
+
+    private fun viewEvent(event: ViewEvents) {
+        viewEventLiveData.value = event
+    }
 
     override fun observe(): LiveData<ViewEvents> = viewEventLiveData
 
