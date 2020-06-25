@@ -50,7 +50,7 @@ class TimeStampLogic(
 
     private fun addSelected(id: Int) {
         if (selected.isEmpty()) {
-            viewEventLiveData.value = ViewEvents.DisplayDeleteButton
+            viewEvent(ViewEvents.DisplayDeleteButton)
         }
         selected.add(id)
     }
@@ -58,14 +58,14 @@ class TimeStampLogic(
     private fun removeSelected(id: Int) {
         selected.remove(id)
         if (selected.isEmpty()) {
-            viewEventLiveData.value = ViewEvents.HideDeleteButton
+            viewEvent(ViewEvents.HideDeleteButton)
         }
     }
 
     private fun deleteAll() {
         deleteAllFromRepo(selected.toList())
         selected.clear()
-        viewEventLiveData.value = ViewEvents.HideDeleteButton
+        viewEvent(ViewEvents.HideDeleteButton)
     }
 
     private fun deleteAllFromRepo(selectedCopy: List<Int>) {
