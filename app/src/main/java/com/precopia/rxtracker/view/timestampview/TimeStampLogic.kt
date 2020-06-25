@@ -36,17 +36,11 @@ class TimeStampLogic(
     override fun onEvent(event: LogicEvents) {
         when (event) {
             LogicEvents.OnStart -> onStart()
-            is LogicEvents.EditTime ->
-                viewEventLiveData.setValue(ViewEvents.OpenEditTimeView(
-                        event.id, event.dateTime
-                ))
-            is LogicEvents.EditDate ->
-                viewEventLiveData.setValue(ViewEvents.OpenEditDateView(
-                        event.id, event.dateTime
-                ))
+            is LogicEvents.EditTime -> viewEvent(ViewEvents.OpenEditTimeView(event.id, event.dateTime))
+            is LogicEvents.EditDate -> viewEvent(ViewEvents.OpenEditDateView(event.id, event.dateTime))
             is LogicEvents.DeleteItem -> validateDeletePosition(event.id, event.position)
-            LogicEvents.OpenAddPrescriptionView -> viewEventLiveData.setValue(ViewEvents.OpenPrescriptionView)
-            LogicEvents.OpenAddTimeStampView -> viewEventLiveData.setValue(ViewEvents.OpenAddTimeStampView)
+            LogicEvents.OpenAddPrescriptionView -> viewEvent(ViewEvents.OpenPrescriptionView)
+            LogicEvents.OpenAddTimeStampView -> viewEvent(ViewEvents.OpenAddTimeStampView)
             is LogicEvents.SetNightMode -> nightMode(event.nightModeEnabled)
             is LogicEvents.SelectedAdd -> addSelected(event.id)
             is LogicEvents.SelectedRemove -> removeSelected(event.id)
@@ -83,11 +77,9 @@ class TimeStampLogic(
         ))
     }
 
-    override fun observe(): LiveData<ViewEvents> = viewEventLiveData
-
 
     private fun onStart() {
-        viewEventLiveData.value = ViewEvents.DisplayLoading
+        viewEvent(ViewEvents.DisplayLoading)
         observeRepo()
     }
 
@@ -95,14 +87,10 @@ class TimeStampLogic(
      * When the View restart per a reconfiguration change,
      * it will send another [LogicEvents.OnStart] event, to avoid
      * unnecessarily invoking the Repo, I am storing the list here as well.
-     *
-     * Google recommends having a separate LiveData instance for data from the Repo.
-     * I am only exposing a single LiveData instance because I want to experiment
-     * with different ways to structure an app.
      */
     private fun observeRepo() {
         if (localTimeStampList.isNotEmpty()) {
-            viewEventLiveData.value = ViewEvents.DisplayList(localTimeStampList)
+            viewEvent(ViewEvents.DisplayList(localTimeStampList))
             return
         }
 
@@ -116,7 +104,7 @@ class TimeStampLogic(
 
     private fun evalTimeStampList(list: List<TimeStamp>) {
         if (list.isEmpty()) {
-            viewEventLiveData.value = ViewEvents.DisplayError(ERROR_EMPTY_LIST)
+            viewEvent(ViewEvents.DisplayError(ERROR_EMPTY_LIST))
             return
         }
 
@@ -124,11 +112,11 @@ class TimeStampLogic(
             clear()
             addAll(list)
         }
-        viewEventLiveData.value = ViewEvents.DisplayList(list)
+        viewEvent(ViewEvents.DisplayList(list))
     }
 
     private fun repoError(throwable: Throwable) {
-        viewEventLiveData.value = ViewEvents.DisplayError(ERROR_GENERIC)
+        viewEvent(ViewEvents.DisplayError(ERROR_GENERIC))
         UtilExceptions.throwException(throwable)
     }
 
@@ -137,7 +125,7 @@ class TimeStampLogic(
         if (position < 0) {
             UtilExceptions.throwException(IllegalArgumentException("Is less then 0."))
         }
-        viewEventLiveData.value = ViewEvents.DeleteItem(position)
+        viewEvent(ViewEvents.DeleteItem(position))
         deleteFromRepo(id)
     }
 
@@ -155,6 +143,13 @@ class TimeStampLogic(
         if (nightModeEnabled) utilNightMode.setDay()
         else utilNightMode.setNight()
     }
+
+
+    private fun viewEvent(event: ViewEvents) {
+        viewEventLiveData.value = event
+    }
+
+    override fun observe(): LiveData<ViewEvents> = viewEventLiveData
 
 
     override fun onCleared() {

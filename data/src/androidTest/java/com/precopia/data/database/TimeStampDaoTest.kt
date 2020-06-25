@@ -47,7 +47,7 @@ internal class TimeStampDaoTest {
         val titleString = "title"
         val timeString = "time"
 
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(DbTimeStamp(title = titleString, time = timeString))
                 .test()
@@ -74,7 +74,7 @@ internal class TimeStampDaoTest {
         val titleString = "title"
         val timeString = "time"
 
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(DbTimeStamp(title = titleString, time = timeString))
                 .test()
@@ -145,7 +145,7 @@ internal class TimeStampDaoTest {
         val timeOriginal = "time"
         val timeModified = "timeModified"
 
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(DbTimeStamp(title = title, time = timeOriginal))
                 .test()

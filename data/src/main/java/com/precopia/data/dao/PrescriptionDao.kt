@@ -45,5 +45,5 @@ internal interface PrescriptionDao {
      * EXCLUSIVELY FOR TESTING
      */
     @Query("DELETE FROM prescriptions")
-    fun deleteAll()
+    fun clearDatabase()
 }

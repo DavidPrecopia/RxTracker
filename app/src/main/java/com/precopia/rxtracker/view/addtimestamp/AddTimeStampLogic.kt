@@ -34,7 +34,7 @@ class AddTimeStampLogic(
     }
 
     private fun onStart() {
-        viewEventLiveData.value = ViewEvents.DisplayLoading
+        viewEvent(ViewEvents.DisplayLoading)
         observePrescriptionRepo()
     }
 
@@ -51,14 +51,14 @@ class AddTimeStampLogic(
 
     private fun evalPrescriptionList(list: List<Prescription>) {
         if (list.isEmpty()) {
-            viewEventLiveData.value = ViewEvents.DisplayError(ERROR_EMPTY_LIST)
+            viewEvent(ViewEvents.DisplayError(ERROR_EMPTY_LIST))
         } else {
-            viewEventLiveData.value = ViewEvents.DisplayList(list.map { it.title })
+            viewEvent(ViewEvents.DisplayList(list.map { it.title }))
         }
     }
 
     private fun evalRepoError(throwable: Throwable) {
-        viewEventLiveData.value = ViewEvents.DisplayError(ERROR_GENERIC)
+        viewEvent(ViewEvents.DisplayError(ERROR_GENERIC))
         UtilExceptions.throwException(throwable)
     }
 
@@ -67,17 +67,21 @@ class AddTimeStampLogic(
         disposable.add(
                 subscribeCompletable(
                         timeStampRepo.add(rxTitle),
-                        { viewEventLiveData.value = ViewEvents.Close },
+                        { viewEvent(ViewEvents.Close) },
                         {
                             UtilExceptions.throwException(it)
-                            viewEventLiveData.value = ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED)
-                            viewEventLiveData.value = ViewEvents.Close
+                            viewEvent(ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED))
+                            viewEvent(ViewEvents.Close)
                         },
                         utilSchedulerProvider
                 )
         )
     }
 
+
+    private fun viewEvent(event: ViewEvents) {
+        viewEventLiveData.value = event
+    }
 
     override fun observe(): LiveData<ViewEvents> = viewEventLiveData
 
