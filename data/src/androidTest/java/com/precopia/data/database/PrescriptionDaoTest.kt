@@ -48,7 +48,7 @@ internal class PrescriptionDaoTest {
         val titleString = "title"
         val prescription = DbPrescription(title = titleString)
 
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(prescription)
                 .test()
@@ -71,7 +71,7 @@ internal class PrescriptionDaoTest {
         val title = "title"
         val position = 0.0
 
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(DbPrescription(title = title, position = position))
                 .test()
@@ -98,7 +98,7 @@ internal class PrescriptionDaoTest {
         val positionModified = 1.0
         val prescription = DbPrescription(title = "title", position = positionOriginal)
 
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(prescription)
                 .test()
@@ -128,7 +128,7 @@ internal class PrescriptionDaoTest {
         val positionModified = 1.0
         val prescription = DbPrescription(title = "title", position = positionOriginal)
 
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(prescription)
                 .test()
@@ -156,7 +156,7 @@ internal class PrescriptionDaoTest {
         val position = 0.0
         val prescription = DbPrescription(title = title, position = position)
 
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(prescription)
                 .test()
@@ -180,7 +180,7 @@ internal class PrescriptionDaoTest {
         val prescriptionTwo = DbPrescription(title = "titleTwo", position = 1.0)
         val positionTwoModified = prescriptionTwo.position + 1
 
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(prescriptionOne)
                 .test()
@@ -211,7 +211,7 @@ internal class PrescriptionDaoTest {
      */
     @Test
     fun emptyDatabaseReturnsNothing() {
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.getAll()
                 .test()
