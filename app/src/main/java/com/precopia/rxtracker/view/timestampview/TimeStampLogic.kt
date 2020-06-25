@@ -61,10 +61,6 @@ class TimeStampLogic(
      * When the View restart per a reconfiguration change,
      * it will send another [LogicEvents.OnStart] event, to avoid
      * unnecessarily invoking the Repo, I am storing the list here as well.
-     *
-     * Google recommends having a separate LiveData instance for data from the Repo.
-     * I am only exposing a single LiveData instance because I want to experiment
-     * with different ways to structure an app.
      */
     private fun observeRepo() {
         if (localTimeStampList.isNotEmpty()) {
