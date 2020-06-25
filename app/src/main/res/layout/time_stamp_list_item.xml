@@ -47,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_normal"
         android:checked="true"
+        android:clickable="false"
         android:paddingTop="@dimen/margin_normal"
         android:paddingBottom="@dimen/margin_normal"
         android:visibility="gone"
