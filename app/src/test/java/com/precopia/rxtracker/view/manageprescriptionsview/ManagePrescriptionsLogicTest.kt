@@ -40,13 +40,16 @@ internal class ManagePrescriptionsLogicTest {
     private val disposable = spyk<CompositeDisposable>()
 
 
-    private val logic = ManagePrescriptionsLogic(
-            repo, schedulerProvider, disposable
-    )
+    private lateinit var logic: ManagePrescriptionsLogic
 
 
+    /**
+     * Re-instantiating the class under test before each test to ensure the LiveData
+     * being observed is cleared.
+     */
     @BeforeEach
     fun setUp() {
+        logic = ManagePrescriptionsLogic(repo, schedulerProvider, disposable)
         clearAllMocks()
         UtilSchedulerProviderMockInit.init(schedulerProvider)
     }

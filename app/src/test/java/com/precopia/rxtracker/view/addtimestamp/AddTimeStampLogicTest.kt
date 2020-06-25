@@ -39,13 +39,16 @@ internal class AddTimeStampLogicTest {
     private val disposable = spyk<CompositeDisposable>()
 
 
-    private val logic = AddTimeStampLogic(
-            prescriptionRepo, timeStampRepo, schedulerProvider, disposable
-    )
+    private lateinit var logic: AddTimeStampLogic
 
 
+    /**
+     * Re-instantiating the class under test before each test to ensure the LiveData
+     * being observed is cleared.
+     */
     @BeforeEach
     fun setUp() {
+        logic = AddTimeStampLogic(prescriptionRepo, timeStampRepo, schedulerProvider, disposable)
         clearAllMocks()
         UtilSchedulerProviderMockInit.init(schedulerProvider)
     }
