@@ -10,6 +10,5 @@
     <color name="red_darker">#FF1744</color>
     <color name="nightModeStockBackground">#303030</color>
 
-    <color name="list_item_background">@color/white</color>
     <color name="black_day_white_night">@color/black</color>
 </resources>
