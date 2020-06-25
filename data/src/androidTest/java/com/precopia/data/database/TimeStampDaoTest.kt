@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.precopia.data.datamodel.DbTimeStamp
+import com.precopia.data.datamodel.DbTimeStampDelete
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
@@ -21,9 +22,9 @@ internal class TimeStampDaoTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val database = Room.inMemoryDatabaseBuilder(
-                    ApplicationProvider.getApplicationContext<Application>(),
-                    RxTrackerDatabase::class.java
-            )
+            ApplicationProvider.getApplicationContext<Application>(),
+            RxTrackerDatabase::class.java
+    )
             .allowMainThreadQueries()
             .build()
 
@@ -91,6 +92,45 @@ internal class TimeStampDaoTest {
                 .test()
                 .assertValue { it.isEmpty() }
     }
+
+    /**
+     * - Clear the database.
+     * - Add two [DbTimeStamp].
+     * - Retrieve both of them to get their IDs.
+     * - Delete both of them.
+     * - Get all and verify the returned list is empty.
+     */
+    @Test
+    fun deleteAll() {
+        dao.deleteAll()
+
+        dao.add(DbTimeStamp(title = "titleOne", time = "timeOne"))
+                .test()
+                .assertComplete()
+
+        dao.add(DbTimeStamp(title = "titleTwo", time = "timeTwo"))
+                .test()
+                .assertComplete()
+
+        val values = dao.getAll()
+                .test()
+                .values()
+
+        val insertedIdOne = values[0][0].id
+        val insertedIdTwo = values[0][1].id
+
+        dao.deleteAll(listOf(
+                DbTimeStampDelete(insertedIdOne),
+                DbTimeStampDelete(insertedIdTwo)
+        ))
+                .test()
+                .assertComplete()
+
+        dao.getAll()
+                .test()
+                .assertValue { it.isEmpty() }
+    }
+
 
     /**
      * - Clear the database.

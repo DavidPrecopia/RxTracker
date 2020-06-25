@@ -45,25 +45,6 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
 
         private var isSelected = false
 
-        init {
-            initLongClickListener()
-            initOnClickListener()
-        }
-
-        private fun initLongClickListener() {
-            time_stamp_list_item_root.setOnLongClickListener {
-                displayCheckbox()
-                isSelected = true
-                true
-            }
-        }
-
-        private fun initOnClickListener() {
-            time_stamp_list_item_root.setOnClickListener {
-                if (isSelected) displayOverflow()
-            }
-        }
-
 
         override val containerView: View?
             get() = view
@@ -73,6 +54,8 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             tv_title.text = timeStamp.title
             tv_time.text = timeStamp.time
             initContextMenu(timeStamp)
+            initLongClickListener(timeStamp.id)
+            initOnClickListener(timeStamp.id)
         }
 
         private fun initContextMenu(timeStamp: TimeStamp) {
@@ -99,6 +82,22 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
                 else -> UtilExceptions.throwException(IllegalArgumentException("Unknown menu ID"))
             }
             true
+        }
+
+        private fun initLongClickListener(id: Int) {
+            time_stamp_list_item_root.setOnLongClickListener {
+                displayCheckbox()
+                isSelected = true
+                logic.onEvent(LogicEvents.SelectedAdd(id))
+                true
+            }
+        }
+
+        private fun initOnClickListener(id: Int) {
+            time_stamp_list_item_root.setOnClickListener {
+                if (isSelected) displayOverflow()
+                logic.onEvent(LogicEvents.SelectedRemove(id))
+            }
         }
 
 

@@ -272,4 +272,90 @@ internal class TimeStampLogicTest {
             verify(exactly = 1) { utilNightMode.setNight() }
         }
     }
+
+
+    @Nested
+    inner class SelectedAdd {
+        /**
+         * - Send [LogicEvents.SelectedAdd].
+         * - Verify [ViewEvents.DisplayDeleteButton] was sent to the view.
+         * - Verify that the Repo is not called.
+         */
+        @Test
+        fun selectedAdd() {
+            val id = 1
+
+            logic.onEvent(LogicEvents.SelectedAdd(id))
+
+            logic.observe().observeForTesting {
+                assertThat(logic.observe().value).isEqualTo(ViewEvents.DisplayDeleteButton)
+            }
+            verify { repo wasNot Called }
+        }
+    }
+
+
+    @Nested
+    inner class SelectedRemove {
+        /**
+         * - Send [LogicEvents.SelectedAdd] - need to add before you can remove.
+         * - Send [LogicEvents.SelectedRemove].
+         * - Verify [ViewEvents.DisplayDeleteButton] was sent to the view.
+         * - Verify [ViewEvents.HideDeleteButton] was sent to the view.
+         * - Verify that the Repo is not called.
+         */
+        @Test
+        fun selectedRemove() {
+            val id = 1
+            val listLiveDataOutput = mutableListOf<ViewEvents>()
+            val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
+
+            logic.observe().observeForever(liveDataObserver)
+
+            logic.onEvent(LogicEvents.SelectedAdd(id))
+
+            logic.onEvent(LogicEvents.SelectedRemove(id))
+
+            verify { repo wasNot Called }
+            assertThat(listLiveDataOutput.size).isEqualTo(2)
+            assertThat(listLiveDataOutput[0]).isEqualTo(ViewEvents.DisplayDeleteButton)
+            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.HideDeleteButton)
+
+            logic.observe().removeObserver(liveDataObserver)
+        }
+    }
+
+
+    @Nested
+    inner class DeleteAll {
+        /**
+         * - Send [LogicEvents.SelectedAdd] - need to add before you can remove.
+         * - Send [LogicEvents.DeleteAll].
+         * - Send a List containing the IDs passed-in to the Repo.
+         * - Verify [ViewEvents.DisplayDeleteButton] was sent to the view.
+         * - Verify [ViewEvents.HideDeleteButton] was sent to the view.
+         */
+        @Test
+        fun deleteAll() {
+            val idOne = 1
+            val idTwo = 2
+            val listOfIds = listOf(idOne, idTwo)
+            val listLiveDataOutput = mutableListOf<ViewEvents>()
+            val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
+
+            logic.observe().observeForever(liveDataObserver)
+
+            logic.onEvent(LogicEvents.SelectedAdd(idOne))
+            logic.onEvent(LogicEvents.SelectedAdd(idTwo))
+
+            logic.onEvent(LogicEvents.DeleteAll)
+
+            verify(exactly = 1) { repo.deleteAll(listOfIds) }
+            assertThat(listLiveDataOutput.size).isEqualTo(2)
+            assertThat(listLiveDataOutput[0]).isEqualTo(ViewEvents.DisplayDeleteButton)
+            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.HideDeleteButton)
+
+            logic.observe().removeObserver(liveDataObserver)
+        }
+    }
 }

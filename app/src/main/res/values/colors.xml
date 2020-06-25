@@ -7,6 +7,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="red">#F44336</color>
+    <color name="red_darker">#FF1744</color>
     <color name="nightModeStockBackground">#303030</color>
 
     <color name="list_item_background">@color/white</color>

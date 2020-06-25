@@ -10,6 +10,8 @@
     <string name="content_description_drag_handle">Hold to drag</string>
 
     <string name="menu_item_title_prescriptions">Prescriptions</string>
+    <string name="menu_item_title_delete_all">Mass Delete</string>
+
     <string name="menu_item_title_edit_time">Edit Time</string>
     <string name="menu_item_title_edit_date">Edit Date</string>
     <string name="menu_item_title_delete">Delete</string>

@@ -30,6 +30,8 @@ class TimeStampLogic(
 
     private val localTimeStampList = mutableListOf<TimeStamp>()
 
+    private val selected = mutableListOf<Int>()
+
 
     override fun onEvent(event: LogicEvents) {
         when (event) {
@@ -46,7 +48,39 @@ class TimeStampLogic(
             LogicEvents.OpenAddPrescriptionView -> viewEventLiveData.setValue(ViewEvents.OpenPrescriptionView)
             LogicEvents.OpenAddTimeStampView -> viewEventLiveData.setValue(ViewEvents.OpenAddTimeStampView)
             is LogicEvents.SetNightMode -> nightMode(event.nightModeEnabled)
+            is LogicEvents.SelectedAdd -> addSelected(event.id)
+            is LogicEvents.SelectedRemove -> removeSelected(event.id)
+            LogicEvents.DeleteAll -> deleteAll()
         }
+    }
+
+    private fun addSelected(id: Int) {
+        if (selected.isEmpty()) {
+            viewEventLiveData.value = ViewEvents.DisplayDeleteButton
+        }
+        selected.add(id)
+    }
+
+    private fun removeSelected(id: Int) {
+        selected.remove(id)
+        if (selected.isEmpty()) {
+            viewEventLiveData.value = ViewEvents.HideDeleteButton
+        }
+    }
+
+    private fun deleteAll() {
+        deleteAllFromRepo(selected.toList())
+        selected.clear()
+        viewEventLiveData.value = ViewEvents.HideDeleteButton
+    }
+
+    private fun deleteAllFromRepo(selectedCopy: List<Int>) {
+        disposable.add(subscribeCompletable(
+                repo.deleteAll(selectedCopy),
+                { /*intentionally empty*/ },
+                { repoError(it) },
+                utilSchedulerProvider
+        ))
     }
 
     override fun observe(): LiveData<ViewEvents> = viewEventLiveData

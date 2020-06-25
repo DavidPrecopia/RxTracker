@@ -28,15 +28,20 @@ interface ITimeStampViewContract {
         object OpenAddTimeStampView: ViewEvents()
         data class OpenEditTimeView(val id: Int, val dateTime: String): ViewEvents()
         data class OpenEditDateView(val id: Int, val dateTime: String): ViewEvents()
+        object DisplayDeleteButton: ViewEvents()
+        object HideDeleteButton: ViewEvents()
     }
 
     sealed class LogicEvents {
         object OnStart: LogicEvents()
-        data class  EditTime(val id: Int, val dateTime: String): LogicEvents()
+        data class EditTime(val id: Int, val dateTime: String): LogicEvents()
         data class EditDate(val id: Int, val dateTime: String): LogicEvents()
         data class DeleteItem(val id: Int, val position: Int): LogicEvents()
         data class SetNightMode(val nightModeEnabled: Boolean): LogicEvents()
         object OpenAddPrescriptionView: LogicEvents()
         object OpenAddTimeStampView: LogicEvents()
+        data class SelectedAdd(val id: Int): LogicEvents()
+        data class SelectedRemove(val id: Int): LogicEvents()
+        object DeleteAll: LogicEvents()
     }
 }
