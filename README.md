@@ -1,5 +1,7 @@
 # RxTracker
 
+![Android CI](https://github.com/DavidPrecopia/RxTracker/workflows/Android%20CI/badge.svg)
+
 This helps you keep track of when you take prescriptions.
 
 An APK is [available](https://github.com/DavidPrecopia/RxTracker/releases/download/v1.5/rxtracker-v1.5.apk).
