@@ -13,7 +13,10 @@ jobs:
     - name: Restore keystore.properties
       run: |
         echo "${{ secrets.KEYSTORE_PROPERTIES }}" > keystore.properties.asc
-        gpg -d --passphrase "${{ secrets.KEYSTORE_PROPERTIES_PASSWORD }}" --batch keystore.properties.asc > keystore.properties
+    - uses: actions/upload-artifact@v2
+      with:
+        name: keystore.properties.asc
+        path: keystore.properties.asc
 
   build:
     name: Build a debug APK
