@@ -17,7 +17,7 @@ jobs:
     - name: Restore keystore.jsk
       run: |
         echo "${{ secrets.KEYSTORE }}" > rxtracker_keystore.jks.asc
-        gpg -d --passphrase "${{ secrets.KEYSTORE_PASSWORD }}" --batch release. keystore.asc > app/rxtracker_keystore.jks
+        gpg -d --passphrase "${{ secrets.KEYSTORE_PASSWORD }}" --batch rxtracker_keystore.jks.asc > app/rxtracker_keystore.jks
 
   build:
     name: Build a debug APK
