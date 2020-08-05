@@ -13,11 +13,7 @@ jobs:
     - name: Restore keystore.properties
       run: |
         echo "${{ secrets.KEYSTORE_PROPERTIES }}" > keystore.properties.asc
-        gpg -d --passphrase "${{ secrets.KEYSTORE_PROPERTIES_PASSWORD }}" --batch keystore.properties.asc > /home/runner/work/RxTracker/RxTracker/keystore.properties
-    - name: Restore keystore.jsk
-      run: |
-        echo "${{ secrets.KEYSTORE }}" > rxtracker_keystore.jks.asc
-        gpg -d --passphrase "${{ secrets.KEYSTORE_PASSWORD }}" --batch rxtracker_keystore.jks.asc > app/rxtracker_keystore.jks
+        gpg -d --passphrase "${{ secrets.KEYSTORE_PROPERTIES_PASSWORD }}" --batch keystore.properties.asc > keystore.properties
 
   build:
     name: Build a debug APK
@@ -30,5 +26,5 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew buildDebug
+      run: ./gradlew buildDebug --info
       
