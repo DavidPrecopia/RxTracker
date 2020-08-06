@@ -13,21 +13,15 @@ jobs:
     - name: Restore keystore.properties
       run: |
         echo "${{ secrets.KEYSTORE_PROPERTIES }}" > keystore.properties.asc
-    - uses: actions/upload-artifact@v2
-      with:
-        name: keystore.properties.asc
-        path: keystore.properties.asc
-
-  build:
-    name: Build a debug APK
-    needs: restoreKeystoreFiles
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+        gpg -d --passphrase "${{ secrets.KEYSTORE_PROPERTIES_PASSWORD }}" --batch keystore.properties.asc > keystore.properties
+    - name: Restore keystore.jsk
+      run: |
+        echo "${{ secrets.KEYSTORE }}" > rxtracker_keystore.jks.asc
+        gpg -d --passphrase "${{ secrets.KEYSTORE_PASSWORD }}" --batch rxtracker_keystore.jks.asc > app/rxtracker_keystore.jks
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew buildDebug --info
-      
+    
