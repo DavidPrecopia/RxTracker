@@ -21,7 +21,7 @@ jobs:
     - name: Restore debug google.json
       run: |
         echo "${{ secrets.GOOGLE_JSON_DEBUG }}" > google-services.json.asc
-        gpg -d --passphrase "${{ secrets.GOOGLE_JSON_DEBUG_PASSWORD }}" --batch google-services.json.asc > app/src/debug/google-services.json.asc
+        gpg -d --passphrase "${{ secrets.GOOGLE_JSON_DEBUG_PASSWORD }}" --batch google-services.json.asc > app/src/debug/google-services.json
     - name: Set up JDK 1.8
       uses: actions/setup-java@v1
       with:
