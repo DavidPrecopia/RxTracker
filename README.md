@@ -1,6 +1,6 @@
 # RxTracker
 
-![CI_Master](https://github.com/DavidPrecopia/RxTracker/workflows/CI_Master/badge.svg)
+![CI](https://github.com/DavidPrecopia/RxTracker/workflows/CI/badge.svg)
 
 This helps you keep track of when you take prescriptions.
 
