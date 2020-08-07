@@ -35,5 +35,5 @@ jobs:
       run: ./gradlew buildDebug --info
     # Unit Tests
     - name: Run all unit tests
-      run: ./gradlew tests --info
+      run: ./gradlew test --info
     
