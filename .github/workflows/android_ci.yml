@@ -2,7 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ bug-android-ci ]
+    branches-ignore:
+      - master
+      - release
 
 jobs:
   ci:
