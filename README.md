@@ -1,6 +1,6 @@
 # RxTracker
 
-![Android CI](https://github.com/DavidPrecopia/RxTracker/workflows/Android%20CI/badge.svg)
+![Android CI](https://github.com/DavidPrecopia/RxTracker/workflows/Android%20CI/badge.svg?event=push)
 
 This helps you keep track of when you take prescriptions.
 
