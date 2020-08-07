@@ -1,7 +1,7 @@
 name: CI_Master
 
 on:
-  pull-request:
+  pull_request:
     branches: [ master ]
 
 # The CI job is a god job due to a security issue.
