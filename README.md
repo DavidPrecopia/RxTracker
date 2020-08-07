@@ -28,6 +28,7 @@ An APK is [available](https://github.com/DavidPrecopia/RxTracker/releases/downlo
 - The database is SQLite implemented with Jetpack's [Room](https://developer.android.com/topic/libraries/architecture/room).
 - [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics/) for automated crash reporting.
 - Unit testing with JUnit 5, AssertJ, and MockK.
+- CI with GitHub Actions.
 
 ## Screenshots
 
