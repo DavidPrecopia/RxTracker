@@ -3,6 +3,8 @@ name: CI
 on:
   pull_request:
     branches: [ master ]
+  push:
+    branches-ignore: [ master ]
 
 # The CI job is a god job due to a security issue.
 # In order to transfer the restored files in-between jobs, I would have to upload and then download them.
