@@ -6,6 +6,10 @@ on:
       - master
       - release
 
+# The CI job is a god job due to a security issue.
+# In order to transfer the restored files in-between jobs, I would have to upload and then download them.
+# That is a security breach because the uploaded files will be publicly available.
+
 jobs:
   ci:
     name: CI
