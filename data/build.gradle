@@ -51,15 +51,12 @@ android {
 dependencies {
     implementation project(":domain")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-
     // Room
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     implementation "androidx.room:room-rxjava2:$rootProject.roomVersion"
 
     // RxJava
-    implementation "io.reactivex.rxjava3:rxandroid:$rootProject.rxAndroidVersion"
     implementation "io.reactivex.rxjava3:rxjava:$rootProject.rxJavaVersion"
 
     // RxJava Bridge
