@@ -75,7 +75,6 @@ dependencies {
     implementation project(':data')
 
     implementation "androidx.core:core-ktx:$rootProject.rootProject.coreKtxVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
 
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
@@ -101,7 +100,6 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-runtime-ktx:$rootProject.navVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navVersion"
 
     // Crashlytics
     releaseImplementation "com.google.firebase:firebase-crashlytics:$rootProject.crashlyticsVersion"
