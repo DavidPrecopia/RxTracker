@@ -4,8 +4,6 @@
 
 This helps you keep track of when you take prescriptions.
 
-An APK is [available](https://github.com/DavidPrecopia/RxTracker/releases/download/v1.5/rxtracker-v1.5.apk).
-
 **Technical Features**
 
 - MVVM architecture with multithreading via RxJava 3 and dependency injection via Dagger 2.
