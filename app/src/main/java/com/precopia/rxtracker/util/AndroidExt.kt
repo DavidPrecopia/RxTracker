@@ -1,16 +1,17 @@
 package com.precopia.rxtracker.util
 
 import android.app.Application
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import org.jetbrains.anko.toast
 
 val Fragment.application: Application
     get() = activity!!.application
 
 
-fun Fragment.toast(message: String) = context!!.toast(message)
+fun Fragment.toast(message: String) =
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 
 
 fun Fragment.navigate(direction: NavDirections) {
