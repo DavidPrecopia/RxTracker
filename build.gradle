@@ -25,7 +25,7 @@ buildscript {
         materialDateTimePickerVersion = "4.2.3"
         daggerVersion = '2.27'
         rxAndroidVersion = "3.0.0"
-        rxJavaVersion = '3.0.4'
+        rxJavaVersion = '3.0.7'
         crashlyticsVersion = "17.1.1"
         timberVersion = "4.7.1"
         leakCanaryVersion = "2.4"
