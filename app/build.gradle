@@ -89,9 +89,6 @@ dependencies {
     // MaterialDateTimePicker
     implementation "com.wdullaer:materialdatetimepicker:$rootProject.materialDateTimePickerVersion"
 
-    // Anko
-    implementation "org.jetbrains.anko:anko-commons:$rootProject.ankoVersion"
-
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"

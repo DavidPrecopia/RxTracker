@@ -63,7 +63,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://dl.bintray.com/jetbrains/anko/' }
         maven { url 'https://jetbrains.bintray.com/trove4j' }
     }
 }
