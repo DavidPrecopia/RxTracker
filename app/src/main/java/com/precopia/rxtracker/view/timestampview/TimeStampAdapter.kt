@@ -43,7 +43,7 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             RecyclerView.ViewHolder(view),
             LayoutContainer {
 
-        private var isSelected = false
+        private lateinit var timeStamp: TimeStamp
 
 
         override val containerView: View?
@@ -51,6 +51,7 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
 
 
         fun bindView(timeStamp: TimeStamp) {
+            this.timeStamp = timeStamp
             tv_title.text = timeStamp.title
             tv_time.text = timeStamp.time
             initContextMenu(timeStamp)
@@ -87,7 +88,7 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
         private fun initLongClickListener(id: Int) {
             time_stamp_list_item_root.setOnLongClickListener {
                 displayCheckbox()
-                isSelected = true
+                timeStamp.isSelected = true
                 logic.onEvent(LogicEvents.SelectedAdd(id))
                 true
             }
@@ -95,7 +96,9 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
 
         private fun initOnClickListener(id: Int) {
             time_stamp_list_item_root.setOnClickListener {
-                if (isSelected) displayOverflow()
+                if (timeStamp.isSelected) {
+                    displayOverflow()
+                }
                 logic.onEvent(LogicEvents.SelectedRemove(id))
             }
         }
