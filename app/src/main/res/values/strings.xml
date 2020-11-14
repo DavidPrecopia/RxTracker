@@ -20,7 +20,4 @@
 
     <string name="edit_text_hint_prescription">Prescription</string>
     <string name="recycler_view_label_prescriptions">Added Prescriptions:</string>
-
-    <string name="menu_item_title_night_mode">Night Mode</string>
-    <string name="night_mode_shared_pref_key">night_mode_shared_pref_key</string>
 </resources>
