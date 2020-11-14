@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.common.buildlogic.ViewScope
-import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilParseDateTime
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
+import com.precopia.rxtracker.util.IUtilThemeContract
 import com.precopia.rxtracker.util.UtilParseDateTime
 import com.precopia.rxtracker.view.editdateview.EditDateLogic
 import com.precopia.rxtracker.view.editdateview.IEditDateContract
@@ -25,7 +25,7 @@ class EditDateModule {
                dateTime: String,
                utilParseDateTime: IUtilParseDateTime,
                dismissListener: DialogInterface.OnDismissListener,
-               utilNightMode: IUtilNightModeContract
+               utilTheme: IUtilThemeContract
     ): DatePickerDialog {
         val parsedDate = utilParseDateTime.parsedDate(dateTime)
         val white = "#FFFFFF"
@@ -37,7 +37,7 @@ class EditDateModule {
                 parsedDate[1]
         ).apply {
             version = VERSION_2
-            isThemeDark = utilNightMode.isNightModeEnabled()
+            isThemeDark = utilTheme.isNightModeEnabled()
             setOnDismissListener(dismissListener)
             dismissOnPause(true)
             setCancelColor(white)

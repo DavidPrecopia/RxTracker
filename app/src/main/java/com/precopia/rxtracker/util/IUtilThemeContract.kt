@@ -1,6 +1,6 @@
 package com.precopia.rxtracker.util
 
-interface IUtilNightModeContract {
+interface IUtilThemeContract {
     fun isNightModeEnabled(): Boolean
 
     fun setFollowSystem()

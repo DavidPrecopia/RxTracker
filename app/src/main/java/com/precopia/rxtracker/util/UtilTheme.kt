@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 
-class UtilNightMode(private val application: Application) : IUtilNightModeContract {
+class UtilTheme(private val application: Application) : IUtilThemeContract {
 
     override fun isNightModeEnabled(): Boolean = when (getMode()) {
         Configuration.UI_MODE_NIGHT_YES -> true
