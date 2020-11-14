@@ -41,9 +41,6 @@ internal abstract class RxTrackerApplicationBase: Application() {
 
 
     private fun nightMode() {
-        with(appComponent.utilNightMode()) {
-            if (nightModeEnabled) setNight()
-            else setDay()
-        }
+        appComponent.utilNightMode().setFollowSystem()
     }
 }

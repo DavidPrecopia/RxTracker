@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.precopia.domain.datamodel.TimeStamp
 import com.precopia.domain.repository.ITimeStampRepoContract
-import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.util.UtilExceptions
 import com.precopia.rxtracker.util.subscribeCompletable
@@ -20,7 +19,6 @@ class TimeStampLogic(
         private val repo: ITimeStampRepoContract,
         private val utilSchedulerProvider: IUtilSchedulerProviderContract,
         private val disposable: CompositeDisposable,
-        private val utilNightMode: IUtilNightModeContract
 ): ViewModel(),
         ITimeStampViewContract.Logic {
 
@@ -41,7 +39,6 @@ class TimeStampLogic(
             is LogicEvents.DeleteItem -> validateDeletePosition(event.id, event.position)
             LogicEvents.OpenAddPrescriptionView -> viewEvent(ViewEvents.OpenPrescriptionView)
             LogicEvents.OpenAddTimeStampView -> viewEvent(ViewEvents.OpenAddTimeStampView)
-            is LogicEvents.SetNightMode -> nightMode(event.nightModeEnabled)
             is LogicEvents.SelectedAdd -> addSelected(event.id)
             is LogicEvents.SelectedRemove -> removeSelected(event.id)
             LogicEvents.DeleteAll -> deleteAll()
@@ -136,12 +133,6 @@ class TimeStampLogic(
                 { UtilExceptions.throwException(it) },
                 utilSchedulerProvider
         ))
-    }
-
-
-    private fun nightMode(nightModeEnabled: Boolean) {
-        if (nightModeEnabled) utilNightMode.setDay()
-        else utilNightMode.setNight()
     }
 
 

@@ -6,7 +6,6 @@ import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.InstantExecutorExtension
 import com.precopia.rxtracker.UtilSchedulerProviderMockInit
 import com.precopia.rxtracker.observeForTesting
-import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.common.ERROR_EMPTY_LIST
 import com.precopia.rxtracker.view.common.ERROR_GENERIC
@@ -36,8 +35,6 @@ internal class TimeStampLogicTest {
 
     private val disposable = spyk<CompositeDisposable>()
 
-    private val utilNightMode = mockk<IUtilNightModeContract>(relaxUnitFun = true)
-
 
     private lateinit var logic: TimeStampLogic
 
@@ -48,7 +45,7 @@ internal class TimeStampLogicTest {
      */
     @BeforeEach
     fun init() {
-        logic = TimeStampLogic(repo, schedulerProvider, disposable, utilNightMode)
+        logic = TimeStampLogic(repo, schedulerProvider, disposable)
         clearAllMocks()
         UtilSchedulerProviderMockInit.init(schedulerProvider)
     }
@@ -247,32 +244,6 @@ internal class TimeStampLogicTest {
                 assertThat(logic.observe().value).isEqualTo(null)
             }
             verify { repo wasNot Called }
-        }
-    }
-
-
-    @Nested
-    inner class NightMode {
-        /**
-         * - Night mode will be enable at the start of the test.
-         * - Set day.
-         */
-        @Test
-        fun `nightMode - enabled at start`() {
-            logic.onEvent(LogicEvents.SetNightMode(true))
-
-            verify(exactly = 1) { utilNightMode.setDay() }
-        }
-
-        /**
-         * - Night mode will be enable at the start of the test.
-         * - Set day.
-         */
-        @Test
-        fun `nightMode - disabled at start`() {
-            logic.onEvent(LogicEvents.SetNightMode(false))
-
-            verify(exactly = 1) { utilNightMode.setNight() }
         }
     }
 

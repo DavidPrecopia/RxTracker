@@ -1,31 +1,23 @@
 package com.precopia.rxtracker.util
 
-import android.content.SharedPreferences
+import android.app.Application
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.edit
 
-class UtilNightMode(private val sharedPrefs: SharedPreferences,
-                    private val key: String) : IUtilNightModeContract {
+class UtilNightMode(private val application: Application) : IUtilNightModeContract {
 
-    override val nightModeEnabled: Boolean
-        get() = AppCompatDelegate.MODE_NIGHT_YES == sharedPrefs.getInt(key, -1)
-
-
-    override fun setDay() {
-        setMode(AppCompatDelegate.MODE_NIGHT_NO)
+    override fun isNightModeEnabled(): Boolean = when (getMode()) {
+        Configuration.UI_MODE_NIGHT_YES -> true
+        else -> false
     }
 
-    override fun setNight() {
-        setMode(AppCompatDelegate.MODE_NIGHT_YES)
-    }
+    private fun getMode() = application.resources?.configuration?.uiMode
+            ?.and(Configuration.UI_MODE_NIGHT_MASK)
 
 
-    private fun setMode(mode: Int) {
-        saveChange(mode)
-        AppCompatDelegate.setDefaultNightMode(mode)
-    }
-
-    private fun saveChange(mode: Int) {
-        sharedPrefs.edit { putInt(key, mode) }
+    override fun setFollowSystem() {
+        AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        )
     }
 }

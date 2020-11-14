@@ -1,9 +1,7 @@
 package com.precopia.rxtracker.util
 
 interface IUtilNightModeContract {
-    val nightModeEnabled: Boolean
+    fun isNightModeEnabled(): Boolean
 
-    fun setDay()
-
-    fun setNight()
+    fun setFollowSystem()
 }

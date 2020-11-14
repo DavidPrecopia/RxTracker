@@ -40,7 +40,7 @@ class EditTimeModule {
                 DateFormat.is24HourFormat(application)
         ).apply {
             version = VERSION_2
-            isThemeDark = utilNightMode.nightModeEnabled
+            isThemeDark = utilNightMode.isNightModeEnabled()
             setOnDismissListener(dismissListener)
             dismissOnPause(true)
             setCancelColor(white)

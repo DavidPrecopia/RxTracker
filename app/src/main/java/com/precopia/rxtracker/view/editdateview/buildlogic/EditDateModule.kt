@@ -37,7 +37,7 @@ class EditDateModule {
                 parsedDate[1]
         ).apply {
             version = VERSION_2
-            isThemeDark = utilNightMode.nightModeEnabled
+            isThemeDark = utilNightMode.isNightModeEnabled()
             setOnDismissListener(dismissListener)
             dismissOnPause(true)
             setCancelColor(white)
