@@ -61,7 +61,7 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
 
         private fun restoreCheckedState(timeStamp: TimeStamp) {
             if (timeStamp.isSelected) {
-                displayAsChecked(timeStamp.id)
+                setCheckedState(timeStamp.id)
             }
         }
 
@@ -94,19 +94,25 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
         private fun initOnClickListener(id: Int) {
             time_stamp_list_item_root.setOnClickListener {
                 when (timeStamp.isSelected) {
-                    true -> displayOverflow()
-                    false -> displayAsChecked(timeStamp.id)
+                    true -> setUncheckedState(id)
+                    false -> setCheckedState(id)
                 }
-                logic.onEvent(LogicEvents.SelectedRemove(id))
             }
         }
 
 
-        private fun displayAsChecked(id: Int) {
+        private fun setCheckedState(id: Int) {
             displayCheckbox()
             timeStamp.isSelected = true
             logic.onEvent(LogicEvents.SelectedAdd(id))
         }
+
+        private fun setUncheckedState(id: Int) {
+            displayOverflow()
+            timeStamp.isSelected = false
+            logic.onEvent(LogicEvents.SelectedRemove(id))
+        }
+
 
         private fun displayOverflow() {
             selection_checkbox.visibility = View.GONE

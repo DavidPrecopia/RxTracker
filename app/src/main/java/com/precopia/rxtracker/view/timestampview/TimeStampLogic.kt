@@ -49,9 +49,7 @@ class TimeStampLogic(
     }
 
     private fun addSelected(id: Int) {
-        if (selected.isEmpty()) {
-            viewEvent(ViewEvents.DisplayDeleteButton)
-        }
+        viewEvent(ViewEvents.DisplayDeleteButton)
         selected.add(id)
     }
 
