@@ -43,7 +43,7 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             RecyclerView.ViewHolder(view),
             LayoutContainer {
 
-        private var isSelected = false
+        private lateinit var timeStamp: TimeStamp
 
 
         override val containerView: View?
@@ -51,11 +51,18 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
 
 
         fun bindView(timeStamp: TimeStamp) {
+            this.timeStamp = timeStamp
             tv_title.text = timeStamp.title
             tv_time.text = timeStamp.time
+            restoreCheckedState(timeStamp)
             initContextMenu(timeStamp)
-            initLongClickListener(timeStamp.id)
             initOnClickListener(timeStamp.id)
+        }
+
+        private fun restoreCheckedState(timeStamp: TimeStamp) {
+            if (timeStamp.isSelected) {
+                displayAsChecked(timeStamp.id)
+            }
         }
 
         private fun initContextMenu(timeStamp: TimeStamp) {
@@ -84,22 +91,22 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             true
         }
 
-        private fun initLongClickListener(id: Int) {
-            time_stamp_list_item_root.setOnLongClickListener {
-                displayCheckbox()
-                isSelected = true
-                logic.onEvent(LogicEvents.SelectedAdd(id))
-                true
-            }
-        }
-
         private fun initOnClickListener(id: Int) {
             time_stamp_list_item_root.setOnClickListener {
-                if (isSelected) displayOverflow()
+                when (timeStamp.isSelected) {
+                    true -> displayOverflow()
+                    false -> displayAsChecked(timeStamp.id)
+                }
                 logic.onEvent(LogicEvents.SelectedRemove(id))
             }
         }
 
+
+        private fun displayAsChecked(id: Int) {
+            displayCheckbox()
+            timeStamp.isSelected = true
+            logic.onEvent(LogicEvents.SelectedAdd(id))
+        }
 
         private fun displayOverflow() {
             selection_checkbox.visibility = View.GONE
