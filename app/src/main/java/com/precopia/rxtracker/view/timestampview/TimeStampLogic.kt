@@ -89,6 +89,8 @@ class TimeStampLogic(
             viewEvent(ViewEvents.DisplayError(ERROR_EMPTY_LIST))
             return
         }
+        // This ensures it is not holding old data.
+        selected.clear()
         viewEvent(ViewEvents.DisplayList(list))
     }
 
