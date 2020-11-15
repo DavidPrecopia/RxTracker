@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -116,7 +117,11 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
 
 
     private fun changeVisibilityDeleteButton(visible: Boolean) {
-        menu.findItem(R.id.menu_id_delete_all).isVisible = visible
+        when (visible) {
+            true -> fab.setImageDrawable(getDrawable(R.drawable.ic_delete_black_24))
+            false -> fab.setImageDrawable(getDrawable(R.drawable.ic_add_black_24dp))
+        }
+        fab.refreshDrawableState()
     }
 
 
@@ -140,9 +145,23 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
     }
 
     private fun initFab() {
-        fab.setOnClickListener { logic.onEvent(LogicEvents.OpenAddTimeStampView) }
+        fabClickListener()
         fabScrollListener()
     }
+
+    private fun fabClickListener() {
+        val addIconState = getDrawable(R.drawable.ic_add_black_24dp).constantState
+        val deleteIconState = getDrawable(R.drawable.ic_delete_black_24).constantState
+        fab.setOnClickListener {
+            when (fab.drawable.constantState!!) {
+                addIconState -> logic.onEvent(LogicEvents.OpenAddTimeStampView)
+                deleteIconState -> logic.onEvent(LogicEvents.DeleteAll)
+            }
+        }
+    }
+
+    private fun getDrawable(resId: Int) =
+            ResourcesCompat.getDrawable(resources, resId, requireContext().theme)!!
 
     private fun fabScrollListener() {
         recycler_view.addOnScrollListener(object: RecyclerView.OnScrollListener() {
