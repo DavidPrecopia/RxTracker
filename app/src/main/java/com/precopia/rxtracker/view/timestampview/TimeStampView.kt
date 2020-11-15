@@ -28,9 +28,6 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
         ITimeStampViewContract.View {
 
 
-    private lateinit var menu: Menu
-
-
     @Inject
     lateinit var logic: ITimeStampViewContract.Logic
 
@@ -179,14 +176,12 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
-        this.menu = menu
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_id_prescriptions -> logic.onEvent(LogicEvents.OpenAddPrescriptionView)
-            R.id.menu_id_delete_all -> logic.onEvent(LogicEvents.DeleteAll)
         }
         return super.onOptionsItemSelected(item)
     }
