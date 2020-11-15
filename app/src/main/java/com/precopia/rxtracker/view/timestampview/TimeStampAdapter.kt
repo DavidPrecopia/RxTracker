@@ -56,7 +56,6 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             tv_time.text = timeStamp.time
             restoreCheckedState(timeStamp)
             initContextMenu(timeStamp)
-            initLongClickListener(timeStamp.id)
             initOnClickListener(timeStamp.id)
         }
 
@@ -92,17 +91,11 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             true
         }
 
-        private fun initLongClickListener(id: Int) {
-            time_stamp_list_item_root.setOnLongClickListener {
-                displayAsChecked(id)
-                true
-            }
-        }
-
         private fun initOnClickListener(id: Int) {
             time_stamp_list_item_root.setOnClickListener {
-                if (timeStamp.isSelected) {
-                    displayOverflow()
+                when (timeStamp.isSelected) {
+                    true -> displayOverflow()
+                    false -> displayAsChecked(timeStamp.id)
                 }
                 logic.onEvent(LogicEvents.SelectedRemove(id))
             }
