@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,7 +63,7 @@ class ManagePrescriptionsView: Fragment(R.layout.add_prescription_view),
         init()
         with(logic) {
             onEvent(LogicEvents.OnStart)
-            observe().observe(viewLifecycleOwner, Observer { evalViewEvents(it) })
+            observe().observe(viewLifecycleOwner, { evalViewEvents(it) })
         }
     }
 
