@@ -54,8 +54,16 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             this.timeStamp = timeStamp
             tv_title.text = timeStamp.title
             tv_time.text = timeStamp.time
+            restoreSelectedState(timeStamp.isSelected, timeStamp.id)
             initContextMenu(timeStamp)
             initOnClickListener(timeStamp.id)
+        }
+
+        private fun restoreSelectedState(isSelected: Boolean, id: Int) {
+            when (isSelected) {
+                true -> setCheckedState(id)
+                false -> setUncheckedState(id)
+            }
         }
 
         private fun initContextMenu(timeStamp: TimeStamp) {
