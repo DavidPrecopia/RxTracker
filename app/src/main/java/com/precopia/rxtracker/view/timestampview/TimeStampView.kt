@@ -118,7 +118,9 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
             true -> fab.setImageDrawable(getDrawable(R.drawable.ic_delete_black_24))
             false -> fab.setImageDrawable(getDrawable(R.drawable.ic_add_black_24dp))
         }
-        fab.refreshDrawableState()
+        // Hacky, it is fixed in MaterialDesign v1.2.1, however that version breaks night mode's colors.
+        fab.hide()
+        fab.show()
     }
 
 
