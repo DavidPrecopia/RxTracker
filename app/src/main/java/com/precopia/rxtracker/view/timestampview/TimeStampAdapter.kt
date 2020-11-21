@@ -43,7 +43,7 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             RecyclerView.ViewHolder(view),
             LayoutContainer {
 
-        private var isSelected = false
+        private lateinit var timeStamp: TimeStamp
 
 
         override val containerView: View?
@@ -51,11 +51,19 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
 
 
         fun bindView(timeStamp: TimeStamp) {
+            this.timeStamp = timeStamp
             tv_title.text = timeStamp.title
             tv_time.text = timeStamp.time
+            restoreSelectedState(timeStamp.isSelected, timeStamp.id)
             initContextMenu(timeStamp)
-            initLongClickListener(timeStamp.id)
             initOnClickListener(timeStamp.id)
+        }
+
+        private fun restoreSelectedState(isSelected: Boolean, id: Int) {
+            when (isSelected) {
+                true -> setCheckedState(id)
+                false -> setUncheckedState(id)
+            }
         }
 
         private fun initContextMenu(timeStamp: TimeStamp) {
@@ -84,20 +92,26 @@ class TimeStampAdapter(private val logic: ITimeStampViewContract.Logic):
             true
         }
 
-        private fun initLongClickListener(id: Int) {
-            time_stamp_list_item_root.setOnLongClickListener {
-                displayCheckbox()
-                isSelected = true
-                logic.onEvent(LogicEvents.SelectedAdd(id))
-                true
+        private fun initOnClickListener(id: Int) {
+            time_stamp_list_item_root.setOnClickListener {
+                when (timeStamp.isSelected) {
+                    true -> setUncheckedState(id)
+                    false -> setCheckedState(id)
+                }
             }
         }
 
-        private fun initOnClickListener(id: Int) {
-            time_stamp_list_item_root.setOnClickListener {
-                if (isSelected) displayOverflow()
-                logic.onEvent(LogicEvents.SelectedRemove(id))
-            }
+
+        private fun setCheckedState(id: Int) {
+            displayCheckbox()
+            timeStamp.isSelected = true
+            logic.onEvent(LogicEvents.SelectedAdd(id))
+        }
+
+        private fun setUncheckedState(id: Int) {
+            displayOverflow()
+            timeStamp.isSelected = false
+            logic.onEvent(LogicEvents.SelectedRemove(id))
         }
 
 

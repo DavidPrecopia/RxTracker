@@ -7,5 +7,5 @@
 /captures
 .externalNativeBuild
 .cxx
-rxtracker_keystore.jks
+/app/rxtracker_keystore.jks
 keystore.properties

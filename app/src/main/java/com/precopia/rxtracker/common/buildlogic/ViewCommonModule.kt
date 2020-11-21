@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.precopia.domain.repository.IPrescriptionRepoContract
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.common.RxTrackerApplication
-import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
+import com.precopia.rxtracker.util.IUtilThemeContract
 import com.precopia.rxtracker.util.UtilSchedulerProvider
 import com.precopia.rxtracker.view.manageprescriptionsview.ItemTouchHelperCallback
 import dagger.Module
@@ -33,8 +33,8 @@ class ViewCommonModule {
 
     @ViewScope
     @Provides
-    fun utilNightMode(appComponent: AppComponent): IUtilNightModeContract {
-        return appComponent.utilNightMode()
+    fun theme(appComponent: AppComponent): IUtilThemeContract {
+        return appComponent.utilTheme()
     }
 
     @ViewScope

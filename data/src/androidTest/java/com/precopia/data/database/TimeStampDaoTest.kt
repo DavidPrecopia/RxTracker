@@ -102,7 +102,7 @@ internal class TimeStampDaoTest {
      */
     @Test
     fun deleteAll() {
-        dao.deleteAll()
+        dao.clearDatabase()
 
         dao.add(DbTimeStamp(title = "titleOne", time = "timeOne"))
                 .test()

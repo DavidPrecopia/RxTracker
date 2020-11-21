@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.precopia.domain.datamodel.TimeStamp
 import com.precopia.domain.repository.ITimeStampRepoContract
-import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.util.UtilExceptions
 import com.precopia.rxtracker.util.subscribeCompletable
@@ -20,15 +19,11 @@ class TimeStampLogic(
         private val repo: ITimeStampRepoContract,
         private val utilSchedulerProvider: IUtilSchedulerProviderContract,
         private val disposable: CompositeDisposable,
-        private val utilNightMode: IUtilNightModeContract
 ): ViewModel(),
         ITimeStampViewContract.Logic {
 
 
     private val viewEventLiveData = MutableLiveData<ViewEvents>()
-
-
-    private val localTimeStampList = mutableListOf<TimeStamp>()
 
     private val selected = mutableListOf<Int>()
 
@@ -41,7 +36,6 @@ class TimeStampLogic(
             is LogicEvents.DeleteItem -> validateDeletePosition(event.id, event.position)
             LogicEvents.OpenAddPrescriptionView -> viewEvent(ViewEvents.OpenPrescriptionView)
             LogicEvents.OpenAddTimeStampView -> viewEvent(ViewEvents.OpenAddTimeStampView)
-            is LogicEvents.SetNightMode -> nightMode(event.nightModeEnabled)
             is LogicEvents.SelectedAdd -> addSelected(event.id)
             is LogicEvents.SelectedRemove -> removeSelected(event.id)
             LogicEvents.DeleteAll -> deleteAll()
@@ -49,10 +43,10 @@ class TimeStampLogic(
     }
 
     private fun addSelected(id: Int) {
-        if (selected.isEmpty()) {
-            viewEvent(ViewEvents.DisplayDeleteButton)
+        viewEvent(ViewEvents.DisplayDeleteButton)
+        if (selected.contains(id).not()) {
+            selected.add(id)
         }
-        selected.add(id)
     }
 
     private fun removeSelected(id: Int) {
@@ -83,17 +77,7 @@ class TimeStampLogic(
         observeRepo()
     }
 
-    /**
-     * When the View restart per a reconfiguration change,
-     * it will send another [LogicEvents.OnStart] event, to avoid
-     * unnecessarily invoking the Repo, I am storing the list here as well.
-     */
     private fun observeRepo() {
-        if (localTimeStampList.isNotEmpty()) {
-            viewEvent(ViewEvents.DisplayList(localTimeStampList))
-            return
-        }
-
         disposable.add(subscribeFlowableTimeStamp(
                 repo.getAll(),
                 { evalTimeStampList(it) },
@@ -107,11 +91,8 @@ class TimeStampLogic(
             viewEvent(ViewEvents.DisplayError(ERROR_EMPTY_LIST))
             return
         }
-
-        with(localTimeStampList) {
-            clear()
-            addAll(list)
-        }
+        // This ensures it is not holding old data.
+        selected.clear()
         viewEvent(ViewEvents.DisplayList(list))
     }
 
@@ -136,12 +117,6 @@ class TimeStampLogic(
                 { UtilExceptions.throwException(it) },
                 utilSchedulerProvider
         ))
-    }
-
-
-    private fun nightMode(nightModeEnabled: Boolean) {
-        if (nightModeEnabled) utilNightMode.setDay()
-        else utilNightMode.setNight()
     }
 
 

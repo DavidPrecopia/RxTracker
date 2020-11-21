@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.SharedPreferences
 import com.precopia.domain.repository.IPrescriptionRepoContract
 import com.precopia.domain.repository.ITimeStampRepoContract
-import com.precopia.rxtracker.util.IUtilNightModeContract
+import com.precopia.rxtracker.util.IUtilThemeContract
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
     RepositoryModule::class,
-    UtilNightModeModule::class,
+    UtilThemeModule::class,
     SharedPrefsModule::class
 ])
 interface AppComponent {
@@ -20,7 +20,7 @@ interface AppComponent {
 
     fun prescriptionRepo(): IPrescriptionRepoContract
 
-    fun utilNightMode(): IUtilNightModeContract
+    fun utilTheme(): IUtilThemeContract
 
     fun sharedPrefs(): SharedPreferences
 

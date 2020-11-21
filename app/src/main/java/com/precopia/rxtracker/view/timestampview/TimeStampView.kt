@@ -7,14 +7,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.precopia.rxtracker.R
-import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.util.navigate
 import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.LogicEvents
@@ -29,14 +28,8 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
         ITimeStampViewContract.View {
 
 
-    private lateinit var menu: Menu
-
-
     @Inject
     lateinit var logic: ITimeStampViewContract.Logic
-
-    @Inject
-    lateinit var nightMode: IUtilNightModeContract
 
     @Inject
     lateinit var adapter: ITimeStampViewContract.Adapter
@@ -72,7 +65,7 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
         init()
         with(logic) {
             onEvent(LogicEvents.OnStart)
-            observe().observe(viewLifecycleOwner, Observer { evalViewEvents(it) })
+            observe().observe(viewLifecycleOwner, { evalViewEvents(it) })
         }
     }
 
@@ -121,7 +114,13 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
 
 
     private fun changeVisibilityDeleteButton(visible: Boolean) {
-        menu.findItem(R.id.menu_id_delete_all).isVisible = visible
+        when (visible) {
+            true -> fab.setImageDrawable(getDrawable(R.drawable.ic_delete_black_24))
+            false -> fab.setImageDrawable(getDrawable(R.drawable.ic_add_black_24dp))
+        }
+        // Hacky, it is fixed in MaterialDesign v1.2.1, however that version breaks night mode's colors.
+        fab.hide()
+        fab.show()
     }
 
 
@@ -145,9 +144,23 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
     }
 
     private fun initFab() {
-        fab.setOnClickListener { logic.onEvent(LogicEvents.OpenAddTimeStampView) }
+        fabClickListener()
         fabScrollListener()
     }
+
+    private fun fabClickListener() {
+        val addIconState = getDrawable(R.drawable.ic_add_black_24dp).constantState
+        val deleteIconState = getDrawable(R.drawable.ic_delete_black_24).constantState
+        fab.setOnClickListener {
+            when (fab.drawable.constantState!!) {
+                addIconState -> logic.onEvent(LogicEvents.OpenAddTimeStampView)
+                deleteIconState -> logic.onEvent(LogicEvents.DeleteAll)
+            }
+        }
+    }
+
+    private fun getDrawable(resId: Int) =
+            ResourcesCompat.getDrawable(resources, resId, requireContext().theme)!!
 
     private fun fabScrollListener() {
         recycler_view.addOnScrollListener(object: RecyclerView.OnScrollListener() {
@@ -165,25 +178,12 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.toolbar_menu, menu)
-        initMenuSetCheckedState(menu)
-        this.menu = menu
         super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    private fun initMenuSetCheckedState(menu: Menu) {
-        menu.findItem(R.id.menu_id_night_mode).isChecked = nightMode.nightModeEnabled
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_id_prescriptions -> logic.onEvent(LogicEvents.OpenAddPrescriptionView)
-            R.id.menu_id_night_mode -> {
-                with(item.isChecked) {
-                    logic.onEvent(LogicEvents.SetNightMode(this))
-                    this.not()
-                }
-            }
-            R.id.menu_id_delete_all -> logic.onEvent(LogicEvents.DeleteAll)
         }
         return super.onOptionsItemSelected(item)
     }

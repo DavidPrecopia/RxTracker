@@ -10,7 +10,6 @@
     <string name="content_description_drag_handle">Hold to drag</string>
 
     <string name="menu_item_title_prescriptions">Prescriptions</string>
-    <string name="menu_item_title_delete_all">Mass Delete</string>
 
     <string name="menu_item_title_edit_time">Edit Time</string>
     <string name="menu_item_title_edit_date">Edit Date</string>
@@ -20,7 +19,4 @@
 
     <string name="edit_text_hint_prescription">Prescription</string>
     <string name="recycler_view_label_prescriptions">Added Prescriptions:</string>
-
-    <string name="menu_item_title_night_mode">Night Mode</string>
-    <string name="night_mode_shared_pref_key">night_mode_shared_pref_key</string>
 </resources>

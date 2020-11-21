@@ -18,7 +18,7 @@ internal abstract class RxTrackerApplicationBase: Application() {
         super.onCreate()
         initAppComponent()
         initRxAndroidScheduler()
-        nightMode()
+        setTheme()
     }
 
     private fun initAppComponent() {
@@ -40,10 +40,7 @@ internal abstract class RxTrackerApplicationBase: Application() {
     }
 
 
-    private fun nightMode() {
-        with(appComponent.utilNightMode()) {
-            if (nightModeEnabled) setNight()
-            else setDay()
-        }
+    private fun setTheme() {
+        appComponent.utilTheme().setFollowSystem()
     }
 }

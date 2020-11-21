@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.precopia.domain.repository.ITimeStampRepoContract
 import com.precopia.rxtracker.common.buildlogic.ViewScope
-import com.precopia.rxtracker.util.IUtilNightModeContract
 import com.precopia.rxtracker.util.IUtilSchedulerProviderContract
 import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract
 import com.precopia.rxtracker.view.timestampview.TimeStampAdapter
@@ -29,10 +28,9 @@ class TimeStampModule {
     fun factory(
             repo: ITimeStampRepoContract,
             utilSchedulerProvider: IUtilSchedulerProviderContract,
-            disposable: CompositeDisposable,
-            utilNightMode: IUtilNightModeContract
+            disposable: CompositeDisposable
     ): ViewModelProvider.NewInstanceFactory {
-        return TimeStampLogicFactory(repo, utilSchedulerProvider, disposable, utilNightMode)
+        return TimeStampLogicFactory(repo, utilSchedulerProvider, disposable)
     }
 
     @ViewScope
