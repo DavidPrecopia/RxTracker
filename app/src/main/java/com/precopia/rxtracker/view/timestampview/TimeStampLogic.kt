@@ -25,9 +25,6 @@ class TimeStampLogic(
 
     private val viewEventLiveData = MutableLiveData<ViewEvents>()
 
-
-    private val localTimeStampList = mutableListOf<TimeStamp>()
-
     private val selected = mutableListOf<Int>()
 
 
@@ -47,7 +44,9 @@ class TimeStampLogic(
 
     private fun addSelected(id: Int) {
         viewEvent(ViewEvents.DisplayDeleteButton)
-        selected.add(id)
+        if (selected.contains(id).not()) {
+            selected.add(id)
+        }
     }
 
     private fun removeSelected(id: Int) {
@@ -78,17 +77,7 @@ class TimeStampLogic(
         observeRepo()
     }
 
-    /**
-     * When the View restart per a reconfiguration change,
-     * it will send another [LogicEvents.OnStart] event, to avoid
-     * unnecessarily invoking the Repo, I am storing the list here as well.
-     */
     private fun observeRepo() {
-        if (localTimeStampList.isNotEmpty()) {
-            viewEvent(ViewEvents.DisplayList(localTimeStampList))
-            return
-        }
-
         disposable.add(subscribeFlowableTimeStamp(
                 repo.getAll(),
                 { evalTimeStampList(it) },
@@ -102,11 +91,8 @@ class TimeStampLogic(
             viewEvent(ViewEvents.DisplayError(ERROR_EMPTY_LIST))
             return
         }
-
-        with(localTimeStampList) {
-            clear()
-            addAll(list)
-        }
+        // This ensures it is not holding old data.
+        selected.clear()
         viewEvent(ViewEvents.DisplayList(list))
     }
 
