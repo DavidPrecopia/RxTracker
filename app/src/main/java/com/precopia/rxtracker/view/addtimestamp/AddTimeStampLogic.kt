@@ -67,11 +67,11 @@ class AddTimeStampLogic(
         disposable.add(
                 subscribeCompletable(
                         timeStampRepo.add(rxTitle),
-                        { viewEvent(ViewEvents.Close) },
+                        { viewEvent(ViewEvents.Close(true)) },
                         {
                             UtilExceptions.throwException(it)
                             viewEvent(ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED))
-                            viewEvent(ViewEvents.Close)
+                            viewEvent(ViewEvents.Close(false))
                         },
                         utilSchedulerProvider
                 )

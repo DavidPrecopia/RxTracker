@@ -154,7 +154,7 @@ internal class AddTimeStampLogicTest {
 
             verify(exactly = 1) { timeStampRepo.add(title) }
             logic.observe().observeForTesting {
-                assertThat(logic.observe().value).isEqualTo(ViewEvents.Close)
+                assertThat(logic.observe().value).isEqualTo(ViewEvents.Close(true))
             }
         }
 
@@ -185,7 +185,7 @@ internal class AddTimeStampLogicTest {
             assertThat(listLiveDataOutput[0]).isEqualTo(
                     ViewEvents.DisplayMessage(ERROR_OPERATION_FAILED)
             )
-            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.Close)
+            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.Close(false))
 
             logic.observe().removeObserver(liveDataObserver)
         }

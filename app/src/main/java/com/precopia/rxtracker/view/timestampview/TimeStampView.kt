@@ -11,11 +11,14 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.util.navigate
+import com.precopia.rxtracker.view.common.BUNDLE_KEY_ADDED_TIMESTAMP
+import com.precopia.rxtracker.view.common.REQUEST_KEY_ADD_TIMESTAMP
 import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.LogicEvents
 import com.precopia.rxtracker.view.timestampview.ITimeStampViewContract.ViewEvents
 import com.precopia.rxtracker.view.timestampview.buildlogic.DaggerTimeStampComponent
@@ -125,9 +128,19 @@ class TimeStampView: Fragment(R.layout.time_stamp_view),
 
 
     private fun init() {
+        initResultListener()
         initToolbar()
         initRecyclerView()
         initFab()
+    }
+
+    private fun initResultListener() {
+        setFragmentResultListener(REQUEST_KEY_ADD_TIMESTAMP) { _, bundle ->
+            if (bundle.getBoolean(BUNDLE_KEY_ADDED_TIMESTAMP, false)) {
+                recycler_view.smoothScrollToPosition(0)
+                bundle.putBoolean(BUNDLE_KEY_ADDED_TIMESTAMP, false)
+            }
+        }
     }
 
     private fun initToolbar() {
