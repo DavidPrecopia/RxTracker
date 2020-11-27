@@ -30,7 +30,9 @@ internal class TimeStampRepo(private val dao: TimeStampDao, private val timeUtil
             RxJavaBridge.toV3Completable(dao.deleteAll(ids.map { DbTimeStampDelete(it) }))
 
     override fun modifyDateTime(id: Int, calendar: Calendar): Completable =
-            RxJavaBridge.toV3Completable(dao.modifyDateTime(id, timeUtil.calendarToString(calendar)))
+            RxJavaBridge.toV3Completable(dao.modifyDateTime(
+                    id, timeUtil.calendarToString(calendar), timeUtil.calendarToYear(calendar)
+            ))
 
 
     private fun mapDbTimeStamp(list: List<DbTimeStamp>) = list.map {

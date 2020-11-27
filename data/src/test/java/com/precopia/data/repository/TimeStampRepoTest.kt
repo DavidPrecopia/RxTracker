@@ -189,9 +189,11 @@ internal class TimeStampRepoTest {
             val id = 1
             val calendar = mockk<Calendar>()
             val timeString = "current time"
+            val yearInt = 2020
 
             every { timeUtil.calendarToString(calendar) } returns timeString
-            every { dao.modifyDateTime(id, timeString) } returns io.reactivex.Completable.complete()
+            every { timeUtil.calendarToYear(calendar) } returns yearInt
+            every { dao.modifyDateTime(id, timeString, yearInt) } returns io.reactivex.Completable.complete()
 
             repo.modifyDateTime(id, calendar)
                     .test()
@@ -207,10 +209,12 @@ internal class TimeStampRepoTest {
             val id = 1
             val calendar = mockk<Calendar>()
             val timeString = "current time"
+            val yearInt = 2020
             val throwable = mockk<Throwable>(relaxed = true)
 
             every { timeUtil.calendarToString(calendar) } returns timeString
-            every { dao.modifyDateTime(id, timeString) } returns io.reactivex.Completable.error(throwable)
+            every { timeUtil.calendarToYear(calendar) } returns yearInt
+            every { dao.modifyDateTime(id, timeString, yearInt) } returns io.reactivex.Completable.error(throwable)
 
             repo.modifyDateTime(id, calendar)
                     .test()

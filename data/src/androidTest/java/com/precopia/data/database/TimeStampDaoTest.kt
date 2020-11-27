@@ -193,12 +193,15 @@ internal class TimeStampDaoTest {
                 .test()
                 .values()[0][0].id
 
-        dao.modifyDateTime(insertedId, timeModified)
+        dao.modifyDateTime(insertedId, timeModified, year)
                 .test()
                 .assertComplete()
 
         dao.getAll()
                 .test()
-                .assertValue { it[0].time == timeModified }
+                .assertValue {
+                    it[0].time == timeModified &&
+                    it[0].year == year
+                }
     }
 }
