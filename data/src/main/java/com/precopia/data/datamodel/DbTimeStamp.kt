@@ -8,6 +8,7 @@ import com.precopia.data.database.DatabaseConstants.TIME_STAMP_DATE_COLUMN
 import com.precopia.data.database.DatabaseConstants.TIME_STAMP_ID_COLUMN
 import com.precopia.data.database.DatabaseConstants.TIME_STAMP_TABLE_NAME
 import com.precopia.data.database.DatabaseConstants.TIME_STAMP_TITLE_COLUMN
+import com.precopia.data.database.DatabaseConstants.TIME_STAMP_YEAR_COLUMN
 
 @Entity(tableName = TIME_STAMP_TABLE_NAME)
 internal data class DbTimeStamp(
@@ -20,5 +21,8 @@ internal data class DbTimeStamp(
         val title: String,
         @NonNull
         @ColumnInfo(name = TIME_STAMP_DATE_COLUMN)
-        val time: String
+        val time: String,
+        @NonNull
+        @ColumnInfo(name = TIME_STAMP_YEAR_COLUMN)
+        val year: Int
 )

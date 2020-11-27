@@ -16,7 +16,7 @@ interface IAddTimeStampContract {
         data class DisplayList(val list: List<String>): ViewEvents()
         data class DisplayError(val message: String): ViewEvents()
         data class DisplayMessage(val message: String): ViewEvents()
-        object Close: ViewEvents()
+        data class Close(val operationSuccessful: Boolean): ViewEvents()
     }
 
     sealed class LogicEvents {

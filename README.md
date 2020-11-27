@@ -28,7 +28,7 @@ This helps you keep track of when you take prescriptions.
 - Unit testing with JUnit 5, AssertJ, and MockK.
 - CI with GitHub Actions.
 
-## Screenshots
+## Screenshots (old color scheme)
 
 View all added time stamps.
 

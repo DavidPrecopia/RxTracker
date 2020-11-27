@@ -46,10 +46,11 @@ internal class TimeStampDaoTest {
     fun addAndGet() {
         val titleString = "title"
         val timeString = "time"
+        val yearInt = 2020
 
         dao.clearDatabase()
 
-        dao.add(DbTimeStamp(title = titleString, time = timeString))
+        dao.add(DbTimeStamp(title = titleString, time = timeString, year = yearInt))
                 .test()
                 .assertComplete()
 
@@ -59,6 +60,41 @@ internal class TimeStampDaoTest {
                     it.size == 1
                             && it[0].title == titleString
                             && it[0].time == timeString
+                            && it[0].year == yearInt
+                }
+    }
+
+    /**
+     * - Clear the database.
+     * - Add two [DbTimeStamp] with different dates and years.
+     * - Retrieve it and verify that they are unmodified and in the correct order.
+     */
+    @Test
+    fun addAndGetVerifyOrder() {
+        val titleString = "title"
+        val timeOneString = "1/25/2021"
+        val yearOneInt = 2021
+        val timeTwoString = "12/25/2020"
+        val yearTwoInt = 2020
+
+        dao.clearDatabase()
+
+        dao.add(DbTimeStamp(title = titleString, time = timeOneString, year = yearOneInt))
+                .test()
+                .assertComplete()
+
+        dao.add(DbTimeStamp(title = titleString, time = timeTwoString, year = yearTwoInt))
+                .test()
+                .assertComplete()
+
+        dao.getAll()
+                .test()
+                .assertValue {
+                    it.size == 2
+                            && it[0].time == timeOneString
+                            && it[0].year == yearOneInt
+                            && it[1].time == timeTwoString
+                            && it[1].year == yearTwoInt
                 }
     }
 
@@ -73,10 +109,11 @@ internal class TimeStampDaoTest {
     fun delete() {
         val titleString = "title"
         val timeString = "time"
+        val yearInt = 2020
 
         dao.clearDatabase()
 
-        dao.add(DbTimeStamp(title = titleString, time = timeString))
+        dao.add(DbTimeStamp(title = titleString, time = timeString, year = yearInt))
                 .test()
                 .assertComplete()
 
@@ -104,11 +141,11 @@ internal class TimeStampDaoTest {
     fun deleteAll() {
         dao.clearDatabase()
 
-        dao.add(DbTimeStamp(title = "titleOne", time = "timeOne"))
+        dao.add(DbTimeStamp(title = "titleOne", time = "timeOne", year = 2021))
                 .test()
                 .assertComplete()
 
-        dao.add(DbTimeStamp(title = "titleTwo", time = "timeTwo"))
+        dao.add(DbTimeStamp(title = "titleTwo", time = "timeTwo", year = 2020))
                 .test()
                 .assertComplete()
 
@@ -144,10 +181,11 @@ internal class TimeStampDaoTest {
         val title = "title"
         val timeOriginal = "time"
         val timeModified = "timeModified"
+        val year = 2020
 
         dao.clearDatabase()
 
-        dao.add(DbTimeStamp(title = title, time = timeOriginal))
+        dao.add(DbTimeStamp(title = title, time = timeOriginal, year = year))
                 .test()
                 .assertComplete()
 
@@ -155,12 +193,15 @@ internal class TimeStampDaoTest {
                 .test()
                 .values()[0][0].id
 
-        dao.modifyDateTime(insertedId, timeModified)
+        dao.modifyDateTime(insertedId, timeModified, year)
                 .test()
                 .assertComplete()
 
         dao.getAll()
                 .test()
-                .assertValue { it[0].time == timeModified }
+                .assertValue {
+                    it[0].time == timeModified &&
+                    it[0].year == year
+                }
     }
 }

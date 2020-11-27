@@ -39,7 +39,7 @@ internal class TimeStampRepoTest {
          */
         @Test
         fun `getAll - success`() {
-            val dbTimeStamp = DbTimeStamp(0, "title", "time")
+            val dbTimeStamp = DbTimeStamp(0, "title", "time", 2020)
 
             every { dao.getAll() } returns io.reactivex.Flowable.just(listOf(dbTimeStamp))
 
@@ -75,10 +75,11 @@ internal class TimeStampRepoTest {
          */
         @Test
         fun `add - complete`() {
-            val dbTimeStamp = DbTimeStamp(0, "title", "time")
+            val dbTimeStamp = DbTimeStamp(0, "title", "time", 2020)
 
             every { dao.add(dbTimeStamp) } returns io.reactivex.Completable.complete()
             every { timeUtil.getCurrentTime() } returns dbTimeStamp.time
+            every { timeUtil.getCurrentYear() } returns dbTimeStamp.year
 
             repo.add(dbTimeStamp.title)
                     .test()
@@ -91,11 +92,12 @@ internal class TimeStampRepoTest {
          */
         @Test
         fun `add - error`() {
-            val dbTimeStamp = DbTimeStamp(0, "title", "time")
+            val dbTimeStamp = DbTimeStamp(0, "title", "time", 2020)
             val throwable = mockk<Throwable>(relaxed = true)
 
             every { dao.add(dbTimeStamp) } returns io.reactivex.Completable.error(throwable)
             every { timeUtil.getCurrentTime() } returns dbTimeStamp.time
+            every { timeUtil.getCurrentYear() } returns dbTimeStamp.year
 
             repo.add(dbTimeStamp.title)
                     .test()
@@ -119,6 +121,7 @@ internal class TimeStampRepoTest {
             val currentTimeString = "time"
 
             every { timeUtil.getCurrentTime() } returns currentTimeString
+            every { timeUtil.getCurrentYear() } returns 2020
             every { dao.add(timeStamp = capture(capturedArg)) } answers {
                 io.reactivex.Completable.complete()
             }
@@ -186,9 +189,11 @@ internal class TimeStampRepoTest {
             val id = 1
             val calendar = mockk<Calendar>()
             val timeString = "current time"
+            val yearInt = 2020
 
             every { timeUtil.calendarToString(calendar) } returns timeString
-            every { dao.modifyDateTime(id, timeString) } returns io.reactivex.Completable.complete()
+            every { timeUtil.calendarToYear(calendar) } returns yearInt
+            every { dao.modifyDateTime(id, timeString, yearInt) } returns io.reactivex.Completable.complete()
 
             repo.modifyDateTime(id, calendar)
                     .test()
@@ -204,10 +209,12 @@ internal class TimeStampRepoTest {
             val id = 1
             val calendar = mockk<Calendar>()
             val timeString = "current time"
+            val yearInt = 2020
             val throwable = mockk<Throwable>(relaxed = true)
 
             every { timeUtil.calendarToString(calendar) } returns timeString
-            every { dao.modifyDateTime(id, timeString) } returns io.reactivex.Completable.error(throwable)
+            every { timeUtil.calendarToYear(calendar) } returns yearInt
+            every { dao.modifyDateTime(id, timeString, yearInt) } returns io.reactivex.Completable.error(throwable)
 
             repo.modifyDateTime(id, calendar)
                     .test()

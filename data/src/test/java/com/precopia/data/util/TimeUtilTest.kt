@@ -25,6 +25,18 @@ internal class TimeUtilTest {
     }
 
     /**
+     * Compare a new instance of [Calendar] to the return from [TimeUtil.getCurrentYear].
+     */
+    @Test
+    fun getCurrentYear() {
+        assertThat(
+                timeUtil.getCurrentYear()
+        ).isEqualTo(
+                Calendar.getInstance().get(Calendar.YEAR)
+        )
+    }
+
+    /**
      * Compare a custom instance of [Calendar] to the return from [TimeUtil.calendarToString].
      */
     @Test
@@ -54,4 +66,21 @@ internal class TimeUtilTest {
             ).format(
                     calendar.time
             )
+
+
+    /**
+     * Compare a custom instance of [Calendar] to the return from [TimeUtil.calendarToYear].
+     */
+    @Test
+    fun calendarToYear() {
+        val calendar = Calendar.getInstance().apply {
+            this[Calendar.YEAR] = 2020
+        }
+
+        assertThat(
+                timeUtil.calendarToYear(calendar)
+        ).isEqualTo(
+                calendar.get(Calendar.YEAR)
+        )
+    }
 }

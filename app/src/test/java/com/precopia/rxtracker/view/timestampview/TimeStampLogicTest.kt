@@ -60,7 +60,7 @@ internal class TimeStampLogicTest {
          */
         @Test
         fun `onStart - normal`() {
-            val listTimeStamp = listOf(TimeStamp(0, "title", "time"))
+            val listTimeStamp = listOf(TimeStamp(0, "title", "time", 2020))
             val listLiveDataOutput = mutableListOf<ViewEvents>()
             val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 
@@ -306,7 +306,7 @@ internal class TimeStampLogicTest {
          * - Send [LogicEvents.SelectedAdd] - need to add before you can remove.
          * - Send [LogicEvents.DeleteAll].
          * - Send a List containing the IDs passed-in to the Repo.
-         * - Verify [ViewEvents.DisplayDeleteButton] was sent to the view.
+         * - Verify [ViewEvents.DisplayDeleteButton] was sent to the view twice.
          * - Verify [ViewEvents.HideDeleteButton] was sent to the view.
          */
         @Test
@@ -325,9 +325,10 @@ internal class TimeStampLogicTest {
             logic.onEvent(LogicEvents.DeleteAll)
 
             verify(exactly = 1) { repo.deleteAll(listOfIds) }
-            assertThat(listLiveDataOutput.size).isEqualTo(2)
+            assertThat(listLiveDataOutput.size).isEqualTo(3)
             assertThat(listLiveDataOutput[0]).isEqualTo(ViewEvents.DisplayDeleteButton)
-            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.HideDeleteButton)
+            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.DisplayDeleteButton)
+            assertThat(listLiveDataOutput[2]).isEqualTo(ViewEvents.HideDeleteButton)
 
             logic.observe().removeObserver(liveDataObserver)
         }

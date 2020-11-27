@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import com.precopia.rxtracker.R
 import com.precopia.rxtracker.util.application
 import com.precopia.rxtracker.util.navigateUp
@@ -15,6 +17,8 @@ import com.precopia.rxtracker.util.toast
 import com.precopia.rxtracker.view.addtimestamp.IAddTimeStampContract.LogicEvents
 import com.precopia.rxtracker.view.addtimestamp.IAddTimeStampContract.ViewEvents
 import com.precopia.rxtracker.view.addtimestamp.bulidlogic.DaggerAddTimeStampComponent
+import com.precopia.rxtracker.view.common.BUNDLE_KEY_ADDED_TIMESTAMP
+import com.precopia.rxtracker.view.common.REQUEST_KEY_ADD_TIMESTAMP
 import kotlinx.android.synthetic.main.add_time_stamp_view.*
 import javax.inject.Inject
 
@@ -57,7 +61,7 @@ class AddTimeStampView: Fragment(R.layout.add_time_stamp_view),
             is ViewEvents.DisplayList -> displayList(event.list)
             is ViewEvents.DisplayError -> displayError(event.message)
             is ViewEvents.DisplayMessage -> toast(event.message)
-            ViewEvents.Close -> navigateUp()
+            is ViewEvents.Close -> closeView(event.operationSuccessful)
         }
     }
 
@@ -113,6 +117,15 @@ class AddTimeStampView: Fragment(R.layout.add_time_stamp_view),
             text = message
             isVisible = true
         }
+    }
+
+
+    private fun closeView(operationSuccessful: Boolean) {
+        setFragmentResult(
+                REQUEST_KEY_ADD_TIMESTAMP,
+                bundleOf(BUNDLE_KEY_ADDED_TIMESTAMP to operationSuccessful)
+        )
+        navigateUp()
     }
 
 
