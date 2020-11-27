@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.precopia.data.database.DatabaseConstants.TIME_STAMP_DATE_COLUMN
 import com.precopia.data.database.DatabaseConstants.TIME_STAMP_ID_COLUMN
+import com.precopia.data.database.DatabaseConstants.TIME_STAMP_YEAR_COLUMN
 import com.precopia.data.datamodel.DbTimeStamp
 import com.precopia.data.datamodel.DbTimeStampDelete
 import io.reactivex.Completable
@@ -14,7 +15,7 @@ import io.reactivex.Flowable
 
 @Dao
 internal interface TimeStampDao {
-    @Query("SELECT * FROM time_stamps ORDER BY $TIME_STAMP_DATE_COLUMN DESC")
+    @Query("SELECT * FROM time_stamps ORDER BY $TIME_STAMP_YEAR_COLUMN DESC, $TIME_STAMP_DATE_COLUMN DESC")
     fun getAll(): Flowable<List<DbTimeStamp>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

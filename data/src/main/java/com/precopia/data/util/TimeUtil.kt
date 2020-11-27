@@ -7,6 +7,8 @@ import java.util.*
 internal class TimeUtil: ITimeUtil {
     override fun getCurrentTime(): String = getFormattedDate()
 
+    override fun getCurrentYear(): Int = Calendar.getInstance().get(Calendar.YEAR)
+
     override fun calendarToString(calendar: Calendar): String =
             getFormattedDate(calendar)
 
