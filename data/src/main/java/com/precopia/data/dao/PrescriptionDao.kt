@@ -8,19 +8,20 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_ID_COLUMN
 import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_POSITION_COLUMN
+import com.precopia.data.database.DatabaseConstants.PRESCRIPTION_TABLE_NAME
 import com.precopia.data.datamodel.DbPrescription
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
 internal interface PrescriptionDao {
-    @Query("SELECT * FROM prescriptions ORDER BY $PRESCRIPTION_POSITION_COLUMN ASC")
+    @Query("SELECT * FROM $PRESCRIPTION_TABLE_NAME ORDER BY $PRESCRIPTION_POSITION_COLUMN ASC")
     fun getAll(): Flowable<List<DbPrescription>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun add(prescription: DbPrescription): Completable
 
-    @Query("DELETE FROM prescriptions WHERE $PRESCRIPTION_ID_COLUMN = :id")
+    @Query("DELETE FROM $PRESCRIPTION_TABLE_NAME WHERE $PRESCRIPTION_ID_COLUMN = :id")
     fun delete(id: Int): Completable
 
 
@@ -30,10 +31,10 @@ internal interface PrescriptionDao {
         return getAllSynchronously()
     }
 
-    @Query("UPDATE prescriptions SET $PRESCRIPTION_POSITION_COLUMN = :newPos WHERE $PRESCRIPTION_ID_COLUMN = :id")
+    @Query("UPDATE $PRESCRIPTION_TABLE_NAME SET $PRESCRIPTION_POSITION_COLUMN = :newPos WHERE $PRESCRIPTION_ID_COLUMN = :id")
     fun updatePosition(id: Int, newPos: Double)
 
-    @Query("SELECT * FROM prescriptions ORDER BY $PRESCRIPTION_POSITION_COLUMN ASC")
+    @Query("SELECT * FROM $PRESCRIPTION_TABLE_NAME ORDER BY $PRESCRIPTION_POSITION_COLUMN ASC")
     fun getAllSynchronously(): MutableList<DbPrescription>
 
 
@@ -44,6 +45,6 @@ internal interface PrescriptionDao {
     /**
      * EXCLUSIVELY FOR TESTING
      */
-    @Query("DELETE FROM prescriptions")
+    @Query("DELETE FROM $PRESCRIPTION_TABLE_NAME")
     fun clearDatabase()
 }
