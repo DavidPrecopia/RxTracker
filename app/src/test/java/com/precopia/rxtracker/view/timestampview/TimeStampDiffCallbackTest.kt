@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test
 internal class TimeStampDiffCallbackTest {
 
 
-    private val one = TimeStamp(1, "titleOne", "timeOne")
-    private val two = TimeStamp(2, "titleTwo", "timeTwo")
+    private val one = TimeStamp(1, "titleOne", "timeOne", 2020)
+    private val two = TimeStamp(2, "titleTwo", "timeTwo", 2021)
 
 
     private val diffCallback = TimeStampDiffCallback()

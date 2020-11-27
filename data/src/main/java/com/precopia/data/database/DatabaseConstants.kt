@@ -7,6 +7,7 @@ internal object DatabaseConstants {
     const val TIME_STAMP_ID_COLUMN = "id"
     const val TIME_STAMP_TITLE_COLUMN = "title"
     const val TIME_STAMP_DATE_COLUMN = "date"
+    const val TIME_STAMP_YEAR_COLUMN = "year"
 
     const val PRESCRIPTION_TABLE_NAME = "prescriptions"
     const val PRESCRIPTION_ID_COLUMN = "id"
