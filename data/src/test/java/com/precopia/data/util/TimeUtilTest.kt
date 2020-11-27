@@ -66,4 +66,21 @@ internal class TimeUtilTest {
             ).format(
                     calendar.time
             )
+
+
+    /**
+     * Compare a custom instance of [Calendar] to the return from [TimeUtil.calendarToYear].
+     */
+    @Test
+    fun calendarToYear() {
+        val calendar = Calendar.getInstance().apply {
+            this[Calendar.YEAR] = 2020
+        }
+
+        assertThat(
+                timeUtil.calendarToYear(calendar)
+        ).isEqualTo(
+                calendar.get(Calendar.YEAR)
+        )
+    }
 }

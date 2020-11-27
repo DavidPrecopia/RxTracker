@@ -28,8 +28,8 @@ internal interface TimeStampDao {
     @Delete(entity = DbTimeStamp::class)
     fun deleteAll(ids: List<DbTimeStampDelete>): Completable
 
-    @Query("UPDATE $TIME_STAMP_TABLE_NAME SET $TIME_STAMP_DATE_COLUMN = :time WHERE $TIME_STAMP_ID_COLUMN = :id")
-    fun modifyDateTime(id: Int, time: String): Completable
+    @Query("UPDATE $TIME_STAMP_TABLE_NAME SET $TIME_STAMP_DATE_COLUMN = :time, $TIME_STAMP_YEAR_COLUMN  = :year WHERE $TIME_STAMP_ID_COLUMN = :id")
+    fun modifyDateTime(id: Int, time: String, year: Int): Completable
 
 
     /**

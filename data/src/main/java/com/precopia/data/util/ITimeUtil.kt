@@ -8,4 +8,6 @@ interface ITimeUtil {
     fun getCurrentYear(): Int
 
     fun calendarToString(calendar: Calendar): String
+
+    fun calendarToYear(calendar: Calendar): Int
 }
