@@ -251,20 +251,28 @@ internal class TimeStampLogicTest {
     @Nested
     inner class SelectedAdd {
         /**
-         * - Send [LogicEvents.SelectedAdd].
-         * - Verify [ViewEvents.DisplayDeleteButton] was sent to the view.
+         * - Send [LogicEvents.SelectedAdd] twice.
+         * - Verify [ViewEvents.DisplayDeleteButton] was sent to the view twice.
          * - Verify that the Repo is not called.
          */
         @Test
         fun selectedAdd() {
-            val id = 1
+            val idOne = 1
+            val idTwo = 2
+            val listLiveDataOutput = mutableListOf<ViewEvents>()
+            val liveDataObserver = Observer<ViewEvents> { listLiveDataOutput.add(it) }
 
-            logic.onEvent(LogicEvents.SelectedAdd(id))
+            logic.observe().observeForever(liveDataObserver)
 
-            logic.observe().observeForTesting {
-                assertThat(logic.observe().value).isEqualTo(ViewEvents.DisplayDeleteButton)
-            }
+            logic.onEvent(LogicEvents.SelectedAdd(idOne))
+            logic.onEvent(LogicEvents.SelectedAdd(idTwo))
+
             verify { repo wasNot Called }
+            assertThat(listLiveDataOutput.size).isEqualTo(2)
+            assertThat(listLiveDataOutput[0]).isEqualTo(ViewEvents.DisplayDeleteButton)
+            assertThat(listLiveDataOutput[1]).isEqualTo(ViewEvents.DisplayDeleteButton)
+
+            logic.observe().removeObserver(liveDataObserver)
         }
     }
 
