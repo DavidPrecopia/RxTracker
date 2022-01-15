@@ -2,6 +2,10 @@
 
 ![CI](https://github.com/DavidPrecopia/RxTracker/workflows/CI/badge.svg)
 
+
+**This project is no longer able to compile due having antiquated dependencies (cannot find due to JCenter being shut down) and needing to move on to other projects.**
+
+
 This helps you keep track of when you take prescriptions.
 
 You can find the latest APK [here](https://github.com/DavidPrecopia/RxTracker/releases).
